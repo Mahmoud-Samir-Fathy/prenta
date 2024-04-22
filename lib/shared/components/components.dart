@@ -14,19 +14,39 @@ Widget defaultTextFormField({
   bool isPassword = false,
   IconData? suffix,
   Function()? suffixpressed,
-})=>TextFormField(
-  controller: controller,
-  keyboardType: KeyboardType,
-  obscureText: isPassword,
-  onChanged:onChanged,
-  onFieldSubmitted:onSubmit,
-  onTap: onTap,
-  validator: validate,
-  decoration: InputDecoration(
-    prefixIcon: Icon(prefix),
-    labelText: lable,
-    enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30.0),borderSide: BorderSide(width: 0.3)),
-    suffixIcon: suffix !=null?IconButton(icon: Icon(suffix),onPressed: suffixpressed,):null,
+})=>Container(
+  width: double.infinity,
+  decoration: BoxDecoration(
+    border: Border.all(
+      color: Colors.grey.withOpacity(0.5), // Change this color to the desired border color
+      width: 0.4, // You can adjust the width of the border as needed
+    ),
+    color: Colors.white,
+    borderRadius: BorderRadius.all(
+      Radius.circular(30),
+    ),
+  ),
+  child: Padding(
+    padding: const EdgeInsets.symmetric(vertical: 8),
+    child: TextFormField(
+      controller: controller,
+      keyboardType: KeyboardType,
+      obscureText: isPassword,
+      onChanged:onChanged,
+      onFieldSubmitted:onSubmit,
+      onTap: onTap,
+      validator: validate,
+      decoration: InputDecoration(
+        border: InputBorder.none,
+        prefixIcon: Icon(prefix),
+        hintText: lable,
+        focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30.0),borderSide: BorderSide.none),
+        suffixIcon: suffix !=null?IconButton(icon: Icon(suffix),onPressed: suffixpressed,):null,
+        contentPadding: EdgeInsets.symmetric(vertical: 11.0),
+
+      ),
+      style: TextStyle(fontSize: 14),
+    ),
   ),
 );
 

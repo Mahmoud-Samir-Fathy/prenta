@@ -10,6 +10,7 @@ class AccountScreen extends StatelessWidget {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         body: Stack(
           fit: StackFit.expand, // Expand the Stack to fill the entire screen
           children: [
@@ -69,7 +70,7 @@ class AccountScreen extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    SizedBox(height: 30),
+                    SizedBox(height: 10),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Container(
@@ -78,13 +79,11 @@ class AccountScreen extends StatelessWidget {
                           dividerColor: Colors.transparent,
                           labelColor: HexColor('#27374D'),
                           indicator: BoxDecoration(
-
                               color: Colors.white, borderRadius: BorderRadius.circular(30)
                           ),
-
                           tabs: [
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                              padding: const EdgeInsets.symmetric(horizontal: 50.0),
                               child: Tab(text: 'Login'),
                             ),
                             Padding(
