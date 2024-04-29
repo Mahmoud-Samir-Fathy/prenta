@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:motion_toast/motion_toast.dart';
+import 'package:printa/shared/styles/colors.dart';
 
 Widget defaultTextFormField({
   required TextEditingController? controller,
@@ -53,7 +53,6 @@ Widget defaultTextFormField({
 Widget defaultMaterialButton({
   required String text,
   required Function,
-
 })=>MaterialButton(
 onPressed: Function,
 child:
@@ -61,7 +60,7 @@ Padding(
 padding: const EdgeInsets.all(12.0),
 child: Text(text,style: TextStyle(color: Colors.white,fontSize: 20),),
 ),
-color: HexColor('#27374D'),
+color: firstColor,
 shape: RoundedRectangleBorder(
 borderRadius: BorderRadius.all( Radius.circular(10),),
 ),

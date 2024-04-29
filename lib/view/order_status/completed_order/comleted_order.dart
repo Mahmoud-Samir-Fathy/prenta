@@ -1,6 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
+import 'package:printa/shared/styles/colors.dart';
 
 class completed_order extends StatelessWidget{
   @override
@@ -46,7 +45,7 @@ Widget buildCompletedItem()=>Container(
                           ],
                         ),
                         SizedBox(width: 30,),
-                        CircleAvatar(backgroundColor: HexColor('#27374D'),
+                        CircleAvatar(backgroundColor: firstColor,
                             child: Text('L', style: TextStyle(color: Colors.white, fontSize: 16,fontWeight: FontWeight.bold),), radius: 16),
                         Spacer(),
                         TextButton(onPressed: (){}, child: Text('Leave Review',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 18),))
@@ -57,7 +56,6 @@ Widget buildCompletedItem()=>Container(
                 ),
               ),
             ),
-
           ],
         ),
       ],

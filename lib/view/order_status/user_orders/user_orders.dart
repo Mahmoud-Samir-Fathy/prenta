@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:hexcolor/hexcolor.dart';
+import 'package:printa/shared/styles/colors.dart';
 import 'package:printa/view/order_status/active_order/active_order.dart';
 import 'package:printa/view/order_status/cancelled_order/cancelled_order.dart';
 import 'package:printa/view/order_status/completed_order/comleted_order.dart';
@@ -18,25 +16,22 @@ class user_orders extends StatelessWidget{
            title: Text('My Orders'),
            centerTitle: true,
            elevation: 0.0,
-
          ),
-
          body:Column(
            children: [
              TabBar(
                indicator: UnderlineTabIndicator(
                  borderSide: BorderSide(
                      width: 4.0,
-                     color: HexColor('#27374D')
+                     color: firstColor
                  ),
                ),
                  dividerColor: Colors.transparent,
-                 labelColor: HexColor('#27374D'),
+                 labelColor: firstColor,
                  tabs: [
                    Tab(text: 'Active'),
                    Tab(text: 'Completed',),
                    Tab(text: 'Cancelled',)
-
                  ]),
 
              Expanded(
@@ -44,17 +39,12 @@ class user_orders extends StatelessWidget{
                  active_order(),
                  completed_order(),
                  cancelled_order(),
-               
                ]),
              )
-
            ],
          ) ,
-
        ),
      ),
    );
   }
-
-
 }

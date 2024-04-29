@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:printa/view/login&register_screen/register_body/register_body.dart';
-
+import '../../../shared/styles/colors.dart';
 import '../login_body/login_body.dart';
 
-class AccountScreen extends StatelessWidget {
+class account_screen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -38,7 +37,7 @@ class AccountScreen extends StatelessWidget {
                   Text(
                     'Go ahead and set up\n your account',
                     style: TextStyle(
-                      color: HexColor('##DDE6ED'),
+                      color: forthColor,
                       fontWeight: FontWeight.bold,
                       fontSize: 25,
                     ),
@@ -48,7 +47,7 @@ class AccountScreen extends StatelessWidget {
                     'Sign in-up to enjoy our offers',
                     style: TextStyle(
                       fontSize: 17,
-                      color: HexColor('#94A3B8'),
+                      color: thirdColor,
                     ),
                   ),
                   SizedBox(height: 15),
@@ -77,7 +76,7 @@ class AccountScreen extends StatelessWidget {
                         padding: EdgeInsets.only(top: 5,bottom: 5),
                         child: TabBar(
                           dividerColor: Colors.transparent,
-                          labelColor: HexColor('#27374D'),
+                          labelColor: firstColor,
                           indicator: BoxDecoration(
                               color: Colors.white, borderRadius: BorderRadius.circular(30)
                           ),
