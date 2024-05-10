@@ -108,17 +108,17 @@ class _on_boardingState extends State<on_boarding> {
        )
    );
   }
-  Widget buildBoardingItem(onBoardingModel model)=>Column(
+  Widget buildBoardingItem(onBoardingModel onboard)=>Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Expanded(
         child: Image(
-          image: AssetImage('${model.image}'),
+          image: AssetImage('${onboard.image}'),
         ),
       ),
-      Text('${model.tittle}',style: TextStyle(fontSize:30,fontWeight: FontWeight.bold),),
+      Text('${onboard.tittle}',style: TextStyle(fontSize:30,fontWeight: FontWeight.bold),),
       SizedBox(height: 40,),
-      Text('${model.description}',style: TextStyle(fontSize: 20),),
+      Text('${onboard.description}',style: TextStyle(fontSize: 20),),
       SizedBox(height: 30,),
     ],
   );
