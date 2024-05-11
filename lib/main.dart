@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:printa/view/on_boarding/on_boarding.dart';
 import 'shared/network/local/cache_helper.dart';
-import 'view/forget_password/change_password.dart';
-import 'view/forget_password/forget_password.dart';
-import 'view/forget_password/forget_password_otp.dart';
-import 'view/forget_password/successful_change.dart';
-import 'view/login&register_screen/account_screen/account_screen.dart';
-import 'view/order_status/user_orders/user_orders.dart';
+import 'view/account_otp_verification/otp_verification.dart';
+import 'view/account_otp_verification/verification_success.dart';
+
 
 
 void main() async{
@@ -39,7 +35,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner:  false,
-      home: successful_change()
+      home: verification_success()
     );
   }
 }
