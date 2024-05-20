@@ -1,54 +1,34 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 import '../../shared/components/components.dart';
 
-class orderplaced extends StatefulWidget {
-  const orderplaced({Key? key}) : super(key: key);
+class OrderPlaced extends StatefulWidget {
+  const OrderPlaced({Key? key}) : super(key: key);
 
   @override
-  State<orderplaced> createState() => _orderplacedState();
+  State<OrderPlaced> createState() => _OrderPlacedState();
 }
 
-class _orderplacedState extends State<orderplaced> {
+class _OrderPlacedState extends State<OrderPlaced> {
   List<Map<String, dynamic>> cartItems = [
     {
       'image': 'images/wishlisttshirt.png',
-      'title': 'Hawaiian Shirts for Men ',
+      'title': 'Hawaiian Shirts for Men',
       'size': 'M',
       'price': '90',
       'quantity': 1,
     },
     {
       'image': 'images/wishlisttshirt.png',
-      'title': 'Hawaiian Shirts for Men ',
+      'title': 'Hawaiian Shirts for Men',
       'size': 'L',
       'price': '75',
       'quantity': 1,
     },
     {
       'image': 'images/wishlisttshirt.png',
-      'title': 'Hawaiian Shirts for Men ',
-      'size': 'L',
-      'price': '75',
-      'quantity': 1,
-    },{
-      'image': 'images/wishlisttshirt.png',
-      'title': 'Hawaiian Shirts for Men ',
-      'size': 'L',
-      'price': '75',
-      'quantity': 1,
-    },{
-      'image': 'images/wishlisttshirt.png',
-      'title': 'Hawaiian Shirts for Men ',
-      'size': 'L',
-      'price': '75',
-      'quantity': 1,
-    },{
-      'image': 'images/wishlisttshirt.png',
-      'title': 'Hawaiian Shirts for Men ',
+      'title': 'Hawaiian Shirts for Men',
       'size': 'L',
       'price': '75',
       'quantity': 1,
@@ -61,18 +41,16 @@ class _orderplacedState extends State<orderplaced> {
     return Scaffold(
       backgroundColor: HexColor('FCFCFC'),
       appBar: AppBar(
-        centerTitle: true,
+        centerTitle: false,
         backgroundColor: Colors.white,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {},
-        ),
         title: Text(
-          'Checkout',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          'My Order',
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
         ),
+        iconTheme: IconThemeData(color: Colors.black),
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
             child: LayoutBuilder(
@@ -84,11 +62,15 @@ class _orderplacedState extends State<orderplaced> {
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Card(
-                        color: HexColor('FFFFFF'),
+                        color: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        elevation: 2,
                         child: ListTile(
                           leading: Container(
-                            width: constraints.maxWidth * 0.15,
-                            height: constraints.maxWidth * 0.15,
+                            width: constraints.maxWidth * 0.30,
+                            height: constraints.maxWidth * 0.30,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                               image: DecorationImage(
@@ -97,149 +79,118 @@ class _orderplacedState extends State<orderplaced> {
                               ),
                             ),
                           ),
-                          title: Row(
-                            children: [
-                              Text(item['title']),
-                              Spacer(),
-                              CircleAvatar(
-                                radius: 16,
-                                backgroundColor: Colors.blueAccent,
-                                child: Text(
-                                  '${item['size']}',
-                                  style: TextStyle(fontSize: 15, color: Colors.white),
-                                ),
-                              ),
-
-                            ],
-                          ),
+                          title: Text(item['title']),
                           subtitle: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('${item['price']} EG'),
+                              SizedBox(height: 10),
                               Row(
-                                mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  GestureDetector(
-                                    onTap:() {
-                                      setState(() {
-                                        item['quantity']++;
-                                      });
-                                    },
-                                    child: Container(
-                                      width: 30,height: 30,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        border: Border.all(color: Colors.grey),
-                                      ),
-                                      child: Icon(Icons.add,size: 20,),
-
-                                    ),
-                                  ),
-                                  SizedBox(width: 6,),
-                                  Text('${item['quantity']}'),
-                                  SizedBox(width: 6,),
-
-                                  GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        if (item['quantity'] > 1) {
-                                          item['quantity']--;
-                                        }
-                                      });
-                                    },
-                                    child: Container(
-                                      width: 30,height: 30,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        border: Border.all(color: Colors.grey),
-                                      ),
-                                      child: Icon(Icons.remove,size: 20,),
-
-                                    ),
-                                  ),
-                                  Spacer(),
-                                  GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        cartItems.removeAt(index);
-                                      });
-                                    },
-                                    child: Icon(
-                                      Icons.delete, size: 25,
-
+                                  Text('Qty (${item['quantity']})'),
+                                  SizedBox(width: 30),
+                                  CircleAvatar(
+                                    radius: 16,
+                                    backgroundColor: Colors.blueGrey,
+                                    child: Text(
+                                      '${item['size']}',
+                                      style: TextStyle(
+                                          fontSize: 15, color: Colors.white),
                                     ),
                                   ),
                                 ],
                               ),
+                              SizedBox(height: 10),
+                              Text('${item['price']} EG'),
                             ],
                           ),
-
-
                         ),
                       ),
-
                     );
                   },
                 );
               },
             ),
           ),
+          SizedBox(height: 10),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0,horizontal: 15),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Sub total',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      '${calculateSubtotal()} LE',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 12),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Shipping',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      '50 LE', // Assuming fixed shipping cost
-                      style: TextStyle(fontSize: 16),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 12),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Total',
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      '${calculateTotal() + 50} LE', // Adding shipping cost to total
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-              ],
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: Text(
+              'Order Summary',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
           ),
-
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Card(
+              color: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+              elevation: 2,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                    vertical: 16.0, horizontal: 15.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Items (${calculateTotalQuantity()})',
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          '${calculateSubtotal()} LE',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 12),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Shipping',
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          '50 LE', // Assuming fixed shipping cost
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 12),
+                    Divider(color: Colors.grey[500]),
+                    SizedBox(height: 12),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Total',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          '${calculateTotal() + 50} LE', // Adding shipping cost to total
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child:                                 Center(child: defaultMaterialButton(text: 'Check out', Function: (){})),
-
+            child: Center(
+                child: defaultMaterialButton(
+                    text: 'Continue Shopping', Function: () {})),
           ),
-
         ],
       ),
     );
@@ -253,7 +204,8 @@ class _orderplacedState extends State<orderplaced> {
     }
     return total;
   }
-// Calculate subtotal amount
+
+  // Calculate subtotal amount
   double calculateSubtotal() {
     double subtotal = 0;
     for (var item in cartItems) {
@@ -262,4 +214,12 @@ class _orderplacedState extends State<orderplaced> {
     return subtotal;
   }
 
+  // Calculate total quantity
+  int calculateTotalQuantity() {
+    int totalQuantity = 0;
+    for (var item in cartItems) {
+      totalQuantity += item['quantity'] as int;
+    }
+    return totalQuantity;
+  }
 }
