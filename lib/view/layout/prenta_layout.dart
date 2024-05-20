@@ -21,8 +21,8 @@ class _prenta_layoutState extends State<prenta_layout> {
 
   List<Widget> screens=[
     product_screen(),
-    history_screen(),
     search_screen(),
+    history_screen(),
     profile_screen()
   ];
 
@@ -81,14 +81,14 @@ class _prenta_layoutState extends State<prenta_layout> {
         inactiveColorPrimary: Colors.grey,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.history),
-        title: "History",
+        icon: Icon(Icons.search),
+        title: "Search",
         activeColorPrimary: Colors.teal,
         inactiveColorPrimary: Colors.grey,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.search),
-        title: "Search",
+        icon: Icon(Icons.history),
+        title: "History",
         activeColorPrimary: Colors.blueAccent,
         inactiveColorPrimary: Colors.grey,
       ),

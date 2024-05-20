@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:printa/view/Order_placed/order_placed.dart';
 import 'shared/network/local/cache_helper.dart';
 import 'view/account_otp_verification/otp_verification.dart';
 import 'view/account_otp_verification/verification_success.dart';
-import 'view/check_Out/checkout.dart';
+import 'view/layout/prenta_layout.dart';
 
 
 
@@ -23,7 +22,6 @@ void main() async{
     // isDark: isDark,
     // startWidget: widget,
   ));
-
 }
 
 class MyApp extends StatelessWidget {
@@ -37,7 +35,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner:  false,
-      home: orderplaced()
+      home: prenta_layout()
     );
   }
 }
