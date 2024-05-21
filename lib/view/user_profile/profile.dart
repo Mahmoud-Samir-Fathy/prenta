@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:printa/shared/components/components.dart';
 import 'package:printa/shared/styles/colors.dart';
 
 class profile_screen extends StatelessWidget{
@@ -20,19 +18,9 @@ class profile_screen extends StatelessWidget{
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Stack(
-                  alignment: AlignmentDirectional.bottomEnd,
-                  children: [
-                    CircleAvatar(
-                      radius: 70,
-                      child: Image(image: AssetImage('images/google.png'),fit: BoxFit.fill,),
-                    ),
-                    CircleAvatar(
-                      backgroundColor: Colors.blue,
-                      radius: 20,
-                      child: Icon(Icons.camera_alt_outlined),
-                    )
-                  ],
+                CircleAvatar(
+                  radius: 70,
+                  child: Image(image: AssetImage('images/google.png'),fit: BoxFit.fill,),
                 ),
                 SizedBox(height: 10,),
                 Text('Mahmoud Samir'),
