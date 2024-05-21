@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:printa/shared/components/components.dart';
 
 class edit_profile extends StatelessWidget {
+
+  var firstNameController = TextEditingController();
+  var lastNameController = TextEditingController();
+  var emailNameController = TextEditingController();
+  var phoneNameController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    var firstNameController = TextEditingController();
-    var lastNameController = TextEditingController();
-    var emailNameController = TextEditingController();
-    var phoneNameController = TextEditingController();
-
-
     return Scaffold(
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
