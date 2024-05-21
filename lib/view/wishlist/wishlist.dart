@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:printa/view/wishlist/wishlistitem.dart';
 
 class wishlist extends StatefulWidget {
   const wishlist({super.key});
@@ -271,7 +270,8 @@ backgroundColor: Colors.white,
                 ),
               ],
             ),
-          )
+          ),
+          SizedBox(height: 20,)
 
         ],
       ),

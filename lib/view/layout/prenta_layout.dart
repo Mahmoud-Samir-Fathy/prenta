@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
-import 'package:printa/view/layout/history.dart';
 import 'package:printa/view/layout/productScreen.dart';
-import 'package:printa/view/layout/profile.dart';
-import 'package:printa/view/layout/search.dart';
+import 'package:printa/view/user_profile/profile.dart';
+import 'package:printa/view/order_status/user_orders/user_orders.dart';
+import 'package:printa/view/wishlist/wishlist.dart';
 
 class prenta_layout extends StatefulWidget {
   @override
@@ -21,8 +21,8 @@ class _prenta_layoutState extends State<prenta_layout> {
 
   List<Widget> screens=[
     product_screen(),
-    search_screen(),
-    history_screen(),
+    wishlist(),
+    user_orders(),
     profile_screen()
   ];
 

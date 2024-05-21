@@ -120,7 +120,6 @@ class profile_screen extends StatelessWidget{
                           )
                         ),
                         child: MaterialButton(
-
                           height: 60,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.all( Radius.circular(30),),
@@ -132,17 +131,14 @@ class profile_screen extends StatelessWidget{
                               Text('Sign out'),
                             ],
                           ),
-                          onPressed: (){},
+                          onPressed: (){
+                            _showSignOutDialog(context);
 
-
+                          },
                         ),
                       )
-
-
                   ),
                   SizedBox(height: 20,)
-
-
                 ],
               ),
             ),
@@ -151,4 +147,60 @@ class profile_screen extends StatelessWidget{
       ),
     );
   }
+}
+void _showSignOutDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+
+        title: Align(alignment:AlignmentDirectional.center,child: Text('Sign Out'),),
+        content: Container(height:100,child: Center(child: Text('Do you want to sign out?',style: TextStyle(fontWeight: FontWeight.w300),))),
+        actions: [
+          Container(
+            height: 50,
+            width: 120,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30),
+                border: Border.all(
+                    color:firstColor
+                )
+            ),
+            child: MaterialButton(
+            height:50,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all( Radius.circular(30),),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Cancel'),
+            ),
+          ),
+          Container(
+            height: 50,
+            width: 120,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30),
+                border: Border.all(
+                    color:firstColor
+                )
+            ),
+            child: MaterialButton(
+
+              color: firstColor,
+            height:50,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all( Radius.circular(30),),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Sign Out',style: TextStyle(color: Colors.white),),
+            ),
+          ),
+        ],
+      );
+    },
+  );
 }
