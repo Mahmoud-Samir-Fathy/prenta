@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:printa/view/login&register_screen/account_screen/account_screen.dart';
+import 'package:printa/view/login&register_screen/register_body/register_body.dart';
 import 'shared/network/local/cache_helper.dart';
 import 'view/account_otp_verification/otp_verification.dart';
 import 'view/account_otp_verification/verification_success.dart';
@@ -35,7 +37,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner:  false,
-      home: prenta_layout()
+      home: account_screen()
     );
   }
 }

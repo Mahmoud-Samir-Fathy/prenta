@@ -8,6 +8,8 @@ class RegisterBody extends StatelessWidget{
     var passwordController=TextEditingController();
     var nameController=TextEditingController();
     var phoneController=TextEditingController();
+    var confirmPasswordController=TextEditingController();
+
 
     return Container(
       child: SingleChildScrollView(
@@ -34,7 +36,7 @@ class RegisterBody extends StatelessWidget{
                         return 'Please enter your phone';
                       else return null;
                     },
-                    lable: 'Phone number',
+                    lable: 'Phone Number',
                     prefix: Icons.phone_android
                 ),SizedBox(height: 15,),
                 defaultTextFormField(
@@ -57,6 +59,19 @@ class RegisterBody extends StatelessWidget{
                     else return null;
                   },
                   lable: 'Password',
+                  prefix: Icons.lock,
+                  suffix: Icons.visibility_off,
+                ),
+                SizedBox(height: 15,),
+                defaultTextFormField(
+                  controller: confirmPasswordController,
+                  KeyboardType: TextInputType.visiblePassword,
+                  validate: (value ) {
+                    if(value!.isEmpty)
+                      return 'Please type the correct password';
+                    else return null;
+                  },
+                  lable: 'Confirm Password',
                   prefix: Icons.lock,
                   suffix: Icons.visibility_off,
                 ),
