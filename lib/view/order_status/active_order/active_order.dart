@@ -48,7 +48,7 @@ class active_order extends StatelessWidget{
                           CircleAvatar(backgroundColor: firstColor,
                               child: Text('L', style: TextStyle(color: Colors.white, fontSize: 16,fontWeight: FontWeight.bold),), radius: 16),
                           Spacer(),
-                          TextButton(onPressed: (){}, child: Text('Track Order',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 18),))
+                          Text('Processing',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 18),)
 
                         ],
                       ),
