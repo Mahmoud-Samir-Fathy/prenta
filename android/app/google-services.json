@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "7618526028",
+    "project_id": "prenta-842a9",
+    "storage_bucket": "prenta-842a9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:7618526028:android:d6c33a2a7703d46811ede9",
+        "android_client_info": {
+          "package_name": "com.example.printa"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2_q6ie5KZ3lXbsoDTAr4CaTRL19OfATg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
