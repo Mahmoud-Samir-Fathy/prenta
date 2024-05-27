@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:printa/shared/styles/colors.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../models/on_board_model/on_board_model.dart';
@@ -25,18 +26,18 @@ class _on_boardingState extends State<on_boarding> {
   List<onBoardingModel> boarding=[
     onBoardingModel(
         image: ('images/onboard1.png'),
-        tittle: 'Screen tittle 1',
-        description: 'Description 1'
+        tittle: 'Now You Can Customize \nYour Own Product',
+        description: 'Create a product that reflects your unique style by designing it exactly the way you want. From choosing colors to adding personal touches, make it truly yours.'
     ),
     onBoardingModel(
         image: ('images/onboard2.png'),
-        tittle: 'Screen tittle 2',
-        description: 'Description 2'
+        tittle: 'Discover Unique Designs',
+        description: 'Browse through a variety of products featuring our own design ideas. From stylish apparel to eye-catching accessories, find something that resonates with your style.'
     ),
     onBoardingModel(
         image: ('images/onboard3.png'),
-        tittle: 'Screen tittle 3',
-        description: 'Description 3'
+        tittle: 'Get Your Product Quickly',
+        description: 'With just a few simple clicks, we\'ll swiftly deliver the product you choose as fast as possible. Your satisfaction is our priority, and we\'re committed to getting your order to you promptly.'
     )
   ];
   @override
@@ -100,7 +101,7 @@ class _on_boardingState extends State<on_boarding> {
                      boardController.nextPage(duration: Duration(milliseconds: 750), curve:Curves.fastEaseInToSlowEaseOut );
                    };
                    },
-                   child: Icon(Icons.keyboard_arrow_right_sharp,color: forthColor,),)
+                   child: Icon(Ionicons.chevron_forward_outline,color: forthColor,),)
                ],
              )
            ],

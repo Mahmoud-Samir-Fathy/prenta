@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ionicons/ionicons.dart';
 
 class wishlist extends StatefulWidget {
   const wishlist({super.key});
@@ -24,7 +25,6 @@ class _wishlistState extends State<wishlist> {
       'price': '75',
       'quantity': 1,
     },
-    // Add more items as needed
   ];
 
   @override
@@ -32,16 +32,13 @@ class _wishlistState extends State<wishlist> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar:  AppBar(
-backgroundColor: Colors.white,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: (){},
-        ),
-
+        backgroundColor: Colors.white,
         title: Text('Wishlist'),
+        centerTitle: true,
+        elevation: 0.0,
         actions: [
           IconButton(
-            icon: Icon(Icons.search),
+            icon: Icon(Ionicons.search),
             onPressed: (){},
           ),
         ],
@@ -96,9 +93,6 @@ backgroundColor: Colors.white,
                                   ),
                                 ],
                               ),
-            
-            
-            
                             ],
                           ),
                         ),
@@ -135,17 +129,13 @@ backgroundColor: Colors.white,
                                       });
                                     },
                                     behavior: HitTestBehavior.translucent, // Respond to taps within the entire area of the GestureDetector
-                                    child: Icon(Icons.cancel_outlined),
+                                    child: Icon(Ionicons.close),
                                   )
-            
-            
                                   ]),
-            
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Image.asset(item['image'], width: 100, height: 100,fit: BoxFit.cover,), // Adjusted image size
-            
                                     Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
@@ -196,20 +186,15 @@ backgroundColor: Colors.white,
                                                 ),
                                               ),
                                             ),
-            
-            
                                           ],
                                         ),
-            
                                       ],
                                     ),
-            
                                   ],
                                 ),
                                 Row(mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [                                Text(' ${item['price']} LE'),
-            
-            
+                                    children: [
+                                      Text(' ${item['price']} LE'),
                                     ]),
                               ],
                             ),
@@ -272,7 +257,6 @@ backgroundColor: Colors.white,
             ),
           ),
           SizedBox(height: 20,)
-
         ],
       ),
     );

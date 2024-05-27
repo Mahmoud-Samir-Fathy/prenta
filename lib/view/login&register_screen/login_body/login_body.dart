@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:printa/shared/components/components.dart';
 
 class LoginBody extends StatelessWidget{
@@ -21,7 +22,7 @@ class LoginBody extends StatelessWidget{
                       else return null;
                     },
                     lable: 'Email',
-                    prefix: Icons.email_outlined
+                    prefix: Ionicons.mail_outline
                 ),SizedBox(height: 15,),
                 defaultTextFormField(
                     controller: passwordController,
@@ -32,8 +33,8 @@ class LoginBody extends StatelessWidget{
                       else return null;
                     },
                     lable: 'Password',
-                    prefix: Icons.lock,
-                    suffix: Icons.visibility_off,
+                    prefix: Ionicons.key_outline,
+                    suffix: Ionicons.eye_off_outline,
                 ),
                 SizedBox(height: 10,),
                 Align(
@@ -93,6 +94,7 @@ class LoginBody extends StatelessWidget{
                            ],
                          ),
                     ),)),
+                SizedBox(height: 20,)
 
               ],
             ),

@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
-import 'package:printa/view/layout/productScreen.dart';
+import 'package:printa/shared/components/components.dart';
+import 'package:printa/shared/styles/colors.dart';
+import 'package:printa/view/Customize/customize.dart';
 import 'package:printa/view/user_profile/profile.dart';
 import 'package:printa/view/order_status/user_orders/user_orders.dart';
 import 'package:printa/view/wishlist/wishlist.dart';
+
+import '../homeScreen/homescreen.dart';
 
 class prenta_layout extends StatefulWidget {
   @override
@@ -18,9 +23,8 @@ class _prenta_layoutState extends State<prenta_layout> {
       currentIndex = index;
     });
   }
-
   List<Widget> screens=[
-    product_screen(),
+    HomeScreen(),
     wishlist(),
     user_orders(),
     profile_screen()
@@ -37,7 +41,7 @@ class _prenta_layoutState extends State<prenta_layout> {
               controller: PersistentTabController(initialIndex: currentIndex),
               screens: screens,
               items: _navBarsItems(),
-              backgroundColor: Colors.black,
+              backgroundColor: firstColor,
               navBarStyle: NavBarStyle.style19,
               confineInSafeArea: true,
               handleAndroidBackButtonPress: true,
@@ -63,8 +67,11 @@ class _prenta_layoutState extends State<prenta_layout> {
             bottom: MediaQuery.of(context).size.height * 0.09,
             right: MediaQuery.of(context).size.width * 0.05,
             child: FloatingActionButton(
-              onPressed: (){},
-              child: Icon(Icons.add),
+              backgroundColor: firstColor,
+              onPressed: (){
+                navigateTo(context, customize());
+              },
+              child: Icon(Ionicons.shirt,color: Colors.white,),
             ),
           ),
         ],
@@ -75,28 +82,28 @@ class _prenta_layoutState extends State<prenta_layout> {
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.home),
+        icon: Icon(Ionicons.home),
         title: "Home",
-        activeColorPrimary: Colors.blue,
-        inactiveColorPrimary: Colors.grey,
+        activeColorPrimary: thirdColor,
+        inactiveColorPrimary: forthColor,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.search),
+        icon: Icon(Ionicons.bag),
         title: "Search",
-        activeColorPrimary: Colors.teal,
-        inactiveColorPrimary: Colors.grey,
+        activeColorPrimary: thirdColor,
+        inactiveColorPrimary: forthColor,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.history),
+        icon: Icon(Ionicons.archive),
         title: "History",
-        activeColorPrimary: Colors.blueAccent,
-        inactiveColorPrimary: Colors.grey,
+        activeColorPrimary: thirdColor,
+        inactiveColorPrimary: forthColor,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.person),
+        icon: Icon(Ionicons.person),
         title: "Profile",
-        activeColorPrimary: Colors.deepOrange,
-        inactiveColorPrimary: Colors.grey,
+        activeColorPrimary: thirdColor,
+        inactiveColorPrimary: forthColor,
       ),
     ];
   }

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:ionicons/ionicons.dart';
+import 'package:printa/shared/components/components.dart';
 import 'package:printa/shared/styles/colors.dart';
+
+import '../edit_user_profile/edit_user_profile.dart';
 
 class profile_screen extends StatelessWidget{
   @override
@@ -47,31 +51,33 @@ class profile_screen extends StatelessWidget{
                   SizedBox(height: 20,),
                   Row(
                     children: [
-                      Icon(Icons.person),
+                      Icon(Ionicons.person),
                       SizedBox(width: 15,),
                       Text('Edit Profile'),
                       Spacer(),
-                      IconButton(onPressed: (){}, icon:Icon( Icons.arrow_forward_ios_sharp))
+                      IconButton(onPressed: (){
+                        navigateTo(context, edit_profile());
+                      }, icon:Icon( Ionicons.chevron_forward_outline))
                     ],
                   ),
                   SizedBox(height: 15,),
                   Row(
                     children: [
-                      Icon(Icons.settings),
+                      Icon(Ionicons.settings),
                       SizedBox(width: 15,),
-                      Text('Dark Mode'),
+                      Text('Change Themes'),
                       Spacer(),
-                      IconButton(onPressed: (){}, icon:Icon( Icons.arrow_forward_ios_sharp))
+                      IconButton(onPressed: (){}, icon:Icon( Ionicons.chevron_forward_outline))
                     ],
                   ),
                   SizedBox(height: 15,),
                   Row(
                     children: [
-                      Icon(Icons.wallet),
+                      Icon(Ionicons.wallet),
                       SizedBox(width: 15,),
                       Text('Orders'),
                       Spacer(),
-                      IconButton(onPressed: (){}, icon:Icon( Icons.arrow_forward_ios_sharp))
+                      IconButton(onPressed: (){}, icon:Icon( Ionicons.chevron_forward_outline))
                     ],
                   ),
                   SizedBox(height: 20,),
@@ -79,21 +85,21 @@ class profile_screen extends StatelessWidget{
                   SizedBox(height: 15,),
                   Row(
                     children: [
-                      Icon(Icons.warning),
+                      Icon(Ionicons.information),
                       SizedBox(width: 15,),
                       Text('Help Center'),
                       Spacer(),
-                      IconButton(onPressed: (){}, icon:Icon( Icons.arrow_forward_ios_sharp))
+                      IconButton(onPressed: (){}, icon:Icon(Ionicons.chevron_forward_outline))
                     ],
                   ),
                   SizedBox(height: 15,),
                   Row(
                     children: [
-                      Icon(Icons.warning),
+                      Icon(Ionicons.information),
                       SizedBox(width: 15,),
                       Text('Terms of Service'),
                       Spacer(),
-                      IconButton(onPressed: (){}, icon:Icon( Icons.arrow_forward_ios_sharp))
+                      IconButton(onPressed: (){}, icon:Icon(Ionicons.chevron_forward_outline))
                     ],
                   ),
                   SizedBox(height: 30,),
@@ -114,7 +120,7 @@ class profile_screen extends StatelessWidget{
                           ),
                           child: Row(
                             children: [
-                              Icon(Icons.output_outlined),
+                              Icon(Ionicons.exit_outline),
                               SizedBox(width: 15,),
                               Text('Sign out'),
                             ],

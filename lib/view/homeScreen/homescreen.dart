@@ -1,8 +1,7 @@
 import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-
-import 'itemcard.dart';
+import 'package:ionicons/ionicons.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -30,8 +29,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [Text('Welcome Back!'), Text('Mahmoud Samir')],
                     ),
                     Spacer(),
-                    IconButton(onPressed: () {}, icon: Icon(Icons.notifications)),
-                    IconButton(onPressed: () {}, icon: Icon(Icons.shopping_cart)),
+                    IconButton(onPressed: () {}, icon: Icon(Ionicons.notifications)),
+                    IconButton(onPressed: () {}, icon: Icon(Ionicons.cart)),
                   ],
                 ),
                 SizedBox(height: 30),
@@ -45,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     decoration: InputDecoration(
                       hintText: 'What are you looking for...',
                       border: InputBorder.none,
-                      prefixIcon: Icon(Icons.search),
+                      prefixIcon: Icon(Ionicons.search),
                     ),
                   ),
                 ),
@@ -69,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Row(
                             children: [
                               Text('Shop Now'),
-                              Icon(Icons.arrow_forward_outlined)
+                              Icon(Ionicons.arrow_forward_outline)
                             ],
                           ),
                         ],
@@ -141,4 +140,78 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-
+Widget ItemCard()=>Container(
+  decoration: BoxDecoration(
+    color: Colors.white,
+    borderRadius: BorderRadius.circular(15.0),
+  ),
+  child: Column(
+    children: [
+      Stack(
+        clipBehavior: Clip.none,
+        children: [
+          Container(
+            width: double.infinity,
+            height: 200,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              image: DecorationImage(
+                image: NetworkImage('https://via.placeholder.com/150'),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          Positioned(
+            top: 8,
+            right: 8,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                shape: BoxShape.circle,
+              ),
+              padding: EdgeInsets.all(5),
+              child: Icon(
+               Ionicons.heart_outline,
+                color: Colors.grey,
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: -25, // Position to overlap the image
+            left: 0,
+            right: 0,
+            child: Center(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                  shape: BoxShape.circle,
+                ),
+                padding: EdgeInsets.all(12),
+                child: Icon(
+                  Ionicons. cart,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+      SizedBox(height: 25),
+      Text(
+        'Bomber Jackets',
+        style: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      SizedBox(height: 4),
+      Text(
+        '\$49.99',
+        style: TextStyle(
+          fontSize: 16,
+          color: Colors.black,
+        ),
+      ),
+    ],
+  ),
+);

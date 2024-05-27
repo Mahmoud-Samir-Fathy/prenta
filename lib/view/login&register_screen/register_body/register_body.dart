@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:printa/shared/components/components.dart';
 
 class RegisterBody extends StatelessWidget{
@@ -26,7 +27,7 @@ class RegisterBody extends StatelessWidget{
                       else return null;
                     },
                     lable: 'Full Name',
-                    prefix: Icons.person
+                    prefix: Ionicons.person_outline
                 ),SizedBox(height: 15,),
                 defaultTextFormField(
                     controller: phoneController,
@@ -37,7 +38,7 @@ class RegisterBody extends StatelessWidget{
                       else return null;
                     },
                     lable: 'Phone Number',
-                    prefix: Icons.phone_android
+                    prefix: Ionicons.phone_portrait_outline
                 ),SizedBox(height: 15,),
                 defaultTextFormField(
                     controller: emailController,
@@ -48,7 +49,7 @@ class RegisterBody extends StatelessWidget{
                       else return null;
                     },
                     lable: 'Email',
-                    prefix: Icons.email_outlined
+                    prefix: Ionicons.mail_outline
                 ),SizedBox(height: 15,),
                 defaultTextFormField(
                   controller: passwordController,
@@ -59,8 +60,8 @@ class RegisterBody extends StatelessWidget{
                     else return null;
                   },
                   lable: 'Password',
-                  prefix: Icons.lock,
-                  suffix: Icons.visibility_off,
+                  prefix: Ionicons.key_outline,
+                  suffix: Ionicons.eye_off_outline,
                 ),
                 SizedBox(height: 15,),
                 defaultTextFormField(
@@ -72,8 +73,8 @@ class RegisterBody extends StatelessWidget{
                     else return null;
                   },
                   lable: 'Confirm Password',
-                  prefix: Icons.lock,
-                  suffix: Icons.visibility_off,
+                  prefix: Ionicons.key_outline,
+                  suffix: Ionicons.eye_off_outline,
                 ),
                 SizedBox(height: 30,),
                 defaultMaterialButton(text: 'Register', Function: (){}),
@@ -127,6 +128,8 @@ class RegisterBody extends StatelessWidget{
                           ],
                         ),
                       ),)),
+                SizedBox(height: 20,)
+
 
               ],
             ),

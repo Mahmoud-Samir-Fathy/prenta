@@ -12,10 +12,10 @@ class user_orders extends StatelessWidget{
      child: Container(
        child: Scaffold(
          appBar: AppBar(
-           leading: IconButton( onPressed: () {  }, icon: Icon(Icons.arrow_back_ios_outlined,)),
            title: Text('My Orders'),
            centerTitle: true,
            elevation: 0.0,
+           surfaceTintColor: Colors.transparent,
          ),
          body:Column(
            children: [
