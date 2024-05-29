@@ -24,22 +24,10 @@ class _CustomSplashScreenState extends State<CustomSplashScreen>
       duration: Duration(seconds: 3), // Set your desired animation duration
     );
 
-    _logoAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: Interval(
-          0.0, 1.0,
-          curve: Curves.ease,
-        ),
-      ),
-    );
+    _logoAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(_controller);
 
-    _textAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: Curves.easeIn,
-      ),
-    );
+    _textAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(_controller);
+
     _controller.forward().whenComplete(() {
       navigateAndFinish(context, on_boarding());
     });
@@ -91,6 +79,7 @@ class _CustomSplashScreenState extends State<CustomSplashScreen>
                           color: Colors.black,
                           fontSize: 32.0,
                           fontWeight: FontWeight.bold,
+                          fontFamily: 'SoulDaisy',
                         ),
                       ),
                     );
