@@ -54,7 +54,7 @@ dependencies:
   bloc: ^8.1.2
   flutter_bloc: ^8.1.2
   conditional_builder_null_safety: ^0.0.6
-
+  video_player: ^2.2.19
 
 dev_dependencies:
   flutter_test:

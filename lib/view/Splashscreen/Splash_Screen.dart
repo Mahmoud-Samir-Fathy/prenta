@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
+import 'package:video_player/video_player.dart';
 import 'package:printa/view/on_boarding/on_boarding.dart';
-import 'dart:math';
-
 import '../../shared/components/components.dart';
 
 class CustomSplashScreen extends StatefulWidget {
@@ -14,6 +14,7 @@ class _CustomSplashScreenState extends State<CustomSplashScreen>
   late AnimationController _controller;
   late Animation<double> _logoAnimation;
   late Animation<double> _textAnimation;
+  late VideoPlayerController _videoController;
 
   @override
   void initState() {
@@ -21,12 +22,18 @@ class _CustomSplashScreenState extends State<CustomSplashScreen>
 
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 3), // Set your desired animation duration
+      duration: Duration(seconds: 3),
     );
 
     _logoAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(_controller);
-
     _textAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(_controller);
+
+    _videoController = VideoPlayerController.asset('images/background.mp4')
+      ..initialize().then((_) {
+        _videoController.setLooping(true);
+        _videoController.play();
+        setState(() {});
+      });
 
     _controller.forward().whenComplete(() {
       navigateAndFinish(context, on_boarding());
@@ -36,21 +43,19 @@ class _CustomSplashScreenState extends State<CustomSplashScreen>
   @override
   void dispose() {
     _controller.dispose();
+    _videoController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: Stack(
         fit: StackFit.expand,
         children: [
-          // Background Image
-          // Image.asset(
-          //   'images/Splash.jpg',
-          //   fit: BoxFit.cover,
-          // ),
+          _videoController.value.isInitialized
+              ? VideoPlayer(_videoController)
+              : Container(color: Colors.black),
           Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -58,36 +63,26 @@ class _CustomSplashScreenState extends State<CustomSplashScreen>
                 AnimatedBuilder(
                   animation: _logoAnimation,
                   builder: (context, child) {
-                    return Transform.scale(
-                      scale: _logoAnimation.value,
-                      child: Transform.rotate(
-                        angle: _logoAnimation.value * 2 * pi, // Rotate the logo
-                        child: YourLogoWidget(),
-                      ),
+                    return FadeTransition(
+                      opacity: _logoAnimation,
+                      child: YourLogoWidget(),
                     );
                   },
                 ),
                 SizedBox(height: 20),
-                AnimatedBuilder(
-                  animation: _textAnimation,
-                  builder: (context, child) {
-                    return FadeTransition(
-                      opacity: _textAnimation,
-                      child: Text(
-                        'Prenta',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 32.0,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'SoulDaisy',
-                        ),
-                      ),
-                    );
-                  },
+                Text(
+                  'Prenta',
+                  style: TextStyle(
+                    color: HexColor('#27374D'),
+                    fontSize: 32.0,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'SoulDaisy',
+                  ),
                 ),
               ],
             ),
           ),
+
         ],
       ),
     );
@@ -97,12 +92,11 @@ class _CustomSplashScreenState extends State<CustomSplashScreen>
 class YourLogoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // Replace this with your logo or custom widget
     return Image.asset(
       'images/Prenta.png',
-      width: 200, // Specify the desired width
-      height: 200, // Specify the desired height
-      fit: BoxFit.contain, // Choose an appropriate fit option
+      width: 200,
+      height: 200,
+      fit: BoxFit.contain,
     );
   }
 }
