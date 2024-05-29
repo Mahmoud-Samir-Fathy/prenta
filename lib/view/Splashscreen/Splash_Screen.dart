@@ -27,9 +27,13 @@ class _CustomSplashScreenState extends State<CustomSplashScreen>
     _logoAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: _controller,
-        curve: Curves.easeInOutBack, // Choose your desired curve
+        curve: Interval(
+          0.0, 1.0,
+          curve: Curves.ease,
+        ),
       ),
     );
+
     _textAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: _controller,
@@ -50,14 +54,15 @@ class _CustomSplashScreenState extends State<CustomSplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Stack(
         fit: StackFit.expand,
         children: [
           // Background Image
-          Image.asset(
-            'images/Splash.png',
-            fit: BoxFit.cover,
-          ),
+          // Image.asset(
+          //   'images/Splash.jpg',
+          //   fit: BoxFit.cover,
+          // ),
           Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -83,6 +88,7 @@ class _CustomSplashScreenState extends State<CustomSplashScreen>
                       child: Text(
                         'Prenta',
                         style: TextStyle(
+                          color: Colors.black,
                           fontSize: 32.0,
                           fontWeight: FontWeight.bold,
                         ),
