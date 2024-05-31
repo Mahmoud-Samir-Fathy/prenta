@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:printa/shared/bloc_observer/bloc_observer.dart';
+import 'package:printa/view/homeScreen/homescreen.dart';
 import 'package:printa/view/login&register_screen/account_screen/account_screen.dart';
 import 'package:printa/view/on_boarding/on_boarding.dart';
 import 'firebase_options.dart';
@@ -43,7 +44,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner:  false,
-      home: startWidget
+      home: HomeScreen()
     );
   }
 }
