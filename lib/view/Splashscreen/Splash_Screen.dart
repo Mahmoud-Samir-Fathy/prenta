@@ -2,14 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:video_player/video_player.dart';
 import 'package:printa/view/on_boarding/on_boarding.dart';
-import '../../shared/components/components.dart';
+import 'package:printa/view/login&register_screen/account_screen/account_screen.dart';
+import 'package:printa/view/layout/prenta_layout.dart';
 
-class CustomSplashScreen extends StatefulWidget {
+class SplashScreen extends StatefulWidget {
+  final bool? onBoarding;
+  final String? uId;
+
+  SplashScreen({this.onBoarding, this.uId});
+
   @override
-  _CustomSplashScreenState createState() => _CustomSplashScreenState();
+  _SplashScreenState createState() => _SplashScreenState();
 }
 
-class _CustomSplashScreenState extends State<CustomSplashScreen>
+class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _logoAnimation;
@@ -36,7 +42,21 @@ class _CustomSplashScreenState extends State<CustomSplashScreen>
       });
 
     _controller.forward().whenComplete(() {
-      navigateAndFinish(context, on_boarding());
+      Widget startWidget;
+      if (widget.onBoarding != null) {
+        if (widget.uId != null) {
+          startWidget = prenta_layout();
+        } else {
+          startWidget = account_screen();
+        }
+      } else {
+        startWidget = on_boarding();
+      }
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => startWidget),
+      );
     });
   }
 
@@ -82,7 +102,6 @@ class _CustomSplashScreenState extends State<CustomSplashScreen>
               ],
             ),
           ),
-
         ],
       ),
     );
