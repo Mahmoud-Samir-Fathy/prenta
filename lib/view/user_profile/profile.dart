@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:printa/shared/components/components.dart';
+import 'package:printa/shared/components/constants.dart';
 import 'package:printa/shared/styles/colors.dart';
+import 'package:printa/view/login&register_screen/account_screen/account_screen.dart';
 
 import '../edit_user_profile/edit_user_profile.dart';
 
@@ -189,6 +191,8 @@ void _showSignOutDialog(BuildContext context) {
               ),
               onPressed: () {
                 Navigator.of(context).pop();
+                signout(context);
+
               },
               child: Text('Sign Out',style: TextStyle(color: Colors.white),),
             ),
