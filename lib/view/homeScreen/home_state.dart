@@ -1,20 +1,19 @@
-import 'package:bloc/bloc.dart';
+import '../../models/home_model/product model.dart';
 
-import '../../models/home_model/get product.dart';
-import 'home_bloc.dart';
+abstract class HomeState {}
 
-class ProductBloc extends Bloc<ProductEvent, ProductState> {
-  final ProductRepository _productRepository;
+class HomeInitialState extends HomeState {}
 
-  ProductBloc(this._productRepository) : super(ProductLoading()) {
-    on<LoadProducts>((event, emit) async {
-      emit(ProductLoading());
-      try {
-        final products = await _productRepository.fetchProducts();
-        emit(ProductLoaded(products));
-      } catch (e) {
-        emit(ProductLoading());
-      }
-    });
-  }
+class HomeLoadingState extends HomeState {}
+
+class HomeSuccessState extends HomeState {
+  final List<Product> products;
+
+  HomeSuccessState(this.products);
+}
+
+class HomeErrorState extends HomeState {
+  final String error;
+
+  HomeErrorState(this.error);
 }

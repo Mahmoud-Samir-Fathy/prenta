@@ -6,6 +6,9 @@ import 'package:printa/shared/components/components.dart';
 import 'package:printa/view/layout/prenta_layout.dart';
 import 'package:printa/view_model/register_body/register_body_cubit.dart';
 import 'package:printa/view_model/register_body/register_body_states.dart';
+import '../../account_otp_verification/OTP Bloc.dart';
+import '../../account_otp_verification/OTP Event.dart';
+import '../../account_otp_verification/otp_verification.dart';
 
 class RegisterBody extends StatelessWidget {
   var formKey = GlobalKey<FormState>();
@@ -19,13 +22,23 @@ class RegisterBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (BuildContext context) => RegisterCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<RegisterCubit>(
+          create: (context) => RegisterCubit(),
+        ),
+        BlocProvider<OtpBloc>(
+          create: (context) => OtpBloc(),
+        ),
+      ],
       child: BlocConsumer<RegisterCubit, RegisterStates>(
         listener: (context, state) {
-           if(state is CreateUserSuccessState){
-             navigateAndFinish(context, prenta_layout());
-        }},
+          if (state is CreateUserSuccessState) {
+            final phoneNumber = '+20${phoneController.text}';
+            BlocProvider.of<OtpBloc>(context).add(SendOtpEvent(phoneNumber)); // Send OTP to the phone number
+            navigateAndFinish(context, OtpVerification(phoneNumber: phoneNumber)); // Pass phone number to OtpVerification
+          }
+        },
         builder: (context, state) {
           return Container(
             child: SingleChildScrollView(
@@ -161,15 +174,14 @@ class RegisterBody extends StatelessWidget {
                               RegisterCubit.get(context).userRegister(
                                 firstName: firstNameController.text,
                                 lastName: lastNameController.text,
-                                phoneNumber: phoneController.hashCode,
+                                phoneNumber: int.parse(phoneController.text), // Ensure phone number is an int
                                 email: emailController.text,
                                 password: passwordController.text,
                               );
                             }
                           },
                         ),
-                        fallback: (context) =>
-                            Center(child: CircularProgressIndicator()),
+                        fallback: (context) => Center(child: CircularProgressIndicator()),
                       ),
                       SizedBox(height: 40),
                       Row(
@@ -199,16 +211,13 @@ class RegisterBody extends StatelessWidget {
                             width: 0.3,
                           ),
                           color: Colors.white,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(30),
-                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(30)),
                         ),
                         child: MaterialButton(
                           color: Colors.white,
                           height: 60,
                           shape: RoundedRectangleBorder(
-                            borderRadius:
-                            BorderRadius.all(Radius.circular(30)),
+                            borderRadius: BorderRadius.all(Radius.circular(30)),
                           ),
                           onPressed: () {},
                           child: Padding(
@@ -222,10 +231,7 @@ class RegisterBody extends StatelessWidget {
                                   image: AssetImage('images/google.png'),
                                 ),
                                 SizedBox(width: 3),
-                                Text(
-                                  'Google',
-                                  style: TextStyle(fontSize: 18),
-                                ),
+                                Text('Google', style: TextStyle(fontSize: 18)),
                               ],
                             ),
                           ),

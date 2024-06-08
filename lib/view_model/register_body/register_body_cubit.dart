@@ -23,7 +23,7 @@ void ChangePasswordVisibility(){
     required String lastName,
     required String email,
     required String password,
-    required int phoneNumber,
+    required var phoneNumber,
   }){
     emit(RegisterLoadingState());
     FirebaseAuth.instance.createUserWithEmailAndPassword(

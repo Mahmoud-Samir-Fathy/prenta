@@ -3,12 +3,15 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:printa/shared/bloc_observer/bloc_observer.dart';
+import 'package:printa/view/homeScreen/home_Cubit.dart';
+import 'package:printa/view/homeScreen/homescreen.dart';
 import 'package:printa/view/login&register_screen/account_screen/account_screen.dart';
 import 'package:printa/view/on_boarding/on_boarding.dart';
 import 'package:printa/view/user_profile/profile.dart';
 import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 import 'firebase_options.dart';
+import 'models/home_model/get product.dart';
 import 'shared/components/constants.dart';
 import 'shared/network/local/cache_helper.dart';
 import 'view/Splashscreen/Splash_Screen.dart';
@@ -36,7 +39,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context)=>PrentaCubit()..getUserData())
+        BlocProvider(create: (context)=>PrentaCubit()..getUserData()),
+        BlocProvider(
+          create: (context) => HomeCubit(ProductRepository())..fetchProducts(),
+        ),
       ],
       child: BlocConsumer<PrentaCubit,PrentaStates>(
         listener: (BuildContext context, PrentaStates state){},
@@ -44,7 +50,7 @@ class MyApp extends StatelessWidget {
           return
             MaterialApp(
                 debugShowCheckedModeBanner: false,
-                home:SplashScreen(onBoarding: onBoarding, uId: uId)
+                home:HomeScreen()
             );
         },
       ),
