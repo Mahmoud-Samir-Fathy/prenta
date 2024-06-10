@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
           return
             MaterialApp(
                 debugShowCheckedModeBanner: false,
-                home:HomeScreen()
+                home: SplashScreen(onBoarding: onBoarding, uId: uId)
             );
         },
       ),
