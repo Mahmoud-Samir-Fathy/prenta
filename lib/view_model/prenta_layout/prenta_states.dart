@@ -6,3 +6,14 @@ class PrentaGetUserErrorState extends PrentaStates{
   final String error;
   PrentaGetUserErrorState(this.error);
 }
+class GetProfileImagePickedSuccessState extends PrentaStates{}
+class GetProfileImagePickedErrorState extends PrentaStates{}
+
+class UploadProfileImageSuccessState extends PrentaStates{}
+class UploadProfileImageErrorState extends PrentaStates{}
+
+class UpdateUserInfoErrorState extends PrentaStates{}
+
+class UpdateUserInfoLoadingState extends PrentaStates{}
+
+

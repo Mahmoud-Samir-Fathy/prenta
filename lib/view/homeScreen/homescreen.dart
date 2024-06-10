@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:ionicons/ionicons.dart';
-
 import '../../models/home_model/get product.dart';
 import '../../models/home_model/product model.dart';
 import 'home_cubit.dart';

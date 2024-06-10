@@ -26,7 +26,7 @@ void UserLogin({
           password: password).then((value) {
             emit(LoginSuccessState(value.user!.uid));
       }).catchError((error){
-        emit(LoginErrorState(error));
+        emit(LoginErrorState(error.toString()));
       });
 }
 

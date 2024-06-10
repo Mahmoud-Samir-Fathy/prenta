@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:printa/shared/components/components.dart';
-import 'package:printa/view/layout/prenta_layout.dart';
 import 'package:printa/view_model/register_body/register_body_cubit.dart';
 import 'package:printa/view_model/register_body/register_body_states.dart';
 import '../../account_otp_verification/OTP Bloc.dart';
@@ -174,7 +173,7 @@ class RegisterBody extends StatelessWidget {
                               RegisterCubit.get(context).userRegister(
                                 firstName: firstNameController.text,
                                 lastName: lastNameController.text,
-                                phoneNumber: int.parse(phoneController.text), // Ensure phone number is an int
+                                phoneNumber: phoneController.text, // Ensure phone number is an int
                                 email: emailController.text,
                                 password: passwordController.text,
                               );

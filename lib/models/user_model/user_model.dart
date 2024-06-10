@@ -3,7 +3,8 @@ String? firstName;
 String? lastName;
 String? email;
 String? password;
-int? phoneNumber;
+String? phoneNumber;
+String? profileImage;
 
 UserModel({
   this.firstName,
@@ -11,6 +12,7 @@ UserModel({
   this.email,
   this.password,
   this.phoneNumber,
+  this.profileImage
 });
 
 UserModel.fromJason(Map<String,dynamic>json){
@@ -19,6 +21,7 @@ lastName=json['lastName'];
 email=json['email'];
 password=json['password'];
 phoneNumber=json['phoneNumber'];
+profileImage=json['profileImage'];
 }
 
 Map<String,dynamic>toMap(){
@@ -28,6 +31,7 @@ return{
   'email':email,
   'password':password,
   'phoneNumber':phoneNumber,
+  'profileImage':profileImage
 };
 }
 

@@ -23,7 +23,7 @@ void ChangePasswordVisibility(){
     required String lastName,
     required String email,
     required String password,
-    required var phoneNumber,
+    required String phoneNumber,
   }){
     emit(RegisterLoadingState());
     FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -49,7 +49,7 @@ void ChangePasswordVisibility(){
     required String lastName,
     required String email,
     required String password,
-    required int phoneNumber,
+    required String phoneNumber,
     required String uId,
 
   }){
@@ -58,7 +58,8 @@ void ChangePasswordVisibility(){
         lastName:lastName,
         email: email,
         password: password,
-        phoneNumber: phoneNumber
+        phoneNumber: phoneNumber,
+      profileImage: 'https://img.freepik.com/premium-vector/profile-photo-account-social-media-vector-illustration_276184-167.jpg?w=740'
     );
     FirebaseFirestore.instance
         .collection('users')

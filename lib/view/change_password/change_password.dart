@@ -1,6 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:printa/shared/styles/colors.dart';
+import 'package:printa/view/edit_user_profile/edit_user_profile.dart';
 import '../../shared/components/components.dart';
 
 class change_password extends StatelessWidget{
@@ -15,7 +16,9 @@ class change_password extends StatelessWidget{
       backgroundColor: thirdColor,
       appBar: AppBar(
         backgroundColor: thirdColor,
-        leading: IconButton(icon: Icon(Icons.arrow_back_ios),onPressed: (){},),
+        leading: IconButton(icon: Icon(Ionicons.chevron_back_outline),onPressed: (){
+          navigateTo(context, edit_profile());
+        },),
         title: Text('Change Password'),
         centerTitle:true ,
       ),
