@@ -2,7 +2,6 @@ import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.da
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:printa/shared/components/components.dart';
 import 'package:printa/shared/styles/colors.dart';
 import 'package:printa/view/Customize/customize.dart';
@@ -25,6 +24,9 @@ class _prenta_layoutState extends State<prenta_layout> {
         return Scaffold(
           floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
           floatingActionButton: FloatingActionButton(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30.0), // Adjust as per your requirement
+            ),
             onPressed:(){
               navigateTo(context, customize());
             } ,
