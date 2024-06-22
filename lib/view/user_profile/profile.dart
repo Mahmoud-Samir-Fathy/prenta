@@ -143,6 +143,19 @@ class profile_screen extends StatelessWidget {
                           ),
                         ],
                       ),
+                      SizedBox(height: 15),
+                      Row(
+                        children: [
+                          Icon(Ionicons.chatbox_outline),
+                          SizedBox(width: 15),
+                          Text('Support Chat'),
+                          Spacer(),
+                          IconButton(
+                            onPressed: () {},
+                            icon: Icon(Ionicons.chevron_forward_outline),
+                          ),
+                        ],
+                      ),
                       SizedBox(height: 30),
                       Center(
                         child: Container(
