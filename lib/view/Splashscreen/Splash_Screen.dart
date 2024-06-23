@@ -8,8 +8,8 @@ import 'package:printa/view/layout/prenta_layout.dart';
 class SplashScreen extends StatefulWidget {
   final bool? onBoarding;
   final String? uId;
-
-  SplashScreen({this.onBoarding, this.uId});
+  final bool? isDark;
+  SplashScreen({this.onBoarding, this.uId,this.isDark});
 
   @override
   _SplashScreenState createState() => _SplashScreenState();

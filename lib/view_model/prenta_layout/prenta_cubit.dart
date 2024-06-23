@@ -9,6 +9,7 @@ import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 import '../../models/user_model/user_model.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
+import '../../shared/network/local/cache_helper.dart';
 import '../../view/homeScreen/homescreen.dart';
 import '../../view/order_status/user_orders/user_orders.dart';
 import '../../view/user_profile/profile.dart';
@@ -139,5 +140,19 @@ class PrentaCubit extends Cubit<PrentaStates> {
     }).catchError((error) {
       emit(UpdateUserInfoErrorState());
     });
+  }
+
+
+  bool isDark=false;
+  void changeMode({bool? fromShared}) {
+    if(fromShared !=null){
+      isDark=fromShared;
+      emit(ThemeBrightnessChange());
+    }else {
+      isDark=!isDark;
+      CacheHelper.putBool(key: 'isDark', value: isDark).then((value) {
+        emit(ThemeBrightnessChange());
+      });
+    }
   }
 }

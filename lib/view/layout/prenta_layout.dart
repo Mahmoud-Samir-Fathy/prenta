@@ -30,13 +30,13 @@ class _prenta_layoutState extends State<prenta_layout> {
             onPressed:(){
               navigateTo(context, customize());
             } ,
-            backgroundColor: firstColor,
-            child: Icon(Ionicons.shirt,color:forthColor),
+            backgroundColor:PrentaCubit.get(context).isDark?thirdColor:firstColor,
+            child: Icon(Ionicons.shirt,color:PrentaCubit.get(context).isDark?secondColor:forthColor),
           ),
           bottomNavigationBar: AnimatedBottomNavigationBar(
-            backgroundColor: firstColor,
-              inactiveColor: forthColor,
-              activeColor: thirdColor,
+            backgroundColor: PrentaCubit.get(context).isDark?thirdColor:firstColor,
+              inactiveColor: PrentaCubit.get(context).isDark?secondColor:forthColor,
+              activeColor: PrentaCubit.get(context).isDark?firstColor:thirdColor,
               gapLocation: GapLocation.center,
               notchSmoothness: NotchSmoothness.verySmoothEdge,
               icons: PrentaCubit.get(context).IconList,

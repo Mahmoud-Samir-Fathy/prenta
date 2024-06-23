@@ -37,7 +37,7 @@ class edit_profile extends StatelessWidget {
               leading: IconButton(
                 icon: Icon(Ionicons.chevron_back_outline),
                 onPressed: () {
-                  navigateTo(context, profile_screen());
+                  Navigator.pop(context);
                 },
               ),
               title: Text('Edit Profile'),

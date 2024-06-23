@@ -94,7 +94,9 @@ class profile_screen extends StatelessWidget {
                           Text('Change Themes'),
                           Spacer(),
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                             cubit.changeMode();
+                            },
                             icon: Icon(Ionicons.chevron_forward_outline),
                           ),
                         ],

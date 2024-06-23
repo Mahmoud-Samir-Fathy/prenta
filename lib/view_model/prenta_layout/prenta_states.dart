@@ -18,3 +18,5 @@ class UpdateUserInfoErrorState extends PrentaStates{}
 class UpdateUserInfoLoadingState extends PrentaStates{}
 
 
+class ThemeBrightnessChange extends PrentaStates{}
+
