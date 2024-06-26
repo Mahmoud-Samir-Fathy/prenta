@@ -19,6 +19,14 @@ class PrentaCubit extends Cubit<PrentaStates> {
   PrentaCubit() : super(PrentaInitialState());
   static PrentaCubit get(context) => BlocProvider.of(context);
 
+  IconData suffixIcon=Ionicons.eye_off_outline;
+  bool isPasswordShown=true;
+  void ChangePasswordVisibility(){
+    isPasswordShown =!isPasswordShown;
+    suffixIcon=isPasswordShown?Ionicons.eye_off_outline:Ionicons.eye_outline;
+    emit(ChangeCurrentPasswordVisibility());
+  }
+
 
   int currentIndex = 0;
   var IconList=[
@@ -156,5 +164,31 @@ class PrentaCubit extends Cubit<PrentaStates> {
         emit(ThemeBrightnessChange());
       });
     }
+  }
+  void updateUserPassword({
+    String? firstName,
+    String? lastName,
+    String? email,
+    required String password,
+    String? phoneNumber,
+    String? image,
+  }) {
+    UserModel model = UserModel(
+      firstName: userInfo!.firstName,
+      lastName:  userInfo!.lastName,
+      email:  userInfo!.email,
+      password: password,
+      phoneNumber:  userInfo!.phoneNumber,
+      profileImage: image ?? userInfo!.profileImage,
+    );
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(uId)
+        .update(model.toMap())
+        .then((value) {
+      getUserData();
+    }).catchError((error) {
+      emit(UpdateUserPasswordErrorState());
+    });
   }
 }
