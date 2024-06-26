@@ -17,7 +17,7 @@ class change_password extends StatelessWidget{
       appBar: AppBar(
         backgroundColor: thirdColor,
         leading: IconButton(icon: Icon(Ionicons.chevron_back_outline),onPressed: (){
-          navigateTo(context, edit_profile());
+          Navigator.pop(context);
         },),
         title: Text('Change Password'),
         centerTitle:true ,

@@ -82,6 +82,8 @@ class PrentaCubit extends Cubit<PrentaStates> {
     required String phoneNumber,
     String? profileImage,
   }) {
+    emit(UpdateUserInfoLoadingState());
+
     if (userImage == null) {
       updateUserInfo(
         firstName: firstName,

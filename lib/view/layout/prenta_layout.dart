@@ -34,11 +34,14 @@ class _prenta_layoutState extends State<prenta_layout> {
             child: Icon(Ionicons.shirt,color:PrentaCubit.get(context).isDark?secondColor:forthColor),
           ),
           bottomNavigationBar: AnimatedBottomNavigationBar(
+            leftCornerRadius: 20,
+            rightCornerRadius: 20,
+
             backgroundColor: PrentaCubit.get(context).isDark?thirdColor:firstColor,
               inactiveColor: PrentaCubit.get(context).isDark?secondColor:forthColor,
               activeColor: PrentaCubit.get(context).isDark?firstColor:thirdColor,
               gapLocation: GapLocation.center,
-              notchSmoothness: NotchSmoothness.verySmoothEdge,
+              notchSmoothness: NotchSmoothness.sharpEdge,
               icons: PrentaCubit.get(context).IconList,
               activeIndex: PrentaCubit.get(context).currentIndex,
               onTap: (index){

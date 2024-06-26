@@ -49,6 +49,7 @@ class edit_profile extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    if(state is UpdateUserInfoLoadingState) LinearProgressIndicator(),
                     Stack(
                       alignment: AlignmentDirectional.bottomEnd,
                       children: [
