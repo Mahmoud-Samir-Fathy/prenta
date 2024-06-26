@@ -59,7 +59,12 @@ void ChangePasswordVisibility(){
         email: email,
         password: password,
         phoneNumber: phoneNumber,
-      profileImage: 'https://img.freepik.com/premium-vector/profile-photo-account-social-media-vector-illustration_276184-167.jpg?w=740'
+      profileImage: 'https://img.freepik.com/premium-vector/profile-photo-account-social-media-vector-illustration_276184-167.jpg?w=740',
+      area: '',
+      building: '',
+      city: '',
+      floor: '',
+      streetName: '',
     );
     FirebaseFirestore.instance
         .collection('users')

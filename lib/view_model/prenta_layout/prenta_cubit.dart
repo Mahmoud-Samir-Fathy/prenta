@@ -180,6 +180,48 @@ class PrentaCubit extends Cubit<PrentaStates> {
       password: password,
       phoneNumber:  userInfo!.phoneNumber,
       profileImage: image ?? userInfo!.profileImage,
+      streetName: userInfo!.streetName,
+      area: userInfo!.area,
+      building: userInfo!.building,
+      city: userInfo!.city,
+      floor: userInfo!.floor,
+    );
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(uId)
+        .update(model.toMap())
+        .then((value) {
+      getUserData();
+    }).catchError((error) {
+      emit(UpdateUserPasswordErrorState());
+    });
+  }
+  void updateUserAddress({
+    String? firstName,
+    String? lastName,
+    String? email,
+    String? password,
+    String? phoneNumber,
+    String? image,
+    required String streetName,
+    required String area,
+    required String building,
+    required String city,
+    required String floor,
+
+  }) {
+    UserModel model = UserModel(
+      firstName: userInfo!.firstName,
+      lastName:  userInfo!.lastName,
+      email:  userInfo!.email,
+      password: userInfo!.password,
+      phoneNumber:  userInfo!.phoneNumber,
+      profileImage: image ?? userInfo!.profileImage,
+      streetName: streetName,
+      area: area,
+      building: building,
+      city: city,
+      floor: floor,
     );
     FirebaseFirestore.instance
         .collection('users')

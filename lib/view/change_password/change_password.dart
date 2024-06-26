@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:printa/shared/styles/colors.dart';
 import 'package:printa/view/edit_user_profile/edit_user_profile.dart';
+import 'package:printa/view/user_profile/profile.dart';
 import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 import '../../shared/components/components.dart';
@@ -18,7 +19,12 @@ class change_password extends StatelessWidget{
   Widget build(BuildContext context) {
     return BlocConsumer<PrentaCubit,PrentaStates>(
 
-      listener: (context,state){},
+      listener: (context,state){
+        if(state is PrentaGetUserSuccessState) {
+          navigateTo(context, profile_screen());
+          showToast(context, title: 'Success', description: 'Password has been updated', state: ToastColorState.success, icon: Ionicons.thumbs_up_outline);
+        }
+      },
       builder:(context,state){
         var cubit=PrentaCubit.get(context);
         return  Scaffold(
@@ -118,12 +124,8 @@ class change_password extends StatelessWidget{
                       {
                         if (formKey.currentState!.validate()) {
                               cubit.updateUserPassword(
-                                  image: cubit.userInfo!.profileImage,
-                                  firstName: cubit.userInfo!.firstName,
-                                  email:cubit.userInfo!.email ,
-                                  lastName: cubit.userInfo!.lastName,
-                                  phoneNumber: cubit.userInfo!.phoneNumber,
-                                  password:newPasswordController.text );
+                                  password:newPasswordController.text
+                              );
 
                         }
                       }))
