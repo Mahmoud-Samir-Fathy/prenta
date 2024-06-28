@@ -1,3 +1,4 @@
+import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,11 +13,20 @@ import 'shared/components/constants.dart';
 import 'shared/network/local/cache_helper.dart';
 import 'view/Splashscreen/Splash_Screen.dart';
 
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await FirebaseAppCheck.instance
+      .activate(
+    androidProvider: AndroidProvider.debug,
+    appleProvider: AppleProvider.debug,
+    webProvider: ReCaptchaV3Provider('6LeXRgMqAAAAAMB7bnMXfrXeXALxzscIYqPeWsgn'),
+  );
+
+
   await CacheHelper.init();
   Bloc.observer = MyBlocObserver();
   uId = CacheHelper.getData(key: 'uId');

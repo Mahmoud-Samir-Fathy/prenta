@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:printa/shared/components/components.dart';
+import 'package:printa/view/phone_otp/phone_otp.dart';
+import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/register_body/register_body_cubit.dart';
 import 'package:printa/view_model/register_body/register_body_states.dart';
 import '../../account_otp_verification/OTP Bloc.dart';
@@ -21,22 +23,19 @@ class RegisterBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<RegisterCubit>(
-          create: (context) => RegisterCubit(),
-        ),
-        BlocProvider<OtpBloc>(
-          create: (context) => OtpBloc(),
-        ),
-      ],
+    return BlocProvider(
+      create: (BuildContext context) =>RegisterCubit(),
       child: BlocConsumer<RegisterCubit, RegisterStates>(
         listener: (context, state) {
-          if (state is CreateUserSuccessState) {
-            final phoneNumber = '+20${phoneController.text}';
-            BlocProvider.of<OtpBloc>(context).add(SendOtpEvent(phoneNumber)); // Send OTP to the phone number
-            navigateAndFinish(context, OtpVerification(phoneNumber: phoneNumber)); // Pass phone number to OtpVerification
+          if(state is AuthCodeSentState){
+            navigateTo(context, Otp_verify());
+          }else if(state is AuthErrorState){
+            showToast(context, title: 'Error',
+                description: state.message.toString(),
+                state: ToastColorState.error,
+                icon: Icons.error);
           }
+
         },
         builder: (context, state) {
           return Container(
