@@ -1,10 +1,12 @@
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:printa/shared/bloc_observer/bloc_observer.dart';
 import 'package:printa/shared/styles/themes.dart';
 import 'package:printa/view/homeScreen/home_Cubit.dart';
+import 'package:printa/view/phone_otp/phone_otp.dart';
 import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 import 'firebase_options.dart';
@@ -19,11 +21,13 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+
   await FirebaseAppCheck.instance
       .activate(
-    androidProvider: AndroidProvider.debug,
+    androidProvider: kDebugMode ? AndroidProvider.debug : AndroidProvider.playIntegrity,
     appleProvider: AppleProvider.debug,
-    webProvider: ReCaptchaV3Provider('6LeXRgMqAAAAAMB7bnMXfrXeXALxzscIYqPeWsgn'),
+    webProvider: ReCaptchaV3Provider('6LcumAMqAAAAAAOdP3iSqC2jW2D3jknB7Nlwxt9E'),
   );
 
 

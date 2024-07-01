@@ -4,12 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:printa/shared/components/components.dart';
 import 'package:printa/view/phone_otp/phone_otp.dart';
-import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/register_body/register_body_cubit.dart';
 import 'package:printa/view_model/register_body/register_body_states.dart';
-import '../../account_otp_verification/OTP Bloc.dart';
-import '../../account_otp_verification/OTP Event.dart';
-import '../../account_otp_verification/otp_verification.dart';
+
 
 class RegisterBody extends StatelessWidget {
   var formKey = GlobalKey<FormState>();
