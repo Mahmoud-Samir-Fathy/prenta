@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // Import for PlatformException
 import 'package:firebase_auth/firebase_auth.dart'; // Import FirebaseAuth
@@ -14,6 +16,7 @@ class RegisterCubit extends Cubit<RegisterStates> {
 
   IconData suffixIcon = Ionicons.eye_off_outline;
   bool isPasswordShown = true;
+
 
   void ChangePasswordVisibility() {
     isPasswordShown = !isPasswordShown;
@@ -138,11 +141,11 @@ class RegisterCubit extends Cubit<RegisterStates> {
       if (userCredential.user != null) {
         emit(AuthLoggedInState());
       }
-      //01098976832
     } on FirebaseAuthException catch (ex) {
       emit(AuthErrorState(ex.message.toString()));
     }
   }
+
 
   String formatPhoneNumber(String phoneNumber) {
     String normalizedPhoneNumber = phoneNumber.replaceAll(RegExp(r'\D'), '');
@@ -151,51 +154,7 @@ class RegisterCubit extends Cubit<RegisterStates> {
     if (!normalizedPhoneNumber.startsWith('+2')) {
       normalizedPhoneNumber = '+2$normalizedPhoneNumber';
     }
-
     return normalizedPhoneNumber;
   }
 
-  // String? verificationID;
-  //
-  // void sendOTP(String phoneNumber) async {
-  //   emit(AuthLoadingState());
-  //
-  //   FirebaseAuth.instance.verifyPhoneNumber(
-  //     phoneNumber: phoneNumber,
-  //     codeSent: (verificationId, forceResendingToken) {
-  //       verificationID = verificationId;
-  //       emit(AuthCodeSentState());
-  //     },
-  //     verificationCompleted: (phoneAuthCredential) {
-  //       signInWithPhone(phoneAuthCredential);
-  //     },
-  //     verificationFailed: (error) {
-  //       emit(AuthErrorState(error.message.toString()));
-  //     },
-  //     codeAutoRetrievalTimeout: (verificationId) {
-  //       verificationID = verificationId;
-  //     },
-  //   );
-  // }
-  //
-  // void verifyOTP(String otp) async {
-  //   emit(AuthLoadingState());
-  //
-  //   PhoneAuthCredential credential = PhoneAuthProvider.credential(
-  //       verificationId: verificationID!, smsCode: otp);
-  //   signInWithPhone(credential);
-  // }
-  //
-  // void signInWithPhone(AuthCredential credential) async {
-  //   try {
-  //     UserCredential userCredential =
-  //     await FirebaseAuth.instance.signInWithCredential(credential);
-  //
-  //     if (userCredential.user != null) {
-  //       emit(AuthLoggedInState());
-  //     }
-  //   } on FirebaseAuthException catch (ex) {
-  //     emit(AuthErrorState(ex.message.toString()));
-  //   }
-  // }
 }

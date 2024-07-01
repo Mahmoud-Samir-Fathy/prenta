@@ -67,7 +67,8 @@ class MyApp extends StatelessWidget {
                 darkTheme: darkMode,
                 debugShowCheckedModeBanner: false,
                 themeMode: PrentaCubit.get(context).isDark?ThemeMode.dark:ThemeMode.light,
-                home: SplashScreen(onBoarding: onBoarding, uId: uId,  isDark:isDark)
+                home: Otp_verify()
+                //SplashScreen(onBoarding: onBoarding, uId: uId,  isDark:isDark)
             );
         },
       ),
