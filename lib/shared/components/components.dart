@@ -7,6 +7,7 @@ Widget defaultTextFormField({
   required TextInputType? KeyboardType,
   Function(String)? onChanged,
   Function(String)? onSubmit,
+  bool enabled=true,
   VoidCallback?onTap,
   required String? Function(String?)? validate,
   required String? lable,
@@ -30,6 +31,7 @@ Widget defaultTextFormField({
     padding: const EdgeInsets.symmetric(vertical: 8),
     child: TextFormField(
       controller: controller,
+      enabled:enabled ,
       keyboardType: KeyboardType,
       obscureText: isPassword,
       onChanged:onChanged,

@@ -128,6 +128,7 @@ class edit_profile extends StatelessWidget {
                         Text('Your Email', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
                         SizedBox(height: 8),
                         defaultTextFormField(
+                          enabled: false,
                           controller: emailController,
                           KeyboardType: TextInputType.emailAddress,
                           validate: (value) {
