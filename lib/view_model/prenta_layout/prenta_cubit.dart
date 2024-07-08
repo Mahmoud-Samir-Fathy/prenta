@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -165,37 +166,7 @@ class PrentaCubit extends Cubit<PrentaStates> {
       });
     }
   }
-  void updateUserPassword({
-    String? firstName,
-    String? lastName,
-    String? email,
-    required String password,
-    String? phoneNumber,
-    String? image,
-  }) {
-    UserModel model = UserModel(
-      firstName: userInfo!.firstName,
-      lastName:  userInfo!.lastName,
-      email:  userInfo!.email,
-      password: password,
-      phoneNumber:  userInfo!.phoneNumber,
-      profileImage: image ?? userInfo!.profileImage,
-      streetName: userInfo!.streetName,
-      area: userInfo!.area,
-      building: userInfo!.building,
-      city: userInfo!.city,
-      floor: userInfo!.floor,
-    );
-    FirebaseFirestore.instance
-        .collection('users')
-        .doc(uId)
-        .update(model.toMap())
-        .then((value) {
-      getUserData();
-    }).catchError((error) {
-      emit(UpdateUserPasswordErrorState());
-    });
-  }
+
   void updateUserAddress({
     String? firstName,
     String? lastName,
@@ -230,7 +201,44 @@ class PrentaCubit extends Cubit<PrentaStates> {
         .then((value) {
       getUserData();
     }).catchError((error) {
-      emit(UpdateUserPasswordErrorState());
+      emit(UpdateUserAddressErrorState());
     });
+  }
+
+  Future<void> updateUserPassword({
+    required String email,
+    required String currentPassword,
+    required String newPassword,
+  }) async {
+    emit(UpdateUserInfoLoadingState());
+
+    User? user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      try {
+        // Reauthenticate the user
+        AuthCredential credential = EmailAuthProvider.credential(
+          email: email,
+          password: currentPassword,
+        );
+        await user.reauthenticateWithCredential(credential);
+
+        // Update password in Firebase Authentication
+        await user.updatePassword(newPassword);
+
+        // Update password in Firestore
+        userInfo!.password = newPassword;
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .update(userInfo!.toMap());
+
+        emit(UpdateUserInfoSuccessState());
+      } catch (e) {
+        emit(UpdateUserInfoErrorState());
+      }
+    } else {
+      emit(UpdateUserInfoErrorState());
+    }
   }
 }

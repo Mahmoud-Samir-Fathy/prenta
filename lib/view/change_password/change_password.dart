@@ -20,9 +20,11 @@ class change_password extends StatelessWidget{
     return BlocConsumer<PrentaCubit,PrentaStates>(
 
       listener: (context,state){
-        if(state is PrentaGetUserSuccessState) {
+        if (state is UpdateUserInfoSuccessState) {
           navigateTo(context, profile_screen());
           showToast(context, title: 'Success', description: 'Password has been updated', state: ToastColorState.success, icon: Ionicons.thumbs_up_outline);
+        } else if (state is UpdateUserInfoErrorState) {
+          showToast(context, title: 'Error', description: 'Failed to update password', state: ToastColorState.error, icon: Ionicons.alert_circle_outline);
         }
       },
       builder:(context,state){
@@ -123,9 +125,7 @@ class change_password extends StatelessWidget{
                           child: defaultMaterialButton(text: 'Submit', Function: ()
                       {
                         if (formKey.currentState!.validate()) {
-                              cubit.updateUserPassword(
-                                  password:newPasswordController.text
-                              );
+                          cubit.updateUserPassword(email: cubit.userInfo!.email.toString(), currentPassword: oldPasswordController.text, newPassword: newPasswordController.text);
 
                         }
                       }))

@@ -1,9 +1,11 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:printa/shared/components/components.dart';
 import 'package:printa/shared/network/local/cache_helper.dart';
+import 'package:printa/view/account_otp_verification/verification_success.dart';
 import 'package:printa/view/layout/prenta_layout.dart';
 import 'package:printa/view_model/login_body/login_body_cubit.dart';
 import 'package:printa/view_model/login_body/login_body_states.dart';
@@ -27,11 +29,15 @@ class LoginBody extends StatelessWidget{
                   icon: Icons.error);
             }
             if(state is LoginSuccessState){
-              CacheHelper.saveData(
-                  key: 'uId',
-                  value: state.uId).then((value) {
-                navigateAndFinish(context, prenta_layout());
-              });
+              if(FirebaseAuth.instance.currentUser!.emailVerified){
+                CacheHelper.saveData(
+                    key: 'uId',
+                    value: state.uId).then((value) {
+                  navigateAndFinish(context, prenta_layout());
+                });
+              } else {
+                navigateTo(context, verification_success());
+              }
             }
           } ,
         builder: (BuildContext context, state) {

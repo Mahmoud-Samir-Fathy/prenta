@@ -1,19 +1,16 @@
-import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:printa/shared/bloc_observer/bloc_observer.dart';
 import 'package:printa/shared/styles/themes.dart';
+import 'package:printa/view/Splashscreen/Splash_Screen.dart';
 import 'package:printa/view/homeScreen/home_Cubit.dart';
-import 'package:printa/view/phone_otp/phone_otp.dart';
 import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 import 'firebase_options.dart';
 import 'models/home_model/get product.dart';
 import 'shared/components/constants.dart';
 import 'shared/network/local/cache_helper.dart';
-import 'view/Splashscreen/Splash_Screen.dart';
 
 
 void main() async {
@@ -21,16 +18,6 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
-
-  await FirebaseAppCheck.instance
-      .activate(
-    androidProvider: kDebugMode ? AndroidProvider.debug : AndroidProvider.playIntegrity,
-    appleProvider: AppleProvider.debug,
-    webProvider: ReCaptchaV3Provider('6LcumAMqAAAAAAOdP3iSqC2jW2D3jknB7Nlwxt9E'),
-  );
-
-
   await CacheHelper.init();
   Bloc.observer = MyBlocObserver();
   uId = CacheHelper.getData(key: 'uId');
@@ -67,8 +54,7 @@ class MyApp extends StatelessWidget {
                 darkTheme: darkMode,
                 debugShowCheckedModeBanner: false,
                 themeMode: PrentaCubit.get(context).isDark?ThemeMode.dark:ThemeMode.light,
-                home: Otp_verify()
-                //SplashScreen(onBoarding: onBoarding, uId: uId,  isDark:isDark)
+                home: SplashScreen(onBoarding: onBoarding, uId: uId,  isDark:isDark)
             );
         },
       ),

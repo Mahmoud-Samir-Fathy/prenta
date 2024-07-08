@@ -17,10 +17,18 @@ class UploadProfileImageSuccessState extends PrentaStates{}
 class UploadProfileImageErrorState extends PrentaStates{}
 
 class UpdateUserInfoErrorState extends PrentaStates{}
-class UpdateUserPasswordErrorState extends PrentaStates{}
+class UpdateUserInfoSuccessState extends PrentaStates{}
 
 class UpdateUserInfoLoadingState extends PrentaStates{}
 
+
+class UpdateUserPasswordErrorState extends PrentaStates{}
+
+class UpdateUserAddressErrorState extends PrentaStates{}
+
+
+class ReauthenticationSuccessState extends PrentaStates{}
+class ReauthenticationErrorState extends PrentaStates{}
 
 class ThemeBrightnessChange extends PrentaStates{}
 
