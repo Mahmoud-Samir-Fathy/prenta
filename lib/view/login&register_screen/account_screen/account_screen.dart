@@ -4,6 +4,10 @@ import '../../../shared/styles/colors.dart';
 import '../login_body/login_body.dart';
 
 class account_screen extends StatelessWidget {
+  final bool fromResetPassword; // Flag to determine if navigated from password reset
+
+  account_screen({this.fromResetPassword = false});  // Add default value for the flag
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -104,7 +108,7 @@ class account_screen extends StatelessWidget {
                     Expanded(
                       child: TabBarView(
                         children: [
-                          LoginBody(),
+                          LoginBody(fromResetPassword: fromResetPassword),
                           RegisterBody(),
                         ],
                       ),

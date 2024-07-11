@@ -7,6 +7,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:printa/shared/components/components.dart';
 import 'package:printa/shared/components/constants.dart';
+import 'package:printa/view/login&register_screen/account_screen/account_screen.dart';
+import 'package:printa/view/login&register_screen/login_body/login_body.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 import '../../models/user_model/user_model.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -245,15 +247,36 @@ class PrentaCubit extends Cubit<PrentaStates> {
 
   Future<void> resetPassword({
     required String email,
-    required BuildContext context
-  })async {
-    try{
-      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
-      showToast(context, title: 'Success', description: 'Check your email', state: ToastColorState.success, icon: Ionicons.thumbs_up_outline);
+    required BuildContext context,
 
-    } on FirebaseAuthException catch(e){
-      showToast(context, title: 'Error', description: e.toString(), state: ToastColorState.error, icon: Ionicons.thumbs_down_outline);
+  }) async {
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      showToast(
+        context,
+        title: 'Success',
+        description: 'Check your email',
+        state: ToastColorState.success,
+        icon: Ionicons.thumbs_up_outline,
+      );
+
+      // Navigate to the login screen with the flag
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => account_screen(fromResetPassword: true),
+        ),
+      );
+    } on FirebaseAuthException catch (e) {
+      showToast(
+        context,
+        title: 'Error',
+        description: e.toString(),
+        state: ToastColorState.error,
+        icon: Ionicons.thumbs_down_outline,
+      );
     }
   }
+
 
 }
