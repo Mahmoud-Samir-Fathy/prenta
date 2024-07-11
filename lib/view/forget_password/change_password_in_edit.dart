@@ -5,15 +5,18 @@ import 'package:ionicons/ionicons.dart';
 import 'package:printa/shared/components/components.dart';
 import 'package:printa/view_model/login_body/login_body_cubit.dart';
 import 'package:printa/view_model/login_body/login_body_states.dart';
+import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
+import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 
-class Reset_password extends StatelessWidget{
+class Reset_password_in_edit extends StatelessWidget{
   var emailController=TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    emailController.text=PrentaCubit.get(context).userInfo!.email.toString();
     return BlocProvider(
-      create: (BuildContext context) =>LoginCubit(),
-      child: BlocConsumer<LoginCubit,LoginStates>(
+      create: (BuildContext context) =>PrentaCubit(),
+      child: BlocConsumer<PrentaCubit,PrentaStates>(
         listener: (context,state){},
         builder: (context,state){
           return Scaffold(
@@ -41,6 +44,7 @@ class Reset_password extends StatelessWidget{
                           return null;
                         }
                       },
+                      enabled: false,
                       lable: 'Email Address',
                       prefix:  Ionicons.mail_outline,
                     ),
@@ -49,7 +53,7 @@ class Reset_password extends StatelessWidget{
                     Center(child: Image(image: AssetImage('images/change_password.png'))),
                     SizedBox(height: 40,),
                     Center(child: defaultMaterialButton(text: 'Send', Function: (){
-                      LoginCubit.get(context).resetPassword(context:context,email: emailController.text.trim());
+                      PrentaCubit.get(context).resetPassword(context:context,email: emailController.text.trim());
 
                     })),
                   ],

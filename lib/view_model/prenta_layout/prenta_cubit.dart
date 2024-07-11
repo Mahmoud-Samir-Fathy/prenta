@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:printa/shared/components/components.dart';
 import 'package:printa/shared/components/constants.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 import '../../models/user_model/user_model.dart';
@@ -241,4 +242,18 @@ class PrentaCubit extends Cubit<PrentaStates> {
       emit(UpdateUserInfoErrorState());
     }
   }
+
+  Future<void> resetPassword({
+    required String email,
+    required BuildContext context
+  })async {
+    try{
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      showToast(context, title: 'Success', description: 'Check your email', state: ToastColorState.success, icon: Ionicons.thumbs_up_outline);
+
+    } on FirebaseAuthException catch(e){
+      showToast(context, title: 'Error', description: e.toString(), state: ToastColorState.error, icon: Ionicons.thumbs_down_outline);
+    }
+  }
+
 }

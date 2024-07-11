@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:printa/shared/styles/colors.dart';
-import 'package:printa/view/edit_user_profile/edit_user_profile.dart';
+import 'package:printa/view/forget_password/change_password_in_edit.dart';
 import 'package:printa/view/user_profile/profile.dart';
 import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
@@ -73,7 +73,9 @@ class change_password extends StatelessWidget{
                       ),
                       SizedBox(height: 8,),
                       Align(alignment: AlignmentDirectional.bottomEnd,
-                          child: TextButton(onPressed: (){}, child: Text('Forget Password?'))),
+                          child: TextButton(onPressed: (){
+                            navigateTo(context, Reset_password_in_edit());
+                          }, child: Text('Forget Password?'))),
                       SizedBox(height: 15,),
                       Text('New Password', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
                       SizedBox(height: 8),

@@ -252,7 +252,7 @@ void _showSignOutDialog(BuildContext context, Color color) {
                 borderRadius: BorderRadius.all(Radius.circular(30)),
               ),
               onPressed: () {
-                  signout(context);
+                  signOut(context);
               },
               child: Text(
                 'Sign Out',

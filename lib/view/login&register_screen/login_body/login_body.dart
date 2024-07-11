@@ -6,6 +6,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:printa/shared/components/components.dart';
 import 'package:printa/shared/network/local/cache_helper.dart';
 import 'package:printa/view/account_otp_verification/verification_success.dart';
+import 'package:printa/view/forget_password/change_password.dart';
 import 'package:printa/view/layout/prenta_layout.dart';
 import 'package:printa/view_model/login_body/login_body_cubit.dart';
 import 'package:printa/view_model/login_body/login_body_states.dart';
@@ -78,7 +79,10 @@ class LoginBody extends StatelessWidget{
                     SizedBox(height: 10,),
                     Align(
                         alignment:Alignment.centerRight,
-                        child: TextButton(onPressed: (){},
+                        child: TextButton(onPressed: (){
+                          navigateTo(context, Reset_password());
+
+                        },
                             child: Text('Forget Password?'))),
                     SizedBox(height: 30,),
                     ConditionalBuilder(
