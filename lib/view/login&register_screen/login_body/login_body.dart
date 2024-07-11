@@ -5,9 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:printa/shared/components/components.dart';
 import 'package:printa/shared/network/local/cache_helper.dart';
-import 'package:printa/view/account_otp_verification/verification_success.dart';
-import 'package:printa/view/forget_password/change_password.dart';
+import 'package:printa/view/forget_password/forget_password.dart';
 import 'package:printa/view/layout/prenta_layout.dart';
+import 'package:printa/view/send_email_verification/send_email_verification.dart';
 import 'package:printa/view_model/login_body/login_body_cubit.dart';
 import 'package:printa/view_model/login_body/login_body_states.dart';
 
@@ -40,10 +40,10 @@ class LoginBody extends StatelessWidget {
                 key: 'uId',
                 value: state.uId,
               ).then((value) {
-                navigateAndFinish(context, prenta_layout());
+                navigateAndFinish(context, PrentaLayout());
               });
             } else {
-              navigateTo(context, verification_success());
+              navigateTo(context, SendEmailVerification());
             }
           }
         },
@@ -86,7 +86,7 @@ class LoginBody extends StatelessWidget {
                       alignment: Alignment.centerRight,
                       child: TextButton(
                         onPressed: () {
-                          navigateTo(context, Reset_password());
+                          navigateTo(context, ForgetPassword());
                         },
                         child: Text('Forget Password?'),
                       ),

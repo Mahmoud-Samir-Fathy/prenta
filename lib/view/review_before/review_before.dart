@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:readmore/readmore.dart';
 
-class review_before extends StatelessWidget{
+class ReviewBefore extends StatelessWidget{
   String text='asdaslk;djasldjaskl;dja;sldkjas;ldkasl/dklaskd;laskd;laskd;laskd;laskd;lasjdlasmd.,asmd.,asmd.,asmd.asmd.asd.,asmd.,asmd.,asdm.,asdm.,asdm.,asdm.,asdm.,asdm.,asdm.,asd\n';
   @override
   Widget build(BuildContext context) {

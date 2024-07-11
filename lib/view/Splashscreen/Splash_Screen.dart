@@ -45,12 +45,12 @@ class _SplashScreenState extends State<SplashScreen>
       Widget startWidget;
       if (widget.onBoarding != null) {
         if (widget.uId != null) {
-          startWidget = prenta_layout();
+          startWidget = PrentaLayout();
         } else {
-          startWidget = account_screen();
+          startWidget = AccountScreen();
         }
       } else {
-        startWidget = on_boarding();
+        startWidget = OnBoarding();
       }
 
       Navigator.pushReplacement(

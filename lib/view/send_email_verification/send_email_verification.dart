@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:printa/shared/components/components.dart';
 
-class verification_success extends StatelessWidget{
+class SendEmailVerification extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
 

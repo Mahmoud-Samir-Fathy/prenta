@@ -7,18 +7,18 @@ import '../../shared/components/components.dart';
 import '../../shared/network/local/cache_helper.dart';
 import '../login&register_screen/account_screen/account_screen.dart';
 
-class on_boarding extends StatefulWidget{
+class OnBoarding extends StatefulWidget{
   @override
-  State<on_boarding> createState() => _on_boardingState();
+  State<OnBoarding> createState() => _on_boardingState();
 }
-class _on_boardingState extends State<on_boarding> {
+class _on_boardingState extends State<OnBoarding> {
   var boardController=PageController();
   bool isLast=false;
   void submit(){
     CacheHelper.saveData(key: 'OnBoarding', value: true).then((value) {
       if(value)
       {
-        navigateAndFinish(context, account_screen()
+        navigateAndFinish(context, AccountScreen()
         );
       }
     });

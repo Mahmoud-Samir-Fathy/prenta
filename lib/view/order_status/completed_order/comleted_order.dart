@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:printa/shared/styles/colors.dart';
 
-class completed_order extends StatelessWidget{
+class CompletedOrder extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return ListView.separated(

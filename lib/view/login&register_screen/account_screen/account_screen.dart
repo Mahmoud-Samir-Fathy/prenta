@@ -3,10 +3,10 @@ import 'package:printa/view/login&register_screen/register_body/register_body.da
 import '../../../shared/styles/colors.dart';
 import '../login_body/login_body.dart';
 
-class account_screen extends StatelessWidget {
+class AccountScreen extends StatelessWidget {
   final bool fromResetPassword; // Flag to determine if navigated from password reset
 
-  account_screen({this.fromResetPassword = false});  // Add default value for the flag
+  AccountScreen({this.fromResetPassword = false});  // Add default value for the flag
 
   @override
   Widget build(BuildContext context) {

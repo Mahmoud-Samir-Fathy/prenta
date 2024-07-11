@@ -8,7 +8,7 @@ Future<void> signOut(context) async{
   await FirebaseAuth.instance.signOut();
   CacheHelper.removeData(key: 'uId').then((value) {
     if(value) {
-      navigateAndFinish(context, account_screen());
+      navigateAndFinish(context, AccountScreen());
     };
   });
 }

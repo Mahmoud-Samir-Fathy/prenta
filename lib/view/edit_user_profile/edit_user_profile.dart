@@ -173,7 +173,7 @@ class edit_profile extends StatelessWidget {
                         Text('Change Password'),
                         Spacer(),
                         IconButton(onPressed: (){
-                          navigateTo(context, change_password());
+                          navigateTo(context, ChangePassword());
                         }, icon:Icon( Icons.arrow_forward_ios_sharp))
                       ],
                     ),
@@ -186,7 +186,7 @@ class edit_profile extends StatelessWidget {
                         Text('Change Address'),
                         Spacer(),
                         IconButton(onPressed: (){
-                          navigateTo(context, edit_address());
+                          navigateTo(context, EditAddress());
                         }, icon:Icon( Icons.arrow_forward_ios_sharp))
                       ],
                     ),

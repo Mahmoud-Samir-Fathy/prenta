@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:printa/shared/components/components.dart';
-import 'package:printa/view/account_otp_verification/verification_success.dart';
+import 'package:printa/view/send_email_verification/send_email_verification.dart';
 import 'package:printa/view_model/register_body/register_body_cubit.dart';
 import 'package:printa/view_model/register_body/register_body_states.dart';
 
@@ -24,7 +24,7 @@ class RegisterBody extends StatelessWidget {
       child: BlocConsumer<RegisterCubit, RegisterStates>(
         listener: (context, state) {
           if(state is CreateUserSuccessState){
-            navigateTo(context, verification_success());
+            navigateTo(context, SendEmailVerification());
           }else if (state is CreateUserErrorState){
             showToast(context, title: 'Error', description: state.error, state: ToastColorState.error, icon: Ionicons.warning);
           }

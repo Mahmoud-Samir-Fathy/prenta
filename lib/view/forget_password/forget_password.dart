@@ -6,7 +6,7 @@ import 'package:printa/shared/components/components.dart';
 import 'package:printa/view_model/login_body/login_body_cubit.dart';
 import 'package:printa/view_model/login_body/login_body_states.dart';
 
-class Reset_password extends StatelessWidget {
+class ForgetPassword extends StatelessWidget {
   var emailController = TextEditingController();
 
   @override

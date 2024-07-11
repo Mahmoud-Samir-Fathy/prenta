@@ -4,7 +4,7 @@ import 'package:printa/view/order_status/active_order/active_order.dart';
 import 'package:printa/view/order_status/cancelled_order/cancelled_order.dart';
 import 'package:printa/view/order_status/completed_order/comleted_order.dart';
 
-class user_orders extends StatelessWidget{
+class UserOrders extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
    return DefaultTabController(
@@ -36,9 +36,9 @@ class user_orders extends StatelessWidget{
 
              Expanded(
                child: TabBarView(children: [
-                 active_order(),
-                 completed_order(),
-                 cancelled_order(),
+                 ActiveOrder(),
+                 CompletedOrder(),
+                 CancelledOrder(),
                ]),
              )
            ],

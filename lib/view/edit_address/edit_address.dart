@@ -8,7 +8,7 @@ import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 import '../../shared/components/components.dart';
 
-class edit_address extends StatelessWidget{
+class EditAddress extends StatelessWidget{
   var cityController=TextEditingController();
   var areaController=TextEditingController();
   var stController=TextEditingController();
@@ -22,7 +22,7 @@ class edit_address extends StatelessWidget{
 
       listener: (context,state){
         if(state is PrentaGetUserSuccessState) {
-          navigateTo(context, profile_screen());
+          navigateTo(context, Profile());
           showToast(context, title: 'Success', description: 'Address has been updated', state: ToastColorState.success, icon: Ionicons.thumbs_up_outline);
         }
       },

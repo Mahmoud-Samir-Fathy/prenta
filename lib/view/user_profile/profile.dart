@@ -10,7 +10,7 @@ import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 import '../edit_user_profile/edit_user_profile.dart';
 
-class profile_screen extends StatelessWidget {
+class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<PrentaCubit, PrentaStates>(

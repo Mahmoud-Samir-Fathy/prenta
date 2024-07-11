@@ -2,14 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 
-class wishlist extends StatefulWidget {
-  const wishlist({super.key});
+class Wishlist extends StatefulWidget {
+  const Wishlist({super.key});
 
   @override
-  State<wishlist> createState() => _wishlistState();
+  State<Wishlist> createState() => _wishlistState();
 }
 
-class _wishlistState extends State<wishlist> {
+class _wishlistState extends State<Wishlist> {
   List<Map<String, dynamic>> wishList = [
     {
       'image': 'images/wishlisttshirt.png',

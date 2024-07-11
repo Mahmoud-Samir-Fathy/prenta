@@ -48,9 +48,9 @@ class PrentaCubit extends Cubit<PrentaStates> {
   }
   List<Widget> screens=[
     HomeScreen(),
-    wishlist(),
-    user_orders(),
-    profile_screen()
+    Wishlist(),
+    UserOrders(),
+    Profile()
   ];
 
 
@@ -264,7 +264,7 @@ class PrentaCubit extends Cubit<PrentaStates> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => account_screen(fromResetPassword: true),
+          builder: (context) => AccountScreen(fromResetPassword: true),
         ),
       );
     } on FirebaseAuthException catch (e) {

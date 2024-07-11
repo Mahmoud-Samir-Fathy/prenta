@@ -55,7 +55,7 @@ void UserLogin({
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => account_screen(fromResetPassword: true),
+          builder: (context) => AccountScreen(fromResetPassword: true),
         ),
       );
     } on FirebaseAuthException catch (e) {
@@ -92,7 +92,7 @@ void UserLogin({
             .then((_) {
           print('Password updated successfully in Firestore for user: ${user.uid}');
           emit(UpdateUserPasswordSuccessState());
-          navigateAndFinish(context, prenta_layout());
+          navigateAndFinish(context, PrentaLayout());
           // Navigate to profile or home screen here if needed
         }).catchError((error) {
           print('Failed to update password in Firestore: $error');

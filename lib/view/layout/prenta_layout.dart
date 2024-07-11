@@ -8,12 +8,12 @@ import 'package:printa/view/Customize/customize.dart';
 import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 
-class prenta_layout extends StatefulWidget {
+class PrentaLayout extends StatefulWidget {
 
   @override
-  State<prenta_layout> createState() => _prenta_layoutState();
+  State<PrentaLayout> createState() => _prenta_layoutState();
 }
-class _prenta_layoutState extends State<prenta_layout> {
+class _prenta_layoutState extends State<PrentaLayout> {
 
 
   @override
