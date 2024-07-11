@@ -4,13 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:printa/shared/bloc_observer/bloc_observer.dart';
 import 'package:printa/shared/styles/themes.dart';
 import 'package:printa/view/Splashscreen/Splash_Screen.dart';
-import 'package:printa/view/homeScreen/home_Cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 import 'firebase_options.dart';
-import 'models/home_model/get product.dart';
 import 'shared/components/constants.dart';
 import 'shared/network/local/cache_helper.dart';
+import 'view/homeScreen/homescreen.dart';
 
 
 void main() async {
@@ -42,8 +41,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context)=>PrentaCubit()..getUserData()..changeMode(fromShared:  isDark)),
-        BlocProvider(create: (context) => HomeCubit(ProductRepository())..fetchProducts(),),
+        BlocProvider(create: (context)=>PrentaCubit()..getUserData()..changeMode(fromShared:  isDark)..getProductData()),
       ],
       child: BlocConsumer<PrentaCubit,PrentaStates>(
         listener: (BuildContext context, PrentaStates state){},
@@ -54,7 +52,7 @@ class MyApp extends StatelessWidget {
                 darkTheme: darkMode,
                 debugShowCheckedModeBanner: false,
                 themeMode: PrentaCubit.get(context).isDark?ThemeMode.dark:ThemeMode.light,
-                home: SplashScreen(onBoarding: onBoarding, uId: uId,  isDark:isDark)
+                home:SplashScreen(onBoarding: onBoarding, uId: uId,  isDark:isDark)
             );
         },
       ),

@@ -1,25 +1,34 @@
-class Product {
-  final String id;
-  final String title;
-  final String image;
-  final String description;
-  final double price;
+class ProductModel {
+   String? id;
+   String? title;
+   String? image;
+   String? description;
+   String? price;
 
-  Product({
-    required this.id,
-    required this.title,
-    required this.image,
-    required this.description,
-    required this.price,
+  ProductModel({
+     this.id,
+     this.title,
+     this.image,
+     this.description,
+     this.price,
   });
 
-  factory Product.fromFirestore(Map<String, dynamic> data, String documentId) {
-    return Product(
-      id: documentId,
-      title: data['title'] ?? '',
-      image: data['image'] ?? '',
-      description: data['description'] ?? '',
-      price: data['price']?.toDouble() ?? 0.0,
-    );
+  ProductModel.fromJason(Map<String,dynamic>json){
+    id=json['id'];
+    title=json['title'];
+    image=json['image'];
+    description=json['description'];
+    price=json['price'];
+  }
+
+  Map<String,dynamic>toMap(){
+    return{
+      'id':id,
+      'title':title,
+      'image':image,
+      'description':description,
+      'price':price,
+
+    };
   }
 }

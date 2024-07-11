@@ -32,3 +32,9 @@ class ReauthenticationErrorState extends PrentaStates{}
 
 class ThemeBrightnessChange extends PrentaStates{}
 
+class PrentaGetProductSuccessState extends PrentaStates{}
+class PrentaGetProductErrorState extends PrentaStates {
+  final String error;
+
+  PrentaGetProductErrorState(this.error);
+}

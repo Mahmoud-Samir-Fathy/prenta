@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:printa/models/home_model/product%20model.dart';
 import 'package:printa/shared/components/components.dart';
 import 'package:printa/shared/components/constants.dart';
 import 'package:printa/view/login&register_screen/account_screen/account_screen.dart';
@@ -276,6 +277,24 @@ class PrentaCubit extends Cubit<PrentaStates> {
         icon: Ionicons.thumbs_down_outline,
       );
     }
+  }
+
+  List<ProductModel> productInfo = [];
+
+  void getProductData() {
+    emit(PrentaLoadingState());
+    FirebaseFirestore.instance
+        .collection('products')
+        .get()
+        .then((querySnapshot) {
+      productInfo = querySnapshot.docs
+          .map((doc) => ProductModel.fromJason(doc.data() as Map<String, dynamic>))
+          .toList();
+      emit(PrentaGetProductSuccessState());
+    }).catchError((error) {
+      print(error.toString());
+      emit(PrentaGetProductErrorState(error.toString()));
+    });
   }
 
 
