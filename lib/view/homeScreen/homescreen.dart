@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:printa/models/home_model/product%20model.dart';
+import 'package:printa/shared/components/components.dart';
+import 'package:printa/view/product_details/product_details.dart';
 import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 
@@ -136,7 +138,7 @@ class HomeScreen extends StatelessWidget {
                         itemCount: cubit.productInfo.length,
                         itemBuilder: (context, index) {
                           final product = cubit.productInfo[index];
-                          return ItemCard(product);
+                          return ItemCard(product,context);
                         },
                       ),
                   ],
@@ -150,8 +152,10 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-Widget ItemCard(ProductModel product) => GestureDetector(
-  onTap: () {},
+Widget ItemCard(ProductModel product,context) => GestureDetector(
+  onTap: () {
+    navigateTo(context, ProductDetails(product: product,));
+  },
   child: Container(
     decoration: BoxDecoration(
       color: Colors.white,
@@ -208,9 +212,16 @@ Widget ItemCard(ProductModel product) => GestureDetector(
           ],
         ),
         SizedBox(height: 25),
-        Text('${product.title}', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,),),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('${product.title}', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,),),
+            SizedBox(width: 5,),
+            Text('${product.price}',style: TextStyle(fontSize: 10,fontWeight: FontWeight.w300,color: Colors.grey),)
+          ],
+        ),
         SizedBox(height: 4),
-        Text('${product.description}',maxLines: 1,overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 16),),
+        Text('${product.description}',maxLines: 2,overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 16),),
       ],
     ),
   ),
