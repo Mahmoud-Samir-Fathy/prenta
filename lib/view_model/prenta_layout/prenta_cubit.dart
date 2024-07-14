@@ -67,7 +67,7 @@ class PrentaCubit extends Cubit<PrentaStates> {
         .then((value) {
       print(value.data());
       userInfo = UserModel.fromJason(value.data()!);
-      emit(PrentaGetUserSuccessState());
+      emit(PrentaGetUserSuccessState(userInfo!));
     }).catchError((error) {
       print(error.toString());
       emit(PrentaGetUserErrorState(error.toString()));
@@ -323,15 +323,51 @@ class PrentaCubit extends Cubit<PrentaStates> {
       'image': image,
       'quantity': 1,
     });
-    saveCartItems(); //
-    emit(PrentaSaveToCartSuccessState());// Save cart items whenever an item is added
+
+    // Save cart items to shared preferences
+    CacheHelper.saveCartItems(cartItems);
+
+    emit(PrentaSaveToCartSuccessState()); // Emit success state
   }
 
+
   // Load cart items on initialization
+
   void loadCartItems() {
     cartItems = CacheHelper.getCartItems() ?? [];
     emit(CartLoadedState());
   }
 
+  void increaseQuantity(String title) {
+    var item = cartItems.firstWhere((item) => item['title'] == title);
+    item['quantity']++;
+    saveCartItems();
+    emit(PrentaUpdateCartSuccessState());
+  }
+
+  void decreaseQuantity(String title) {
+    var item = cartItems.firstWhere((item) => item['title'] == title);
+    if (item['quantity'] > 1) {
+      item['quantity']--;
+      saveCartItems();
+      emit(PrentaUpdateCartSuccessState());
+    }
+
+  }
+  void removeFromCart(String title) {
+    print("Removing item: $title");
+    cartItems.removeWhere((item) => item['title'] == title);
+    saveCartItems();
+    CacheHelper.removeCartItem(title); // Ensure this is called
+    emit(PrentaRemoveFromCartSuccessState());
+  }
+
+  double calculateTotal() {
+    return cartItems.fold(0, (total, item) => total + (double.parse(item['price']) * item['quantity']));
+  }
+
+  double calculateSubtotal() {
+    return calculateTotal(); // Adjust if needed
+  }
 
 }

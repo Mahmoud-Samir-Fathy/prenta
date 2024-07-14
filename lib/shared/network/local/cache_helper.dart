@@ -27,7 +27,6 @@ class CacheHelper {
     return await sharedPreferences!.remove(key);
   }
 
-
   static Future<bool> saveListData({required String key, required dynamic value}) async {
     if (value is List) {
       return await sharedPreferences!.setString(key, jsonEncode(value));
@@ -45,4 +44,13 @@ class CacheHelper {
     return [];
   }
 
+  static Future<void> saveCartItems(List<Map<String, dynamic>> items) async {
+    String itemsString = jsonEncode(items);
+    await sharedPreferences!.setString('cartItems', itemsString);
+  }
+  static Future<void> removeCartItem(String item) async {
+    List<Map<String, dynamic>> items = getCartItems();
+    items.removeWhere((cartItem) => cartItem['title'] == item); // or any unique identifier
+    return await saveCartItems(items);
+  }
 }

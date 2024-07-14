@@ -1,4 +1,5 @@
 import 'package:printa/models/home_model/product%20model.dart';
+import 'package:printa/models/user_model/user_model.dart';
 
 abstract class PrentaStates{}
 class PrentaInitialState extends PrentaStates{}
@@ -7,7 +8,10 @@ class ChangeCurrentPasswordVisibility extends PrentaStates{}
 
 class PrentaChangeBottomNav extends PrentaStates{}
 class PrentaLoadingState extends PrentaStates{}
-class PrentaGetUserSuccessState extends PrentaStates{}
+class PrentaGetUserSuccessState extends PrentaStates{
+  final UserModel userModel;
+
+  PrentaGetUserSuccessState(this.userModel);}
 class PrentaGetUserErrorState extends PrentaStates{
   final String error;
   PrentaGetUserErrorState(this.error);
@@ -53,4 +57,9 @@ class PrentaSaveToCartErrorState extends PrentaStates{
   PrentaSaveToCartErrorState(this.error);
 }
 class CartLoadedState extends PrentaStates{}
+class PrentaRemoveFromCartSuccessState extends PrentaStates{}
+class PrentaUpdateCartSuccessState extends PrentaStates{}
+
+
+
 

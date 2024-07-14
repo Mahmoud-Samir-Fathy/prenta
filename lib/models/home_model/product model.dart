@@ -6,6 +6,7 @@ class ProductModel {
    String? price;
    String? size;
    String? color;
+   String? quantity;
 
   ProductModel({
      this.id,
@@ -14,6 +15,7 @@ class ProductModel {
      this.description,
      this.price,
      this.color,
+     this.quantity,
   });
 
   ProductModel.fromJason(Map<String,dynamic>json){
@@ -23,6 +25,7 @@ class ProductModel {
     description=json['description'];
     price=json['price'];
     color=json['color'];
+    quantity=json['quantity'];
   }
 
   Map<String,dynamic>toMap(){
@@ -33,6 +36,7 @@ class ProductModel {
       'description':description,
       'price':price,
       'color':color,
+      'quantity':quantity,
     };
   }
 }
