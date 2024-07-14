@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:hexcolor/hexcolor.dart';
-
 import '../../shared/components/components.dart';
+import '../../shared/network/local/cache_helper.dart';
 
 class CheckOut extends StatefulWidget {
   const CheckOut({Key? key}) : super(key: key);
@@ -13,48 +12,20 @@ class CheckOut extends StatefulWidget {
 }
 
 class _CheckOutState extends State<CheckOut> {
-  List<Map<String, dynamic>> cartItems = [
-    {
-      'image': 'images/wishlisttshirt.png',
-      'title': 'Hawaiian Shirts for Men ',
-      'size': 'M',
-      'price': '90',
-      'quantity': 1,
-    },
-    {
-      'image': 'images/wishlisttshirt.png',
-      'title': 'Hawaiian Shirts for Men ',
-      'size': 'L',
-      'price': '75',
-      'quantity': 1,
-    },
-    {
-      'image': 'images/wishlisttshirt.png',
-      'title': 'Hawaiian Shirts for Men ',
-      'size': 'L',
-      'price': '75',
-      'quantity': 1,
-    },{
-      'image': 'images/wishlisttshirt.png',
-      'title': 'Hawaiian Shirts for Men ',
-      'size': 'L',
-      'price': '75',
-      'quantity': 1,
-    },{
-      'image': 'images/wishlisttshirt.png',
-      'title': 'Hawaiian Shirts for Men ',
-      'size': 'L',
-      'price': '75',
-      'quantity': 1,
-    },{
-      'image': 'images/wishlisttshirt.png',
-      'title': 'Hawaiian Shirts for Men ',
-      'size': 'L',
-      'price': '75',
-      'quantity': 1,
-    },
-    // Add more items as needed
-  ];
+  List<Map<String, dynamic>> cartItems = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadCartItems();
+  }
+
+  void _loadCartItems() async {
+    List<Map<String, dynamic>> items = await CacheHelper.getCartItems();
+    setState(() {
+      cartItems = items;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +36,9 @@ class _CheckOutState extends State<CheckOut> {
         backgroundColor: Colors.white,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
         title: Text(
           'Checkout',
@@ -77,8 +50,9 @@ class _CheckOutState extends State<CheckOut> {
           Expanded(
             child: LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraints) {
-                return ListView.builder(
+                return ListView.separated(
                   itemCount: cartItems.length,
+                  separatorBuilder: (context, index) => Divider(),
                   itemBuilder: (context, index) {
                     final item = cartItems[index];
                     return Padding(
@@ -92,7 +66,7 @@ class _CheckOutState extends State<CheckOut> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                               image: DecorationImage(
-                                image: AssetImage(item['image']),
+                                image: NetworkImage(item['image']), // Use NetworkImage
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -109,7 +83,6 @@ class _CheckOutState extends State<CheckOut> {
                                   style: TextStyle(fontSize: 15, color: Colors.white),
                                 ),
                               ),
-
                             ],
                           ),
                           subtitle: Column(
@@ -120,25 +93,24 @@ class _CheckOutState extends State<CheckOut> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   GestureDetector(
-                                    onTap:() {
-                        setState(() {
-                        item['quantity']++;
-                        });
-                        },
+                                    onTap: () {
+                                      setState(() {
+                                        item['quantity']++;
+                                      });
+                                    },
                                     child: Container(
-                                      width: 30,height: 30,
+                                      width: 30,
+                                      height: 30,
                                       decoration: BoxDecoration(
                                         shape: BoxShape.circle,
                                         border: Border.all(color: Colors.grey),
                                       ),
-                                      child: Icon(Icons.add,size: 20,),
-
-                                      ),
+                                      child: Icon(Icons.add, size: 20),
                                     ),
-SizedBox(width: 6,),
+                                  ),
+                                  SizedBox(width: 6),
                                   Text('${item['quantity']}'),
-                                  SizedBox(width: 6,),
-
+                                  SizedBox(width: 6),
                                   GestureDetector(
                                     onTap: () {
                                       setState(() {
@@ -148,13 +120,13 @@ SizedBox(width: 6,),
                                       });
                                     },
                                     child: Container(
-                                      width: 30,height: 30,
+                                      width: 30,
+                                      height: 30,
                                       decoration: BoxDecoration(
                                         shape: BoxShape.circle,
                                         border: Border.all(color: Colors.grey),
                                       ),
-                                      child: Icon(Icons.remove,size: 20,),
-
+                                      child: Icon(Icons.remove, size: 20),
                                     ),
                                   ),
                                   Spacer(),
@@ -165,19 +137,15 @@ SizedBox(width: 6,),
                                       });
                                     },
                                     child: Icon(
-                                     Icons.delete, size: 25,
-
+                                      Icons.delete, size: 25,
                                     ),
                                   ),
                                 ],
                               ),
                             ],
                           ),
-
-
                         ),
-                        ),
-
+                      ),
                     );
                   },
                 );
@@ -185,7 +153,7 @@ SizedBox(width: 6,),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0,horizontal: 15),
+            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 15),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -233,13 +201,12 @@ SizedBox(width: 6,),
               ],
             ),
           ),
-
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child:                                 Center(child: defaultMaterialButton(text: 'Check out', Function: (){})),
-
+            child: Center(
+              child: defaultMaterialButton(text: 'Check out', Function: () {}),
+            ),
           ),
-
         ],
       ),
     );
@@ -253,7 +220,8 @@ SizedBox(width: 6,),
     }
     return total;
   }
-// Calculate subtotal amount
+
+  // Calculate subtotal amount
   double calculateSubtotal() {
     double subtotal = 0;
     for (var item in cartItems) {
@@ -261,5 +229,4 @@ SizedBox(width: 6,),
     }
     return subtotal;
   }
-
 }

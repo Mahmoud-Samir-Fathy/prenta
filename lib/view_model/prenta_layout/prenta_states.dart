@@ -1,3 +1,5 @@
+import 'package:printa/models/home_model/product%20model.dart';
+
 abstract class PrentaStates{}
 class PrentaInitialState extends PrentaStates{}
 
@@ -32,9 +34,23 @@ class ReauthenticationErrorState extends PrentaStates{}
 
 class ThemeBrightnessChange extends PrentaStates{}
 
-class PrentaGetProductSuccessState extends PrentaStates{}
+class PrentaGetProductSuccessState extends PrentaStates {
+  final List<ProductModel> products;
+
+  PrentaGetProductSuccessState(this.products);
+}
 class PrentaGetProductErrorState extends PrentaStates {
   final String error;
 
   PrentaGetProductErrorState(this.error);
 }
+
+
+class PrentaSaveToCartSuccessState extends PrentaStates{}
+class PrentaSaveToCartErrorState extends PrentaStates{
+  final String error;
+
+  PrentaSaveToCartErrorState(this.error);
+}
+class CartLoadedState extends PrentaStates{}
+

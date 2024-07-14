@@ -1,3 +1,4 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,136 +17,137 @@ class HomeScreen extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
         var cubit = PrentaCubit.get(context);
-        return Scaffold(
-          backgroundColor: Colors.white,
-          body: SafeArea(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Welcome Back!'),
-                            Text('${cubit.userInfo!.firstName}' + ' ' + '${cubit.userInfo!.lastName}'),
-                          ],
-                        ),
-                        Spacer(),
-                        IconButton(onPressed: () {}, icon: Icon(Ionicons.notifications)),
-                        IconButton(onPressed: () {}, icon: Icon(Ionicons.cart)),
-                      ],
-                    ),
-                    SizedBox(height: 30),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: HexColor('F6F6F6'),
-                        borderRadius: BorderRadius.circular(25.0),
-                      ),
-                      padding: EdgeInsets.symmetric(horizontal: 10.0),
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'What are you looking for...',
-                          border: InputBorder.none,
-                          prefixIcon: Icon(Ionicons.search),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 30),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: HexColor('D9D9D9'),
-                        borderRadius: BorderRadius.circular(25.0),
-                      ),
-                      padding: EdgeInsets.all(16.0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        return ConditionalBuilder(
+          condition:cubit.productInfo.isNotEmpty ,
+          builder: (context)=>Scaffold(
+            backgroundColor: Colors.white,
+            body: SafeArea(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
                         children: [
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text('Shop with us!'),
-                              Text('Get 40% Off for all items'),
-                              Row(
-                                children: [
-                                  Text('Shop Now'),
-                                  Icon(Ionicons.arrow_forward_outline)
-                                ],
-                              ),
+                              Text('Welcome Back!'),
+                              Text('${cubit.userInfo!.firstName}' + ' ' + '${cubit.userInfo!.lastName}'),
                             ],
                           ),
-                          Image.asset(
-                            'images/image.png',
-                            width: 100,
-                            height: 100,
-                          ),
+                          Spacer(),
+                          IconButton(onPressed: () {}, icon: Icon(Ionicons.notifications)),
+                          IconButton(onPressed: () {}, icon: Icon(Ionicons.cart)),
                         ],
                       ),
-                    ),
-                    SizedBox(height: 15),
-                    CustomRadioButton(
-                      elevation: 0,
-                      margin: EdgeInsets.symmetric(horizontal: 6.0),
-                      defaultSelected: 'All',
-                      radius: 4,
-                      shapeRadius: 40,
-                      enableShape: true,
-                      unSelectedBorderColor: Colors.white,
-                      absoluteZeroSpacing: false,
-                      unSelectedColor: HexColor('526D82').withOpacity(0.2),
-                      buttonLables: [
-                        'All',
-                        'T-Shirt',
-                        'Hoodle',
-                        'Special',
-                      ],
-                      buttonValues: [
-                        'All',
-                        'T-Shirt',
-                        'Hoodle',
-                        'Special',
-                      ],
-                      buttonTextStyle: ButtonTextStyle(
-                        selectedColor: Colors.white,
-                        unSelectedColor: HexColor('252525'),
-                        textStyle: TextStyle(fontSize: 16),
-                      ),
-                      radioButtonValue: (value) {
-                        print(value);
-                      },
-                      height: 30,
-                      width: 90,
-                      selectedColor: HexColor('27374D'),
-                    ),
-                    SizedBox(height: 15),
-                    if (state is PrentaLoadingState)
-                      Center(child: CircularProgressIndicator()),
-                    if (state is PrentaGetProductSuccessState)
-                      GridView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 8,
-                          mainAxisSpacing: 30,
-                          childAspectRatio: 0.58,
+                      SizedBox(height: 30),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: HexColor('F6F6F6'),
+                          borderRadius: BorderRadius.circular(25.0),
                         ),
-                        itemCount: cubit.productInfo.length,
-                        itemBuilder: (context, index) {
-                          final product = cubit.productInfo[index];
-                          return ItemCard(product,context);
-                        },
+                        padding: EdgeInsets.symmetric(horizontal: 10.0),
+                        child: TextField(
+                          decoration: InputDecoration(
+                            hintText: 'What are you looking for...',
+                            border: InputBorder.none,
+                            prefixIcon: Icon(Ionicons.search),
+                          ),
+                        ),
                       ),
-                  ],
+                      SizedBox(height: 30),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: HexColor('D9D9D9'),
+                          borderRadius: BorderRadius.circular(25.0),
+                        ),
+                        padding: EdgeInsets.all(16.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text('Shop with us!'),
+                                Text('Get 40% Off for all items'),
+                                Row(
+                                  children: [
+                                    Text('Shop Now'),
+                                    Icon(Ionicons.arrow_forward_outline)
+                                  ],
+                                ),
+                              ],
+                            ),
+                            Image.asset(
+                              'images/image.png',
+                              width: 100,
+                              height: 100,
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 15),
+                      CustomRadioButton(
+                        elevation: 0,
+                        margin: EdgeInsets.symmetric(horizontal: 6.0),
+                        defaultSelected: 'All',
+                        radius: 4,
+                        shapeRadius: 40,
+                        enableShape: true,
+                        unSelectedBorderColor: Colors.white,
+                        absoluteZeroSpacing: false,
+                        unSelectedColor: HexColor('526D82').withOpacity(0.2),
+                        buttonLables: [
+                          'All',
+                          'T-Shirt',
+                          'Hoodle',
+                          'Special',
+                        ],
+                        buttonValues: [
+                          'All',
+                          'T-Shirt',
+                          'Hoodle',
+                          'Special',
+                        ],
+                        buttonTextStyle: ButtonTextStyle(
+                          selectedColor: Colors.white,
+                          unSelectedColor: HexColor('252525'),
+                          textStyle: TextStyle(fontSize: 16),
+                        ),
+                        radioButtonValue: (value) {
+                          print(value);
+                        },
+                        height: 30,
+                        width: 90,
+                        selectedColor: HexColor('27374D'),
+                      ),
+                      SizedBox(height: 15),
+                      GridView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 8,
+                            mainAxisSpacing: 30,
+                            childAspectRatio: 0.58,
+                          ),
+                          itemCount: cubit.productInfo.length,
+                          itemBuilder: (context, index) {
+                            final product = cubit.productInfo[index];
+                            return ItemCard(product,context);
+                          },
+                        ),
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
+          fallback: (context)=>Center(child: CircularProgressIndicator()),
         );
       },
     );

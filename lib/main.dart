@@ -9,7 +9,6 @@ import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 import 'firebase_options.dart';
 import 'shared/components/constants.dart';
 import 'shared/network/local/cache_helper.dart';
-import 'view/homeScreen/homescreen.dart';
 
 
 void main() async {

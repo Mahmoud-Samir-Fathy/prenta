@@ -11,6 +11,7 @@ import 'package:printa/shared/components/constants.dart';
 import 'package:printa/view/login&register_screen/account_screen/account_screen.dart';
 import 'package:printa/view/login&register_screen/login_body/login_body.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/user_model/user_model.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
@@ -290,11 +291,46 @@ class PrentaCubit extends Cubit<PrentaStates> {
       productInfo = querySnapshot.docs
           .map((doc) => ProductModel.fromJason(doc.data() as Map<String, dynamic>))
           .toList();
-      emit(PrentaGetProductSuccessState());
+      emit(PrentaGetProductSuccessState(productInfo));
     }).catchError((error) {
       print(error.toString());
       emit(PrentaGetProductErrorState(error.toString()));
     });
+  }
+
+  List<Map<String, dynamic>> cartItems = [];
+
+  void saveCartItems() {
+    CacheHelper.saveListData(key: 'cartItems', value: cartItems);
+  }
+
+  // Example method to add item to cart
+  void saveToCart({
+    required String color,
+    required String price,
+    required String size,
+    required String title,
+    required String description,
+    required String image,
+  }) {
+    // Add the item to the cart
+    cartItems.add({
+      'color': color,
+      'price': price,
+      'size': size,
+      'title': title,
+      'description': description,
+      'image': image,
+      'quantity': 1,
+    });
+    saveCartItems(); //
+    emit(PrentaSaveToCartSuccessState());// Save cart items whenever an item is added
+  }
+
+  // Load cart items on initialization
+  void loadCartItems() {
+    cartItems = CacheHelper.getCartItems() ?? [];
+    emit(CartLoadedState());
   }
 
 
