@@ -48,6 +48,9 @@ class PrentaGetProductErrorState extends PrentaStates {
 
   PrentaGetProductErrorState(this.error);
 }
+class PrentaSizeUpdated extends PrentaStates {}
+
+class PrentaColorUpdated extends PrentaStates {}
 
 
 class PrentaSaveToCartSuccessState extends PrentaStates{}

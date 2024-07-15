@@ -10,38 +10,10 @@ import 'package:printa/view/check_Out/checkout.dart';
 import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 
-class ProductDetails extends StatefulWidget {
+class ProductDetails extends StatelessWidget {
   final ProductModel product;
 
   const ProductDetails({Key? key, required this.product}) : super(key: key);
-
-  @override
-  State<ProductDetails> createState() => _ProductDetailsState();
-}
-
-class _ProductDetailsState extends State<ProductDetails> {
-  String? selectedSize;
-  int selectedCircle = 0;
-
-  final List<Color> circleColors = [
-    Colors.black,
-    Colors.white,
-    HexColor('012639'),
-    Colors.red,
-    Colors.blue,
-    Colors.yellow,
-    Colors.green,
-  ];
-
-  final List<String> colorNames = [
-    'Black',
-    'White',
-    'Navy',
-    'Red',
-    'Blue',
-    'Yellow',
-    'Green',
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +21,7 @@ class _ProductDetailsState extends State<ProductDetails> {
       listener: (context, state) {},
       builder: (context, state) {
         var cubit = PrentaCubit.get(context);
+
         return Scaffold(
           appBar: AppBar(
             leading: IconButton(
@@ -75,14 +48,14 @@ class _ProductDetailsState extends State<ProductDetails> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Image.network(
-                          widget.product.image ?? '',
+                          product.image ?? '',
                           fit: BoxFit.contain,
                         ),
                         SizedBox(height: 16),
                         Row(
                           children: [
                             Text(
-                              widget.product.title ?? '',
+                              product.title ?? '',
                               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                             ),
                             Spacer(),
@@ -101,15 +74,15 @@ class _ProductDetailsState extends State<ProductDetails> {
                         Row(
                           children: [
                             Text(
-                              widget.product.price ?? '',
+                              product.price ?? '',
                               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                             ),
-                            SizedBox(width: 8,),
+                            SizedBox(width: 8),
                             Text(
                               'LE',
                               style: TextStyle(fontSize: 19, fontWeight: FontWeight.w400),
                             ),
-                            SizedBox(width: 8,),
+                            SizedBox(width: 8),
                             RatingBar.builder(
                               initialRating: 3,
                               minRating: 1,
@@ -138,7 +111,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             ),
                             SizedBox(height: 8),
                             Text(
-                              widget.product.description ?? '',
+                              product.description ?? '',
                               style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
                             ),
                             SizedBox(height: 8),
@@ -188,7 +161,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                     ),
                                                   ),
                                                 ),
-                                                Text('You Can Zoom', style: TextStyle(color: Colors.grey),)
+                                                Text('You Can Zoom', style: TextStyle(color: Colors.grey)),
                                               ],
                                             ),
                                           ],
@@ -196,7 +169,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       ),
                                     );
                                   },
-                                  icon: Icon(Icons.info_outline, color: Colors.black54,),
+                                  icon: Icon(Icons.info_outline, color: Colors.black54),
                                   label: Text(' '),
                                 ),
                               ],
@@ -205,7 +178,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             CustomRadioButton(
                               elevation: 0,
                               margin: EdgeInsets.symmetric(horizontal: 6.0),
-                              defaultSelected: 'M',
+                              defaultSelected: cubit.selectedSize,
                               radius: 5,
                               shapeRadius: 10,
                               enableShape: true,
@@ -231,8 +204,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   unSelectedColor: HexColor('252525'),
                                   textStyle: TextStyle(fontSize: 14)),
                               radioButtonValue: (value) {
-                                selectedSize = value.toString();
-                                print(value);
+                                cubit.updateSize(value.toString());
                               },
                               height: 50,
                               width: 50,
@@ -247,12 +219,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                               scrollDirection: Axis.horizontal,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: List.generate(circleColors.length, (index) {
+                                children: List.generate(cubit.circleColors.length, (index) {
                                   return GestureDetector(
                                     onTap: () {
-                                      setState(() {
-                                        selectedCircle = index;
-                                      });
+                                      cubit.updateColor(index);
                                     },
                                     child: Container(
                                       margin: EdgeInsets.all(8),
@@ -261,13 +231,13 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       decoration: BoxDecoration(
                                         shape: BoxShape.circle,
                                         border: Border.all(
-                                          color: selectedCircle == index ? Colors.black : circleColors[index],
+                                          color: cubit.selectedCircle == index ? Colors.black : cubit.circleColors[index],
                                         ),
-                                        color: circleColors[index],
+                                        color: cubit.circleColors[index],
                                       ),
                                       child: Center(
-                                        child: selectedCircle == index
-                                            ? Icon(Icons.check, color: circleColors[index] == Colors.white ? Colors.black : Colors.white)
+                                        child: cubit.selectedCircle == index
+                                            ? Icon(Icons.check, color: cubit.circleColors[index] == Colors.white ? Colors.black : Colors.white)
                                             : Container(),
                                       ),
                                     ),
@@ -279,19 +249,16 @@ class _ProductDetailsState extends State<ProductDetails> {
                             Center(
                               child: defaultMaterialButton(
                                 Function: () {
-                                  String selectedColorName = colorNames[selectedCircle];
+                                  String selectedColorName = cubit.colorNames[cubit.selectedCircle];
                                   cubit.saveToCart(
                                     color: selectedColorName,
-                                    price: widget.product.price ?? '',
-                                    size: selectedSize ?? 'M',
-                                    title: widget.product.title ?? '',
-                                    description: widget.product.description ?? '',
-                                    image: widget.product.image ?? '',
+                                    price: product.price ?? '',
+                                    size: cubit.selectedSize,
+                                    title: product.title ?? '',
+                                    description: product.description ?? '',
+                                    image: product.image ?? '',
                                   );
                                   navigateTo(context, CheckOut());
-
-                                  // Get the selected color name
-                                  // Add your logic to handle the selected color
                                 },
                                 text: 'Add To Cart',
                               ),

@@ -7,29 +7,20 @@ import 'package:printa/shared/styles/colors.dart';
 import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 
-class CheckOut extends StatefulWidget {
+class CheckOut extends StatelessWidget {
   const CheckOut({Key? key}) : super(key: key);
 
   @override
-  State<CheckOut> createState() => _CheckOutState();
-}
-
-class _CheckOutState extends State<CheckOut> {
-  @override
-  void initState() {
-    super.initState();
-    // Load cart items from the cubit
-    BlocProvider.of<PrentaCubit>(context).loadCartItems();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    Future.microtask(() => BlocProvider.of<PrentaCubit>(context).loadCartItems());
+
     return BlocConsumer<PrentaCubit, PrentaStates>(
       listener: (context, state) {
         // Optional: Handle any state changes
       },
       builder: (context, state) {
-        final cartItems = BlocProvider.of<PrentaCubit>(context).cartItems;
+        final cubit = PrentaCubit.get(context);
+        final cartItems = cubit.cartItems;
 
         return Scaffold(
           backgroundColor: HexColor('FCFCFC'),
@@ -47,7 +38,9 @@ class _CheckOutState extends State<CheckOut> {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
-          body: Column(
+          body: cartItems.isEmpty
+              ? Center(child: Text('Your cart is empty.'))
+              : Column(
             children: [
               Expanded(
                 child: ListView.separated(
@@ -96,7 +89,7 @@ class _CheckOutState extends State<CheckOut> {
                                 children: [
                                   GestureDetector(
                                     onTap: () {
-                                      BlocProvider.of<PrentaCubit>(context).increaseQuantity(item['title']);
+                                      cubit.increaseQuantity(item['title']);
                                     },
                                     child: Container(
                                       width: 30,
@@ -113,7 +106,7 @@ class _CheckOutState extends State<CheckOut> {
                                   SizedBox(width: 6),
                                   GestureDetector(
                                     onTap: () {
-                                      BlocProvider.of<PrentaCubit>(context).decreaseQuantity(item['title']);
+                                      cubit.decreaseQuantity(item['title']);
                                     },
                                     child: Container(
                                       width: 30,
@@ -128,7 +121,7 @@ class _CheckOutState extends State<CheckOut> {
                                   Spacer(),
                                   GestureDetector(
                                     onTap: () {
-                                      BlocProvider.of<PrentaCubit>(context).removeFromCart(item['title']);
+                                      cubit.removeFromCart(item['title']);
                                     },
                                     child: Icon(
                                       Icons.delete,
@@ -145,7 +138,66 @@ class _CheckOutState extends State<CheckOut> {
                   },
                 ),
               ),
-              // ... Remaining layout for totals and checkout button
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 15),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Sub total',
+                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          '${cubit.calculateSubtotal()} LE',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 12),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Shipping',
+                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          '50 LE', // Assuming fixed shipping cost
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 12),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Total',
+                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          '${cubit.calculateTotal()} LE', // Adding shipping cost to total
+                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Center(
+                  child: defaultMaterialButton(
+                    text: 'Check out',
+                    Function: () {
+                      // Implement checkout functionality
+                    },
+                  ),
+                ),
+              ),
             ],
           ),
         );
@@ -153,3 +205,4 @@ class _CheckOutState extends State<CheckOut> {
     );
   }
 }
+

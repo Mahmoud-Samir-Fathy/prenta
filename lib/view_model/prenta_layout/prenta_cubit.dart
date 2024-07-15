@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:printa/models/home_model/product%20model.dart';
@@ -296,6 +297,38 @@ class PrentaCubit extends Cubit<PrentaStates> {
       print(error.toString());
       emit(PrentaGetProductErrorState(error.toString()));
     });
+  }
+
+  String selectedSize = 'M';
+  int selectedCircle = 0;
+
+  final List<Color> circleColors = [
+    Colors.black,
+    Colors.white,
+    HexColor('012639'),
+    Colors.red,
+    Colors.blue,
+    Colors.yellow,
+    Colors.green,
+  ];
+
+  final List<String> colorNames = [
+    'Black',
+    'White',
+    'Navy',
+    'Red',
+    'Blue',
+    'Yellow',
+    'Green',
+  ];
+  void updateSize(String size) {
+    selectedSize = size;
+    emit(PrentaSizeUpdated());
+  }
+
+  void updateColor(int index) {
+    selectedCircle = index;
+    emit(PrentaColorUpdated());
   }
 
   List<Map<String, dynamic>> cartItems = [];
