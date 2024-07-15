@@ -64,5 +64,9 @@ class PrentaRemoveFromCartSuccessState extends PrentaStates{}
 class PrentaUpdateCartSuccessState extends PrentaStates{}
 
 
+class CartCheckedOutState extends PrentaStates{}
+class CartCheckoutErrorState extends PrentaStates{}
+
+
 
 

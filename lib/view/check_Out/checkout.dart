@@ -10,6 +10,7 @@ import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 
 class CheckOut extends StatelessWidget {
+
   const CheckOut({Key? key}) : super(key: key);
 
   @override
@@ -18,7 +19,16 @@ class CheckOut extends StatelessWidget {
 
     return BlocConsumer<PrentaCubit, PrentaStates>(
       listener: (context, state) {
-        // Optional: Handle any state changes
+        if (state is CartCheckedOutState) {
+          // Navigate to a confirmation screen or show a success message
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Checkout successful!'))
+          );
+        } else if (state is CartCheckoutErrorState) {
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Checkout failed. Please try again.'))
+          );
+        }
       },
       builder: (context, state) {
         final cubit = PrentaCubit.get(context);
@@ -181,7 +191,7 @@ class CheckOut extends StatelessWidget {
                           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          '${cubit.calculateTotal()} LE', // Adding shipping cost to total
+                          '${cubit.calculateTotalWithShipping()} LE', // Adding shipping cost to total
                           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                       ],
@@ -195,7 +205,7 @@ class CheckOut extends StatelessWidget {
                   child: defaultMaterialButton(
                     text: 'Check out',
                     Function: () {
-                      // Implement checkout functionality
+                      cubit.checkout();
                     },
                   ),
                 ),
@@ -207,4 +217,3 @@ class CheckOut extends StatelessWidget {
     );
   }
 }
-

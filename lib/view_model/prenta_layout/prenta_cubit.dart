@@ -399,8 +399,48 @@ class PrentaCubit extends Cubit<PrentaStates> {
     return cartItems.fold(0, (total, item) => total + (double.parse(item['price']) * item['quantity']));
   }
 
+  double calculateTotalWithShipping() {
+    const double shippingCost = 50.0;
+    return calculateSubtotal() + shippingCost;
+  }
+
   double calculateSubtotal() {
     return calculateTotal(); // Adjust if needed
   }
+  Future<void> checkout() async {
+    try {
+      // Get the current user's ID
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user == null) {
+        print('No user logged in');
+        return;
+      }
+      String userId = user.uid;
 
+      // Assuming cartItems is a List<Map<String, dynamic>>
+      final cartItems = CacheHelper.getData(key: 'cartItems');
+
+      if (cartItems == null || cartItems.isEmpty) {
+        print('No items in the cart');
+        return;
+      }
+
+      // Save cart items to Firestore
+      await FirebaseFirestore.instance.collection('users').doc(userId).collection('orders').add({
+        'items': cartItems,
+        'total': calculateTotalWithShipping(),
+        'date': Timestamp.now(),
+      });
+
+      // Clear the cart in the CacheHelper
+      CacheHelper.removeData(key: 'cartItems');
+      loadCartItems(); // Update the state to reflect the cleared cart
+      emit(CartCheckedOutState());
+
+      print('Checkout successful');
+    } catch (e) {
+      print('Error during checkout: $e');
+      emit(CartCheckoutErrorState());
+    }
+  }
 }
