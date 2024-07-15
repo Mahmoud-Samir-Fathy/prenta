@@ -6,7 +6,9 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:printa/models/home_model/product%20model.dart';
 import 'package:printa/shared/components/components.dart';
+import 'package:printa/shared/styles/colors.dart';
 import 'package:printa/view/check_Out/checkout.dart';
+import 'package:printa/view/layout/prenta_layout.dart';
 import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 
@@ -258,8 +260,8 @@ class ProductDetails extends StatelessWidget {
                                     description: product.description ?? '',
                                     image: product.image ?? '',
                                   );
-                                  navigateTo(context, CheckOut());
-                                },
+                                  showAddToCartDialog(context, cubit.isDark ? Colors.white : firstColor);
+                                  },
                                 text: 'Add To Cart',
                               ),
                             ),
@@ -277,4 +279,70 @@ class ProductDetails extends StatelessWidget {
       },
     );
   }
+}
+void showAddToCartDialog(BuildContext context, Color color) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Align(
+          alignment: AlignmentDirectional.center,
+          child: Text('Successfully add to cart'),
+        ),
+        content: Container(
+          height: 100,
+          child: Center(
+            child: Text(
+              'Do you want to go to checkout screen or continue browsing?',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontWeight: FontWeight.w300),
+            ),
+          ),
+        ),
+        actions: [
+          Container(
+            height: 50,
+            width: 120,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(30),
+              border: Border.all(color: firstColor),
+            ),
+            child: MaterialButton(
+              height: 50,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(30)),
+              ),
+              onPressed: () {
+                navigateTo(context, CheckOut());
+
+              },
+              child: Text('Checkout'),
+            ),
+          ),
+          Container(
+            height: 50,
+            width: 120,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(30),
+              border: Border.all(color: color),
+            ),
+            child: MaterialButton(
+              color: color,
+              height: 50,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(30)),
+              ),
+              onPressed: () {
+                navigateTo(context, PrentaLayout());
+              },
+              child: Text(
+                'Home',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ),
+        ],
+      );
+    },
+  );
 }

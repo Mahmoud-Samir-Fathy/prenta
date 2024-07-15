@@ -6,6 +6,8 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:printa/models/home_model/product%20model.dart';
 import 'package:printa/shared/components/components.dart';
+import 'package:printa/view/check_Out/checkout.dart';
+import 'package:printa/view/notificationScreen/notificationscreen.dart';
 import 'package:printa/view/product_details/product_details.dart';
 import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
@@ -38,8 +40,13 @@ class HomeScreen extends StatelessWidget {
                             ],
                           ),
                           Spacer(),
-                          IconButton(onPressed: () {}, icon: Icon(Ionicons.notifications)),
-                          IconButton(onPressed: () {}, icon: Icon(Ionicons.cart)),
+                          IconButton(onPressed: () {
+                            navigateTo(context, NotificationScreen());
+                          }, icon: Icon(Ionicons.notifications)),
+                          IconButton(onPressed: () {
+                            navigateTo(context, CheckOut());
+
+                          }, icon: Icon(Ionicons.cart)),
                         ],
                       ),
                       SizedBox(height: 30),

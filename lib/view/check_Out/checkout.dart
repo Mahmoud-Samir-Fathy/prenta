@@ -4,6 +4,8 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:printa/shared/components/components.dart';
 import 'package:printa/shared/styles/colors.dart';
+import 'package:printa/view/homeScreen/homescreen.dart';
+import 'package:printa/view/layout/prenta_layout.dart';
 import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 
@@ -30,7 +32,7 @@ class CheckOut extends StatelessWidget {
             leading: IconButton(
               icon: Icon(Ionicons.chevron_back_outline),
               onPressed: () {
-                Navigator.pop(context);
+                navigateTo(context, PrentaLayout());
               },
             ),
             title: Text(
