@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:printa/models/home_model/product%20model.dart';
+import 'package:printa/models/product_model/product%20model.dart';
 import 'package:printa/shared/components/components.dart';
 import 'package:printa/shared/styles/colors.dart';
 import 'package:printa/view/check_Out/checkout.dart';
@@ -233,6 +233,7 @@ class ProductDetails extends StatelessWidget {
                                       decoration: BoxDecoration(
                                         shape: BoxShape.circle,
                                         border: Border.all(
+                                          width: cubit.selectedCircle == index ? 2.0 : 1.0,
                                           color: cubit.selectedCircle == index ? Colors.black : cubit.circleColors[index],
                                         ),
                                         color: cubit.circleColors[index],

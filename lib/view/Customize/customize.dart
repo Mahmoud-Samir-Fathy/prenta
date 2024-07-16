@@ -1,283 +1,177 @@
 import 'dart:io';
-
-import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:ionicons/ionicons.dart';
+import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
+import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
+import 'package:printa/view_model/prenta_layout/prenta_states.dart';
+import '../../shared/components/components.dart'; // Replace with your actual path
 
-import '../../shared/components/components.dart';
+class Customize extends StatelessWidget {
+  const Customize({Key? key}) : super(key: key);
 
-class customize extends StatefulWidget {
-  const customize({super.key});
-
-  @override
-  State<customize> createState() => _customizeState();
-}
-
-class _customizeState extends State<customize> {
-  int selectedCircle=0;
-  final List<Color> circleColors = [
-    Colors.black,
-    Colors.white,
-HexColor('012639'),
-    Colors.red,
-    Colors.blue,
-    Colors.yellow,
-    Colors.green
-    ,
-  ];
-  File? image;
-  final ImagePicker _picker = ImagePicker();
-
-  Future getImage() async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-
-    setState(() {
-      if (pickedFile != null) {
-        image = File(pickedFile.path);
-      } else {
-        print('No image selected.');
-      }
-    });
-  }
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: HexColor('FFFFFF'),
-      statusBarIconBrightness: Brightness.dark,
-    ));
+    return BlocConsumer<PrentaCubit, PrentaStates>(
+      listener: (context, state) {
+        // Handle specific state changes if needed
+      },
+      builder: (context, state) {
+        final cubit = context.read<PrentaCubit>();
 
-    return SafeArea(
-        child: Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Stack(
-              children: [
-                Container(
-                    height: 290,
-                    width: double.infinity,
-                    child: Image.asset('images/customizeimage.png',fit: BoxFit.cover,)),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12),
-                  child: Row(
-                    children: [
-                      CircleAvatar(
-                        backgroundColor: Colors.grey,
-                        radius: 24,
-                        child: Icon(
-                          Icons.arrow_back,
-                          color: Colors.white,
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 10,),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 15.0,horizontal: 12),
-              child: Row(
-                children: [
-                  Text('300'),
-        SizedBox(width: 4,),
-                  Text('LE')],
-              ),
-            ),
-            SizedBox(height: 15,),
-            Text('Sized:'),
-            SizedBox(height: 10,),
-            CustomRadioButton(
-              elevation: 0,
-              margin: EdgeInsets.symmetric(horizontal: 6.0), // creates a margin of 16 logical pixels around the container
-              defaultSelected: 'M',
-radius: 5,
-              shapeRadius: 10,
-              enableShape: true,
-              unSelectedBorderColor: Colors.white,
-              absoluteZeroSpacing: false,
-              unSelectedColor: HexColor('526D82').withOpacity(0.2),
-              buttonLables: [
-                'XS',
-                'S',
-                'M',
-                'L',
-                'XL',
-              ],
-              buttonValues: [
-                'XS',
-                'S',
-                'M',
-                'L',
-                'XL',
-              ],
-              buttonTextStyle: ButtonTextStyle(
-
-                  selectedColor: Colors.white,
-                  unSelectedColor: HexColor('252525'),
-                  textStyle: TextStyle(fontSize: 16)),
-              radioButtonValue: (value) {
-                print(value);
-              },height: 55,
-              width: 55,
-              selectedColor: HexColor('27374D'),
-            ),
-            SizedBox(height: 10,),
-            Text('Colors available:'),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(7, (index) {
-                return GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      selectedCircle = index;
-                    });
-                  },
-                  child: Container(
-                    margin: EdgeInsets.all(8),
-                    width: 50,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(color: selectedCircle== 1|| selectedCircle!= 1? Colors.black45 :circleColors[index] ), // Add this line for a black border
-
-
-                      color: circleColors[index], // Use the color from the list
-                    ),
-                    child: Center(
-                      child: selectedCircle == index
-                          ? Icon(Icons.check, color: selectedCircle!= 1? Colors.white:Colors.black)
-                          : Container(),
-                    ),
-                  ),
-                );
-              }),
+        return Scaffold(
+          appBar: AppBar(
+            leading: IconButton(
+              icon: Icon(Ionicons.chevron_back_outline),
+              onPressed: () {
+                Navigator.pop(context);
+              },
             ),
           ),
-            SizedBox(height: 10,),
-            Text('Insert Image:'),
-            SizedBox(height: 10,),
-            GestureDetector(
-              onTap: getImage,
-              child: Center(
-                child: Container(
-                  height: 300,
-                  width: 300,
-                  decoration: BoxDecoration(
-                    color: HexColor('526D82').withOpacity(0.2),
-                    borderRadius: BorderRadius.circular(40),
-                  ),
-                  child: image == null
-                      ? Icon(Icons.image, color: Colors.white)
-                      : ClipRRect(
-                    borderRadius: BorderRadius.circular(40),
-                    child: Image.file(
-                      image!,
-                      fit: BoxFit.contain,
-                    ),
-                  ),
+          body: SingleChildScrollView(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  height: 400,
+                  width: double.infinity,
+                  child: Image.asset('images/black_T-shirt.png', fit: BoxFit.cover),
                 ),
-              ),
-            ),            SizedBox(height: 10,),
-            Text('Design position:'),
-            SizedBox(height: 10,),
-
-            CustomRadioButton(
-              elevation: 0,
-              margin: EdgeInsets.symmetric(horizontal: 6.0), // creates a margin of 16 logical pixels around the container
-              defaultSelected: 'M',
-              radius: 5,
-              shapeRadius: 10,
-              enableShape: true,
-              unSelectedBorderColor: Colors.white,
-              absoluteZeroSpacing: false,
-              unSelectedColor: HexColor('526D82').withOpacity(0.2),
-              buttonLables: [
-                'LM',
-                'RM',
-                'UM',
-                'BM',
-                'M',
-                'RU',
-                'LU',
-                'MU',
-                'LB',
-                'RB',
-                'MB',
-              ],
-              buttonValues: [
-                'LM',
-                'RM',
-                'UM',
-                'BM',
-                'M',
-                'RU',
-                'LU',
-                'MU',
-                'LB',
-                'RB',
-                'MB',
-              ],
-              buttonTextStyle: ButtonTextStyle(
-
-                  selectedColor: Colors.white,
-                  unSelectedColor: HexColor('252525'),
-                  textStyle: TextStyle(fontSize: 13)),
-              radioButtonValue: (value) {
-                print(value);
-              },height: 55,
-              width: 55,
-              selectedColor: HexColor('27374D'),
-            ),
-            SizedBox(height: 30,),
-
-            Center(
-              child: Container(
-                width: 320,
-                height: 100,
-                decoration: BoxDecoration(
-                  color: HexColor('526D82').withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(20), // Circular radius for the container
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.baseline,
+                  textBaseline: TextBaseline.alphabetic,
+                  children: [
+                    Text('300', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24)),
+                    SizedBox(width: 4),
+                    Text('LE'),
+                  ],
                 ),
-                child: CustomRadioButton(
-                  defaultSelected: 'Front',
+                SizedBox(height: 15),
+                Text('Size:'),
+                SizedBox(height: 10),
+                CustomRadioButton(
                   elevation: 0,
-                  margin: EdgeInsets.symmetric(horizontal: 6.0,vertical: 25),
+                  margin: EdgeInsets.symmetric(horizontal: 6.0),
+                  defaultSelected: 'M',
                   radius: 5,
                   shapeRadius: 10,
                   enableShape: true,
-                  unSelectedBorderColor: HexColor('526D82').withOpacity(0.2),
+                  unSelectedBorderColor: Colors.white,
                   absoluteZeroSpacing: false,
-                  unSelectedColor: Color(0xFF526D82).withOpacity(0.4),
-                  buttonLables: ['Front', 'Back'],
-                  buttonValues: ['Front', 'Back'],
+                  unSelectedColor: HexColor('526D82').withOpacity(0.2),
+                  buttonLables: ['XS', 'S', 'M', 'L', 'XL'],
+                  buttonValues: ['XS', 'S', 'M', 'L', 'XL'],
                   buttonTextStyle: ButtonTextStyle(
                     selectedColor: Colors.white,
-                    unSelectedColor: Colors.white,
-                    textStyle: TextStyle(fontSize: 13),
+                    unSelectedColor: HexColor('252525'),
+                    textStyle: TextStyle(fontSize: 16),
                   ),
                   radioButtonValue: (value) {
-                    print(value);
+                    cubit.updateSize(value); // Update size in cubit
                   },
-                  height: 20,
-                  width: 130,
-                  selectedColor: Color(0xFF27374D),
+                  height: 55,
+                  width: 55,
+                  selectedColor: HexColor('27374D'),
                 ),
-              ),
+                SizedBox(height: 10),
+                Text('Colors available:'),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(cubit.circleColorCustomized.length, (index) {
+                      return GestureDetector(
+                        onTap: () {
+                          cubit.setSelectedCircle(index); // Update selected color
+                        },
+                        child: Container(
+                          margin: EdgeInsets.all(8),
+                          width: 50,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: cubit.selectedCircleCustomized == index ? Colors.black : Colors.black45,
+                              width: cubit.selectedCircleCustomized == index ? 2.0 : 1.0,
+                            ),
+                            color: cubit.circleColorCustomized[index],
+                          ),
+                          child: Center(
+                            child: cubit.selectedCircleCustomized == index
+                                ? Icon(Icons.check, color: cubit.circleColorCustomized[index] == Colors.white ? Colors.black : Colors.white)
+                                : Container(),
+                          ),
+                        ),
+                      );
+                    }),
+                  ),
+                ),
+                SizedBox(height: 10),
+                Text('Insert Front Design'),
+                SizedBox(height: 10),
+                GestureDetector(
+                  onTap: () => cubit.pickFrontDesign(),
+                  child: Center(
+                    child: Container(
+                      height: 300,
+                      width: 300,
+                      decoration: BoxDecoration(
+                        color: HexColor('526D82').withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(40),
+                      ),
+                      child: cubit.frontDesign == null
+                          ? Icon(Icons.image, color: Colors.white, size: 50)
+                          : ClipRRect(
+                        borderRadius: BorderRadius.circular(40),
+                        child: Image.file(
+                          cubit.frontDesign!,
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 30),
+                Text('Insert Back Design'),
+                SizedBox(height: 10),
+                GestureDetector(
+                  onTap: () => cubit.pickBackDesign(),
+                  child: Center(
+                    child: Container(
+                      height: 300,
+                      width: 300,
+                      decoration: BoxDecoration(
+                        color: HexColor('526D82').withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(40),
+                      ),
+                      child: cubit.backDesign == null
+                          ? Icon(Icons.image, color: Colors.white, size: 50)
+                          : ClipRRect(
+                        borderRadius: BorderRadius.circular(40),
+                        child: Image.file(
+                          cubit.backDesign!,
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 30),
+                Center(
+                  child: defaultMaterialButton(
+                    text: 'Confirm',
+                    Function: (){}
+                  ),
+                ),
+                SizedBox(height: 15),
+              ],
             ),
-
-            SizedBox(height: 15,),
-            Center(child: defaultMaterialButton(text: 'Confirm', Function: (){})),
-            SizedBox(height: 15,)
-          ],
-        ),
-      ),
-    ));
+          ),
+        );
+      },
+    );
   }
 }

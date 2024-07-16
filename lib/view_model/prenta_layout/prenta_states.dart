@@ -1,4 +1,4 @@
-import 'package:printa/models/home_model/product%20model.dart';
+import 'package:printa/models/product_model/product%20model.dart';
 import 'package:printa/models/user_model/user_model.dart';
 
 abstract class PrentaStates{}
@@ -66,6 +66,11 @@ class PrentaUpdateCartSuccessState extends PrentaStates{}
 
 class CartCheckedOutState extends PrentaStates{}
 class CartCheckoutErrorState extends PrentaStates{}
+
+
+
+class PrentaFrontDesignUpdated extends PrentaStates{}
+class PrentaBackDesignUpdated extends PrentaStates{}
 
 
 

@@ -6,16 +6,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:printa/models/home_model/product%20model.dart';
+import 'package:printa/models/product_model/product%20model.dart';
 import 'package:printa/shared/components/components.dart';
 import 'package:printa/shared/components/constants.dart';
 import 'package:printa/view/login&register_screen/account_screen/account_screen.dart';
-import 'package:printa/view/login&register_screen/login_body/login_body.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/user_model/user_model.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-
 import '../../shared/network/local/cache_helper.dart';
 import '../../view/homeScreen/homescreen.dart';
 import '../../view/order_status/user_orders/user_orders.dart';
@@ -407,6 +404,8 @@ class PrentaCubit extends Cubit<PrentaStates> {
   double calculateSubtotal() {
     return calculateTotal(); // Adjust if needed
   }
+
+
   Future<void> checkout() async {
     try {
       // Get the current user's ID
@@ -442,5 +441,50 @@ class PrentaCubit extends Cubit<PrentaStates> {
       print('Error during checkout: $e');
       emit(CartCheckoutErrorState());
     }
+  }
+
+
+  File? frontDesign;
+  File? backDesign;
+
+
+  void setFrontDesign(File file) {
+    frontDesign = file;
+    emit(PrentaFrontDesignUpdated());
+  }
+
+  void setBackDesign(File file) {
+    backDesign = file;
+    emit(PrentaBackDesignUpdated());
+  }
+
+  Future<void> pickFrontDesign() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setFrontDesign(File(pickedFile.path));
+    }
+  }
+
+  Future<void> pickBackDesign() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setBackDesign(File(pickedFile.path));
+    }
+  }
+  final List<Color> circleColorCustomized = [
+    Colors.black,
+    Colors.white,
+    HexColor('012639'),
+    Colors.red,
+    Colors.blue,
+    Colors.yellow,
+    Colors.green,
+  ];
+
+  int selectedCircleCustomized = 0;
+
+  void setSelectedCircle(int index) {
+    selectedCircleCustomized = index;
+    emit(PrentaColorUpdated());
   }
 }

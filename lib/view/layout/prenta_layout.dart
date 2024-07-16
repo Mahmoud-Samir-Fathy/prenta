@@ -28,7 +28,7 @@ class _prenta_layoutState extends State<PrentaLayout> {
               borderRadius: BorderRadius.circular(30.0), // Adjust as per your requirement
             ),
             onPressed:(){
-              navigateTo(context, customize());
+              navigateTo(context, Customize());
             } ,
             backgroundColor:PrentaCubit.get(context).isDark?thirdColor:firstColor,
             child: Icon(Ionicons.shirt,color:PrentaCubit.get(context).isDark?secondColor:forthColor),
