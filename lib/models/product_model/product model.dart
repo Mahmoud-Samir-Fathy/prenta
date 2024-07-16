@@ -28,6 +28,7 @@ class ProductModel {
     image=json['image'];
     description=json['description'];
     price=json['price'];
+    size=json['size'];
     color=json['color'];
     quantity=json['quantity'];
     frontDesign=json['frontDesign'];
@@ -41,6 +42,7 @@ class ProductModel {
       'image':image,
       'description':description,
       'price':price,
+      'size':size,
       'color':color,
       'quantity':quantity,
       'frontDesign':frontDesign,

@@ -17,8 +17,7 @@ class Customize extends StatelessWidget {
         // Handle specific state changes if needed
       },
       builder: (context, state) {
-        final cubit = context.read<PrentaCubit>();
-
+        final cubit = PrentaCubit.get(context);
         return Scaffold(
           appBar: AppBar(
             leading: IconButton(
