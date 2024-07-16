@@ -472,19 +472,28 @@ class PrentaCubit extends Cubit<PrentaStates> {
     }
   }
   final List<Color> circleColorCustomized = [
-    Colors.black,
-    Colors.white,
-    HexColor('012639'),
-    Colors.red,
-    Colors.blue,
-    Colors.yellow,
-    Colors.green,
+  HexColor('#FFFFFF'),
+  Colors.black,
+  HexColor('012639'),
+  Colors.red,
+  Colors.blue,
+  Colors.yellow,
+  Colors.green,
   ];
 
   int selectedCircleCustomized = 0;
+  String imagePath = "images/red.png"; // Default image path
 
   void setSelectedCircle(int index) {
-    selectedCircleCustomized = index;
-    emit(PrentaColorUpdated());
+  selectedCircleCustomized = index;
+
+  // Change image if the first color is selected
+  if (index == 0) {
+  imagePath = "images/white.png"; // Update this to the desired image
+  } else {
+  imagePath = "images/red.png"; // Default image for other selections
+  }
+
+  emit(PrentaColorUpdated());
   }
 }

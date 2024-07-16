@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -6,7 +5,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
 import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
-import '../../shared/components/components.dart'; // Replace with your actual path
+import '../../shared/components/components.dart';
 
 class Customize extends StatelessWidget {
   const Customize({Key? key}) : super(key: key);
@@ -35,9 +34,22 @@ class Customize extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
+                  color: Colors.white,
                   height: 400,
                   width: double.infinity,
-                  child: Image.asset('images/black_T-shirt.png', fit: BoxFit.cover),
+                  child: ColorFiltered(
+                    colorFilter: ColorFilter.mode(
+                      cubit.circleColorCustomized[cubit.selectedCircleCustomized],
+                      BlendMode.hue,
+                    ),
+                    child:Container(
+                    color: Colors.white,
+                    child: Image.asset(
+                      cubit.imagePath,
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+            ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -162,8 +174,8 @@ class Customize extends StatelessWidget {
                 SizedBox(height: 30),
                 Center(
                   child: defaultMaterialButton(
-                    text: 'Confirm',
-                    Function: (){}
+                      text: 'Confirm',
+                      Function: (){}
                   ),
                 ),
                 SizedBox(height: 15),
