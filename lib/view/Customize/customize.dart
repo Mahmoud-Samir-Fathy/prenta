@@ -22,7 +22,6 @@ class Customize extends StatelessWidget {
         }
         if(state is PrentaSaveToCartErrorState){
           showToast(context, title: 'Error', description: state.error, state:ToastColorState.error , icon: Ionicons.thumbs_down_outline);
-
         }
 
       },
