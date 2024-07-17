@@ -3,6 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
+import 'package:printa/shared/styles/colors.dart';
+import 'package:printa/view/check_Out/checkout.dart';
+import 'package:printa/view/layout/prenta_layout.dart';
 import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 import '../../shared/components/components.dart';
@@ -14,7 +17,14 @@ class Customize extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<PrentaCubit, PrentaStates>(
       listener: (context, state) {
-        // Handle specific state changes if needed
+        if (state is PrentaSaveToCartSuccessState){
+          PrentaCubit.get(context).showAddToCartDialog(context, PrentaCubit.get(context).isDark ? Colors.white : firstColor);
+        }
+        if(state is PrentaSaveToCartErrorState){
+          showToast(context, title: 'Error', description: state.error, state:ToastColorState.error , icon: Ionicons.thumbs_down_outline);
+
+        }
+
       },
       builder: (context, state) {
         final cubit = PrentaCubit.get(context);
@@ -38,17 +48,17 @@ class Customize extends StatelessWidget {
                   width: double.infinity,
                   child: ColorFiltered(
                     colorFilter: ColorFilter.mode(
-                      cubit.circleColorCustomized[cubit.selectedCircleCustomized],
+                      cubit.circleColorCustomized[cubit.selectedCircleCustomized]['color'], // Extract color from map
                       BlendMode.hue,
                     ),
-                    child:Container(
-                    color: Colors.white,
-                    child: Image.asset(
-                      cubit.imagePath,
-                      fit: BoxFit.contain,
+                    child: Container(
+                      color: Colors.white,
+                      child: Image.network(
+                        cubit.imagePath,
+                        fit: BoxFit.contain,
+                      ),
                     ),
                   ),
-            ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -108,11 +118,11 @@ class Customize extends StatelessWidget {
                               color: cubit.selectedCircleCustomized == index ? Colors.black : Colors.black45,
                               width: cubit.selectedCircleCustomized == index ? 2.0 : 1.0,
                             ),
-                            color: cubit.circleColorCustomized[index],
+                            color: cubit.circleColorCustomized[index]['color'], // Extract color from map
                           ),
                           child: Center(
                             child: cubit.selectedCircleCustomized == index
-                                ? Icon(Icons.check, color: cubit.circleColorCustomized[index] == Colors.white ? Colors.black : Colors.white)
+                                ? Icon(Icons.check, color: cubit.circleColorCustomized[index]['color'] == Colors.white ? Colors.black : Colors.white)
                                 : Container(),
                           ),
                         ),
@@ -124,7 +134,7 @@ class Customize extends StatelessWidget {
                 Text('Insert Front Design'),
                 SizedBox(height: 10),
                 GestureDetector(
-                  onTap: () => cubit.pickFrontDesign(),
+                  onTap: () => cubit.getFrontDesignImage(),
                   child: Center(
                     child: Container(
                       height: 300,
@@ -149,7 +159,7 @@ class Customize extends StatelessWidget {
                 Text('Insert Back Design'),
                 SizedBox(height: 10),
                 GestureDetector(
-                  onTap: () => cubit.pickBackDesign(),
+                  onTap: () => cubit.getBackDesignImage(),
                   child: Center(
                     child: Container(
                       height: 300,
@@ -173,8 +183,16 @@ class Customize extends StatelessWidget {
                 SizedBox(height: 30),
                 Center(
                   child: defaultMaterialButton(
-                      text: 'Confirm',
-                      Function: (){}
+                    text: 'Confirm',
+                    Function: () {
+                      cubit.saveCustomToCart(
+                        color: cubit.selectedColorName,
+                        price: '300', // Example price
+                        size: cubit.selectedSize,
+                        image: '${cubit.imagePath}', // Replace with actual image URL if needed
+                      );
+
+                    },
                   ),
                 ),
                 SizedBox(height: 15),
@@ -186,3 +204,4 @@ class Customize extends StatelessWidget {
     );
   }
 }
+

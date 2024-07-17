@@ -75,3 +75,22 @@ class PrentaBackDesignUpdated extends PrentaStates{}
 
 
 
+class GetFrontDesignPickedSuccessState extends PrentaStates{}
+class GetFrontDesignPickedErrorState extends PrentaStates{}
+class UploadFrontDesignPickedSuccessState extends PrentaStates{}
+class UploadFrontDesignPickedErrorState extends PrentaStates{}
+
+
+
+class GetBackDesignPickedSuccessState extends PrentaStates{}
+class GetBackDesignPickedErrorState extends PrentaStates{}
+class UploadBackDesignPickedSuccessState extends PrentaStates{}
+class UploadBackDesignPickedErrorState extends PrentaStates{}
+
+
+
+
+
+
+
+

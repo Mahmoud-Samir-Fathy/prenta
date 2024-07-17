@@ -9,6 +9,9 @@ import 'package:ionicons/ionicons.dart';
 import 'package:printa/models/product_model/product%20model.dart';
 import 'package:printa/shared/components/components.dart';
 import 'package:printa/shared/components/constants.dart';
+import 'package:printa/shared/styles/colors.dart';
+import 'package:printa/view/check_Out/checkout.dart';
+import 'package:printa/view/layout/prenta_layout.dart';
 import 'package:printa/view/login&register_screen/account_screen/account_screen.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 import '../../models/user_model/user_model.dart';
@@ -144,6 +147,11 @@ class PrentaCubit extends Cubit<PrentaStates> {
       password: password,
       phoneNumber: phoneNumber,
       profileImage: image ?? userInfo!.profileImage,
+      area: userInfo!.area,
+      building: userInfo!.building,
+      city: userInfo!.city,
+      floor: userInfo!.floor,
+      streetName: userInfo!.streetName
     );
     FirebaseFirestore.instance
         .collection('users')
@@ -318,6 +326,7 @@ class PrentaCubit extends Cubit<PrentaStates> {
     'Yellow',
     'Green',
   ];
+
   void updateSize(String size) {
     selectedSize = size;
     emit(PrentaSizeUpdated());
@@ -364,7 +373,7 @@ class PrentaCubit extends Cubit<PrentaStates> {
   // Load cart items on initialization
 
   void loadCartItems() {
-    cartItems = CacheHelper.getCartItems() ?? [];
+    cartItems = CacheHelper.getCartItems();
     emit(CartLoadedState());
   }
 
@@ -429,6 +438,7 @@ class PrentaCubit extends Cubit<PrentaStates> {
         'items': cartItems,
         'total': calculateTotalWithShipping(),
         'date': Timestamp.now(),
+
       });
 
       // Clear the cart in the CacheHelper
@@ -447,53 +457,187 @@ class PrentaCubit extends Cubit<PrentaStates> {
   File? frontDesign;
   File? backDesign;
 
-
-  void setFrontDesign(File file) {
-    frontDesign = file;
-    emit(PrentaFrontDesignUpdated());
-  }
-
-  void setBackDesign(File file) {
-    backDesign = file;
-    emit(PrentaBackDesignUpdated());
-  }
-
-  Future<void> pickFrontDesign() async {
+  Future getFrontDesignImage() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
-      setFrontDesign(File(pickedFile.path));
+      frontDesign = File(pickedFile.path);
+      emit(GetFrontDesignPickedSuccessState());
+    } else {
+      print('No image selected.');
+      emit(GetFrontDesignPickedErrorState());
     }
   }
 
-  Future<void> pickBackDesign() async {
+  Future getBackDesignImage() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
-      setBackDesign(File(pickedFile.path));
+      backDesign = File(pickedFile.path);
+      emit(GetBackDesignPickedSuccessState());
+    } else {
+      print('No image selected.');
+      emit(GetBackDesignPickedErrorState());
     }
   }
-  final List<Color> circleColorCustomized = [
-  HexColor('#FFFFFF'),
-  Colors.black,
-  HexColor('012639'),
-  Colors.red,
-  Colors.blue,
-  Colors.yellow,
-  Colors.green,
+
+  Future<String> uploadFrontDesignImage() async {
+    if (frontDesign != null) {
+      try {
+        final ref = FirebaseStorage.instance
+            .ref()
+            .child('Front/${Uri.file(frontDesign!.path).pathSegments.last}');
+        final uploadTask = await ref.putFile(frontDesign!);
+        final downloadUrl = await uploadTask.ref.getDownloadURL();
+        emit(UploadFrontDesignPickedSuccessState());
+        return downloadUrl;
+      } catch (e) {
+        emit(UploadFrontDesignPickedErrorState());
+        return '';
+      }
+    }
+    return '';
+  }
+
+  Future<String> uploadBackDesignImage() async {
+    if (backDesign != null) {
+      try {
+        final ref = FirebaseStorage.instance
+            .ref()
+            .child('Back/${Uri.file(backDesign!.path).pathSegments.last}');
+        final uploadTask = await ref.putFile(backDesign!);
+        final downloadUrl = await uploadTask.ref.getDownloadURL();
+        emit(UploadBackDesignPickedSuccessState());
+        return downloadUrl;
+      } catch (e) {
+        emit(UploadBackDesignPickedErrorState());
+        return '';
+      }
+    }
+    return '';
+  }
+
+  int titleCounter = 1;
+
+  Future<void> saveCustomToCart({
+    required String color,
+    required String price,
+    required String size,
+    required String image,
+  }) async {
+    final title = 'Customized $titleCounter';
+    titleCounter++;
+    final frontDesignUrl = await uploadFrontDesignImage();
+    final backDesignUrl = await uploadBackDesignImage();
+
+    cartItems.add({
+      'color': color,
+      'price': price,
+      'size': size,
+      'title': title,
+      'image': image,
+      'quantity': 1,
+      'frontDesign':frontDesignUrl,
+      'backDesign':backDesignUrl,
+    });
+
+    // Save cart items to shared preferences
+    CacheHelper.saveCartItems(cartItems);
+    frontDesign = null;
+    backDesign = null;
+    emit(PrentaSaveToCartSuccessState());
+  }
+
+  final List<Map<String, dynamic>> circleColorCustomized = [
+    {'color': HexColor('#FFFFFF'), 'name': 'White'},
+    {'color': Colors.black, 'name': 'Black'},
+    {'color': HexColor('012639'), 'name': 'navy'},
+    {'color': Colors.red, 'name': 'Red'},
+    {'color': Colors.blue, 'name': 'Blue'},
+    {'color': Colors.yellow, 'name': 'Yellow'},
+    {'color': Colors.green, 'name': 'Green'},
   ];
 
   int selectedCircleCustomized = 0;
-  String imagePath = "images/red.png"; // Default image path
+  String selectedColorName = 'White'; // Default color name
+  String imagePath = "https://img.freepik.com/premium-psd/back-white-tee-mockup-whit-no-design-no-hanger-transparency-background-psd_693425-20997.jpg?w=740"; // Default image path
 
   void setSelectedCircle(int index) {
-  selectedCircleCustomized = index;
+    selectedCircleCustomized = index;
+    selectedColorName = circleColorCustomized[index]['name'];
 
-  // Change image if the first color is selected
-  if (index == 0) {
-  imagePath = "images/white.png"; // Update this to the desired image
-  } else {
-  imagePath = "images/red.png"; // Default image for other selections
+    // Change image based on selected color
+    if (index == 0) {
+      imagePath = "https://img.freepik.com/premium-psd/back-white-tee-mockup-whit-no-design-no-hanger-transparency-background-psd_693425-20997.jpg?w=740"; // Image for the first color
+    } else {
+      imagePath = "https://toppng.com/uploads/preview/red-shirt-11551060979gouxt0a87n.png"; // Default image for other selections
+    }
+
+    emit(PrentaColorUpdated());
+  }
+  void showAddToCartDialog(BuildContext context, Color color) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Align(
+            alignment: AlignmentDirectional.center,
+            child: Text('Successfully add to cart'),
+          ),
+          content: Container(
+            height: 100,
+            child: Center(
+              child: Text(
+                'Do you want to go to checkout screen or continue browsing?',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontWeight: FontWeight.w300),
+              ),
+            ),
+          ),
+          actions: [
+            Container(
+              height: 50,
+              width: 120,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30),
+                border: Border.all(color: firstColor),
+              ),
+              child: MaterialButton(
+                height: 50,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(30)),
+                ),
+                onPressed: () {
+                  navigateTo(context, CheckOut());
+
+                },
+                child: Text('Checkout'),
+              ),
+            ),
+            Container(
+              height: 50,
+              width: 120,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30),
+                border: Border.all(color: color),
+              ),
+              child: MaterialButton(
+                color: color,
+                height: 50,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(30)),
+                ),
+                onPressed: () {
+                  navigateTo(context, PrentaLayout());
+                },
+                child: Text(
+                  'Home',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 
-  emit(PrentaColorUpdated());
-  }
 }
