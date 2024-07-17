@@ -48,9 +48,11 @@ class CacheHelper {
     String itemsString = jsonEncode(items);
     await sharedPreferences!.setString('cartItems', itemsString);
   }
-  static Future<void> removeCartItem(String item) async {
+
+  static Future<void> removeCartItem(String itemId) async {
     List<Map<String, dynamic>> items = getCartItems();
-    items.removeWhere((cartItem) => cartItem['title'] == item); // or any unique identifier
-    return await saveCartItems(items);
+    items.removeWhere((cartItem) => cartItem['id'] == itemId); // Remove by unique ID
+    await saveCartItems(items);
   }
+
 }

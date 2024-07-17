@@ -89,6 +89,10 @@ class UploadBackDesignPickedErrorState extends PrentaStates{}
 
 
 
+class CartUpdatedState extends PrentaStates{}
+
+
+
 
 
 

@@ -14,6 +14,7 @@ import 'package:printa/view/check_Out/checkout.dart';
 import 'package:printa/view/layout/prenta_layout.dart';
 import 'package:printa/view/login&register_screen/account_screen/account_screen.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
+import 'package:uuid/uuid.dart';
 import '../../models/user_model/user_model.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import '../../shared/network/local/cache_helper.dart';
@@ -286,6 +287,8 @@ class PrentaCubit extends Cubit<PrentaStates> {
     }
   }
 
+  final Uuid uuid = Uuid(); // Create an instance of Uuid
+
   List<ProductModel> productInfo = [];
 
   void getProductData() {
@@ -352,8 +355,11 @@ class PrentaCubit extends Cubit<PrentaStates> {
     required String description,
     required String image,
   }) {
+    final uniqueId = uuid.v4(); // Generate a unique ID
+
     // Add the item to the cart
     cartItems.add({
+      'id': uniqueId, // Add unique ID
       'color': color,
       'price': price,
       'size': size,
@@ -369,37 +375,34 @@ class PrentaCubit extends Cubit<PrentaStates> {
     emit(PrentaSaveToCartSuccessState()); // Emit success state
   }
 
-
   // Load cart items on initialization
-
   void loadCartItems() {
     cartItems = CacheHelper.getCartItems();
     emit(CartLoadedState());
   }
 
-  void increaseQuantity(String title) {
-    var item = cartItems.firstWhere((item) => item['title'] == title);
+  void increaseQuantity(String id) {
+    var item = cartItems.firstWhere((item) => item['id'] == id);
     item['quantity']++;
     saveCartItems();
     emit(PrentaUpdateCartSuccessState());
   }
 
-  void decreaseQuantity(String title) {
-    var item = cartItems.firstWhere((item) => item['title'] == title);
+  void decreaseQuantity(String id) {
+    var item = cartItems.firstWhere((item) => item['id'] == id);
     if (item['quantity'] > 1) {
       item['quantity']--;
       saveCartItems();
       emit(PrentaUpdateCartSuccessState());
     }
+  }
 
+  void removeFromCart(String itemId) {
+    cartItems.removeWhere((item) => item['id'] == itemId);
+    emit(CartUpdatedState()); // Notify the UI of state change
+    CacheHelper.removeCartItem(itemId); // Update SharedPreferences
   }
-  void removeFromCart(String title) {
-    print("Removing item: $title");
-    cartItems.removeWhere((item) => item['title'] == title);
-    saveCartItems();
-    CacheHelper.removeCartItem(title); // Ensure this is called
-    emit(PrentaRemoveFromCartSuccessState());
-  }
+
 
   double calculateTotal() {
     return cartItems.fold(0, (total, item) => total + (double.parse(item['price']) * item['quantity']));
@@ -413,7 +416,6 @@ class PrentaCubit extends Cubit<PrentaStates> {
   double calculateSubtotal() {
     return calculateTotal(); // Adjust if needed
   }
-
 
   Future<void> checkout() async {
     try {
@@ -438,7 +440,6 @@ class PrentaCubit extends Cubit<PrentaStates> {
         'items': cartItems,
         'total': calculateTotalWithShipping(),
         'date': Timestamp.now(),
-
       });
 
       // Clear the cart in the CacheHelper
@@ -452,7 +453,6 @@ class PrentaCubit extends Cubit<PrentaStates> {
       emit(CartCheckoutErrorState());
     }
   }
-
 
   File? frontDesign;
   File? backDesign;
@@ -527,16 +527,18 @@ class PrentaCubit extends Cubit<PrentaStates> {
     titleCounter++;
     final frontDesignUrl = await uploadFrontDesignImage();
     final backDesignUrl = await uploadBackDesignImage();
+    final uniqueId = uuid.v4(); // Generate a unique ID
 
     cartItems.add({
+      'id': uniqueId, // Add unique ID
       'color': color,
       'price': price,
       'size': size,
       'title': title,
       'image': image,
       'quantity': 1,
-      'frontDesign':frontDesignUrl,
-      'backDesign':backDesignUrl,
+      'frontDesign': frontDesignUrl,
+      'backDesign': backDesignUrl,
     });
 
     // Save cart items to shared preferences

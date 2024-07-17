@@ -133,8 +133,8 @@ class CheckOut extends StatelessWidget {
                                   Spacer(),
                                   GestureDetector(
                                     onTap: () {
-                                      cubit.removeFromCart(item['title']);
-                                    },
+                                      cubit.removeFromCart(item['id']);
+                                      },
                                     child: Icon(
                                       Icons.delete,
                                       size: 25,
