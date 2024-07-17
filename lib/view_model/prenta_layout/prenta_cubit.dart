@@ -11,6 +11,7 @@ import 'package:printa/shared/components/components.dart';
 import 'package:printa/shared/components/constants.dart';
 import 'package:printa/shared/styles/colors.dart';
 import 'package:printa/view/check_Out/checkout.dart';
+import 'package:printa/view/edit_user_profile/edit_user_profile.dart';
 import 'package:printa/view/layout/prenta_layout.dart';
 import 'package:printa/view/login&register_screen/account_screen/account_screen.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
@@ -354,6 +355,7 @@ class PrentaCubit extends Cubit<PrentaStates> {
     required String title,
     required String description,
     required String image,
+    required String status,
   }) {
     emit(PrentaSaveToCartLoadingState());
     final uniqueId = uuid.v4(); // Generate a unique ID
@@ -367,6 +369,7 @@ class PrentaCubit extends Cubit<PrentaStates> {
       'description': description,
       'image': image,
       'quantity': 1,
+      'status':status
     });
 
     // Save cart items to shared preferences
@@ -521,7 +524,8 @@ class PrentaCubit extends Cubit<PrentaStates> {
     required String price,
     required String size,
     required String image,
-    required String title
+    required String title,
+    required String status,
 
   }) async {
     emit(PrentaSaveToCartLoadingState());
@@ -539,6 +543,7 @@ class PrentaCubit extends Cubit<PrentaStates> {
       'quantity': 1,
       'frontDesign': frontDesignUrl,
       'backDesign': backDesignUrl,
+      'status':status
     });
 
     // Save cart items to shared preferences
@@ -632,6 +637,89 @@ class PrentaCubit extends Cubit<PrentaStates> {
                 },
                 child: Text(
                   'Home',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void showCheckOutDialog(BuildContext context, Color color) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Align(
+            alignment: AlignmentDirectional.center,
+            child: Text('Warning'),
+          ),
+          content: Container(
+            height: 100,
+            child: Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    'Please Check your information before forther go on!',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontWeight: FontWeight.w300),
+                  ),
+                  Text(
+                    'Your Address is '+'${userInfo!.city}'+','+'${userInfo!.area}'+','+'${userInfo!.streetName}'+','+'${userInfo!.building}'+','+'${userInfo!.floor}' ,maxLines: 2,overflow:TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontWeight: FontWeight.w300),
+                  ),
+                  Text(
+                    'Your PhoneNumber is '+'${userInfo!.phoneNumber}',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontWeight: FontWeight.w300),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          actions: [
+            Container(
+              height: 50,
+              width: 120,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30),
+                border: Border.all(color: firstColor),
+              ),
+              child: MaterialButton(
+                height: 50,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(30)),
+                ),
+                onPressed: () {
+                  navigateTo(context, edit_profile());
+
+                },
+                child: Text('Edit Profile'),
+              ),
+            ),
+            Container(
+              height: 50,
+              width: 120,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30),
+                border: Border.all(color: color),
+              ),
+              child: MaterialButton(
+                color: color,
+                height: 50,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(30)),
+                ),
+                onPressed: () {
+                  checkout();
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  'ChickOut',
                   style: TextStyle(color: Colors.white),
                 ),
               ),

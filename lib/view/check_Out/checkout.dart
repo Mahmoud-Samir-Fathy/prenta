@@ -24,6 +24,7 @@ class CheckOut extends StatelessWidget {
           ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text('Checkout successful!'))
           );
+
         } else if (state is CartCheckoutErrorState) {
           ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text('Checkout failed. Please try again.'))
@@ -205,7 +206,7 @@ class CheckOut extends StatelessWidget {
                   child: defaultMaterialButton(
                     text: 'Check out',
                     Function: () {
-                      cubit.checkout();
+                      cubit.showCheckOutDialog(context, cubit.isDark ? Colors.white : firstColor);
                     },
                   ),
                 ),

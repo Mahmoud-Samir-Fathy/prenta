@@ -269,6 +269,7 @@ class ProductDetails extends StatelessWidget {
                                     title: product.title ?? '',
                                     description: product.description ?? '',
                                     image: product.image ?? '',
+                                      status: 'OnProcessing'
                                   );
                                   },
                                 text: 'Add To Cart',

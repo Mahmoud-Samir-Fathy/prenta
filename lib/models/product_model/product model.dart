@@ -9,6 +9,7 @@ class ProductModel {
    String? quantity;
    String? frontDesign;
    String? backDesign;
+   String? status;
 
   ProductModel({
      this.id,
@@ -17,9 +18,11 @@ class ProductModel {
      this.description,
      this.price,
      this.color,
+     this.size,
      this.quantity,
      this.frontDesign,
      this.backDesign,
+     this.status,
   });
 
   ProductModel.fromJason(Map<String,dynamic>json){
@@ -33,6 +36,7 @@ class ProductModel {
     quantity=json['quantity'];
     frontDesign=json['frontDesign'];
     backDesign=json['backDesign'];
+    status=json['status'];
   }
 
   Map<String,dynamic>toMap(){
@@ -47,6 +51,7 @@ class ProductModel {
       'quantity':quantity,
       'frontDesign':frontDesign,
       'backDesign':backDesign,
+      'status':status,
     };
   }
 }

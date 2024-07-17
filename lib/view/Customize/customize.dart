@@ -185,6 +185,7 @@ class Customize extends StatelessWidget {
                         price: '300',
                         size: cubit.selectedSize,
                         image: '${cubit.imagePath}',
+                        status: 'OnProcessing'
                       );
 
                     },
