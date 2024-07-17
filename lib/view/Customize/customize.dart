@@ -4,15 +4,11 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
 import 'package:printa/shared/styles/colors.dart';
-import 'package:printa/view/check_Out/checkout.dart';
-import 'package:printa/view/layout/prenta_layout.dart';
 import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 import '../../shared/components/components.dart';
 
 class Customize extends StatelessWidget {
-  const Customize({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<PrentaCubit, PrentaStates>(
@@ -23,7 +19,6 @@ class Customize extends StatelessWidget {
         if(state is PrentaSaveToCartErrorState){
           showToast(context, title: 'Error', description: state.error, state:ToastColorState.error , icon: Ionicons.thumbs_down_outline);
         }
-
       },
       builder: (context, state) {
         final cubit = PrentaCubit.get(context);
@@ -185,16 +180,18 @@ class Customize extends StatelessWidget {
                     text: 'Confirm',
                     Function: () {
                       cubit.saveCustomToCart(
+                        title: 'Customized',
                         color: cubit.selectedColorName,
-                        price: '300', // Example price
+                        price: '300',
                         size: cubit.selectedSize,
-                        image: '${cubit.imagePath}', // Replace with actual image URL if needed
+                        image: '${cubit.imagePath}',
                       );
 
                     },
                   ),
                 ),
                 SizedBox(height: 15),
+                if(state is PrentaSaveToCartLoadingState) LinearProgressIndicator(),
               ],
             ),
           ),

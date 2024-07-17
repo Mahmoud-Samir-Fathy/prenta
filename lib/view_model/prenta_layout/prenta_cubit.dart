@@ -355,8 +355,8 @@ class PrentaCubit extends Cubit<PrentaStates> {
     required String description,
     required String image,
   }) {
+    emit(PrentaSaveToCartLoadingState());
     final uniqueId = uuid.v4(); // Generate a unique ID
-
     // Add the item to the cart
     cartItems.add({
       'id': uniqueId, // Add unique ID
@@ -515,22 +515,22 @@ class PrentaCubit extends Cubit<PrentaStates> {
     return '';
   }
 
-  int titleCounter = 1;
 
   Future<void> saveCustomToCart({
     required String color,
     required String price,
     required String size,
     required String image,
+    required String title
+
   }) async {
-    final title = 'Customized $titleCounter';
-    titleCounter++;
+    emit(PrentaSaveToCartLoadingState());
     final frontDesignUrl = await uploadFrontDesignImage();
     final backDesignUrl = await uploadBackDesignImage();
-    final uniqueId = uuid.v4(); // Generate a unique ID
+    final uniqueId = uuid.v4();
 
     cartItems.add({
-      'id': uniqueId, // Add unique ID
+      'id': uniqueId,
       'color': color,
       'price': price,
       'size': size,
@@ -641,5 +641,4 @@ class PrentaCubit extends Cubit<PrentaStates> {
       },
     );
   }
-
 }

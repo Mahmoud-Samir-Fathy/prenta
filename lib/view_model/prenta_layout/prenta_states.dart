@@ -53,6 +53,7 @@ class PrentaSizeUpdated extends PrentaStates {}
 class PrentaColorUpdated extends PrentaStates {}
 
 
+class PrentaSaveToCartLoadingState extends PrentaStates{}
 class PrentaSaveToCartSuccessState extends PrentaStates{}
 class PrentaSaveToCartErrorState extends PrentaStates{
   final String error;
@@ -68,11 +69,8 @@ class CartCheckedOutState extends PrentaStates{}
 class CartCheckoutErrorState extends PrentaStates{}
 
 
-
 class PrentaFrontDesignUpdated extends PrentaStates{}
 class PrentaBackDesignUpdated extends PrentaStates{}
-
-
 
 
 class GetFrontDesignPickedSuccessState extends PrentaStates{}
@@ -81,20 +79,10 @@ class UploadFrontDesignPickedSuccessState extends PrentaStates{}
 class UploadFrontDesignPickedErrorState extends PrentaStates{}
 
 
-
 class GetBackDesignPickedSuccessState extends PrentaStates{}
 class GetBackDesignPickedErrorState extends PrentaStates{}
 class UploadBackDesignPickedSuccessState extends PrentaStates{}
 class UploadBackDesignPickedErrorState extends PrentaStates{}
 
 
-
 class CartUpdatedState extends PrentaStates{}
-
-
-
-
-
-
-
-

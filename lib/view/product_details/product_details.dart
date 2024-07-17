@@ -7,14 +7,11 @@ import 'package:ionicons/ionicons.dart';
 import 'package:printa/models/product_model/product%20model.dart';
 import 'package:printa/shared/components/components.dart';
 import 'package:printa/shared/styles/colors.dart';
-import 'package:printa/view/check_Out/checkout.dart';
-import 'package:printa/view/layout/prenta_layout.dart';
 import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 
 class ProductDetails extends StatelessWidget {
   final ProductModel product;
-
   const ProductDetails({Key? key, required this.product}) : super(key: key);
 
   @override
@@ -246,7 +243,7 @@ class ProductDetails extends StatelessWidget {
                                         shape: BoxShape.circle,
                                         border: Border.all(
                                           width: cubit.selectedCircle == index ? 2.0 : 1.0,
-                                          color: cubit.selectedCircle == index ? Colors.black : cubit.circleColors[index],
+                                          color: cubit.selectedCircle == index ? Colors.black :Colors.black45,
                                         ),
                                         color: cubit.circleColors[index],
                                       ),
@@ -278,6 +275,7 @@ class ProductDetails extends StatelessWidget {
                               ),
                             ),
                             SizedBox(height: 15),
+                            if(state is PrentaSaveToCartLoadingState) LinearProgressIndicator(),
                           ],
                         ),
                       ],
