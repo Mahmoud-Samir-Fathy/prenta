@@ -99,3 +99,26 @@ class PrentaGetOnProcessingItemsErrorState extends PrentaStates {
 
   PrentaGetOnProcessingItemsErrorState(this.error);
 }
+class PrentaGetCancelledItemsSuccessState extends PrentaStates {
+  final List<Map<String, dynamic>> items;
+
+  PrentaGetCancelledItemsSuccessState(this.items);
+}
+
+class PrentaGetCancelledItemsErrorState extends PrentaStates {
+  final String error;
+
+  PrentaGetCancelledItemsErrorState(this.error);
+}
+
+class PrentaGetCompletedItemsSuccessState extends PrentaStates {
+  final List<Map<String, dynamic>> items;
+
+  PrentaGetCompletedItemsSuccessState(this.items);
+}
+
+class PrentaGetCompletedItemsErrorState extends PrentaStates {
+  final String error;
+
+  PrentaGetCompletedItemsErrorState(this.error);
+}
