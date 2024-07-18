@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -729,4 +730,58 @@ class PrentaCubit extends Cubit<PrentaStates> {
       },
     );
   }
+  List<Map<String, dynamic>> onProcessingItems = [];
+
+  Future<void> getOnProcessingItems() async {
+    try {
+      emit(PrentaLoadingState());
+
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user == null) {
+        print('No user logged in');
+        emit(PrentaGetUserErrorState('No user logged in'));
+        return;
+      }
+
+      String userId = user.uid;
+
+      QuerySnapshot<Map<String, dynamic>> ordersSnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .collection('orders')
+          .get();
+
+      onProcessingItems.clear();
+
+      for (QueryDocumentSnapshot<Map<String, dynamic>> orderDoc in ordersSnapshot.docs) {
+        var data = orderDoc.data();
+        if (data.containsKey('items')) {
+          var itemsField = data['items'];
+          List<dynamic> cartItems;
+          if (itemsField is String) {
+            cartItems = jsonDecode(itemsField);
+          } else {
+            cartItems = itemsField;
+          }
+          for (var item in cartItems) {
+            if (item is Map<String, dynamic> && item['status'] == 'OnProcessing') {
+              onProcessingItems.add(item);
+            } else {
+              print('Item is not a Map<String, dynamic> or missing status field: $item');
+            }
+          }
+        } else {
+          print('Order document does not contain a valid items list: $data');
+        }
+      }
+
+      emit(PrentaGetOnProcessingItemsSuccessState(onProcessingItems));
+    } catch (e) {
+      print('Error fetching onProcessing items: $e');
+      emit(PrentaGetOnProcessingItemsErrorState(e.toString()));
+    }
+  }
+
+
+
 }

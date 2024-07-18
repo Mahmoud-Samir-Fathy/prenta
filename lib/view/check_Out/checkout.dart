@@ -102,7 +102,7 @@ class CheckOut extends StatelessWidget {
                                 children: [
                                   GestureDetector(
                                     onTap: () {
-                                      cubit.increaseQuantity(item['title']);
+                                      cubit.increaseQuantity(item['id']);
                                     },
                                     child: Container(
                                       width: 30,
@@ -119,7 +119,7 @@ class CheckOut extends StatelessWidget {
                                   SizedBox(width: 6),
                                   GestureDetector(
                                     onTap: () {
-                                      cubit.decreaseQuantity(item['title']);
+                                      cubit.decreaseQuantity(item['id']);
                                     },
                                     child: Container(
                                       width: 30,

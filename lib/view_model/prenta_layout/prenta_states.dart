@@ -86,3 +86,16 @@ class UploadBackDesignPickedErrorState extends PrentaStates{}
 
 
 class CartUpdatedState extends PrentaStates{}
+class CartUpdateErrorState extends PrentaStates{}
+
+class PrentaGetOnProcessingItemsSuccessState extends PrentaStates {
+  final List<Map<String, dynamic>> items;
+
+  PrentaGetOnProcessingItemsSuccessState(this.items);
+}
+
+class PrentaGetOnProcessingItemsErrorState extends PrentaStates {
+  final String error;
+
+  PrentaGetOnProcessingItemsErrorState(this.error);
+}
