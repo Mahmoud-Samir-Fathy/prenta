@@ -25,6 +25,7 @@ class CheckOut extends StatelessWidget {
               SnackBar(content: Text('Checkout successful!'))
           );
 
+
         } else if (state is CartCheckoutErrorState) {
           ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text('Checkout failed. Please try again.'))
@@ -43,7 +44,7 @@ class CheckOut extends StatelessWidget {
             leading: IconButton(
               icon: Icon(Ionicons.chevron_back_outline),
               onPressed: () {
-                navigateTo(context, PrentaLayout());
+                navigateAndFinish(context, PrentaLayout());
               },
             ),
             title: Text(

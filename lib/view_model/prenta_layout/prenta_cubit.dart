@@ -733,7 +733,7 @@ class PrentaCubit extends Cubit<PrentaStates> {
   List<Map<String, dynamic>> onProcessingItems = [];
   Future<void> getOnProcessingItems() async {
     try {
-      emit(PrentaLoadingState());
+      emit(PrentaGetOnProcessingItemsLoadingState());
 
       User? user = FirebaseAuth.instance.currentUser;
       if (user == null) {
@@ -785,7 +785,7 @@ class PrentaCubit extends Cubit<PrentaStates> {
 
   Future<void> getCancelledItems() async {
     try {
-      emit(PrentaLoadingState());
+      emit(PrentaGetCancelledItemsLoadingState());
 
       User? user = FirebaseAuth.instance.currentUser;
       if (user == null) {
@@ -837,7 +837,7 @@ class PrentaCubit extends Cubit<PrentaStates> {
 
   Future<void> getCompletedItems() async {
     try {
-      emit(PrentaLoadingState());
+      emit(PrentaGetCompletedItemsLoadingState());
 
       User? user = FirebaseAuth.instance.currentUser;
       if (user == null) {
@@ -882,6 +882,128 @@ class PrentaCubit extends Cubit<PrentaStates> {
       emit(PrentaGetCompletedItemsErrorState(e.toString()));
     }
   }
+  void updateStatusToCompleted(String itemId) async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user == null) {
+        emit(PrentaGetUserErrorState('No user logged in'));
+        return;
+      }
+
+      String userId = user.uid;
+
+      // Retrieve the specific order document containing the item to update
+      QuerySnapshot<Map<String, dynamic>> ordersSnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .collection('orders')
+          .get();
+
+      for (QueryDocumentSnapshot<Map<String, dynamic>> orderDoc in ordersSnapshot.docs) {
+        var data = orderDoc.data();
+        if (data.containsKey('items')) {
+          var itemsField = data['items'];
+          List<dynamic> cartItems;
+          if (itemsField is String) {
+            cartItems = jsonDecode(itemsField);
+          } else {
+            cartItems = itemsField;
+          }
+
+          // Find the specific item by itemId and update its status
+          bool itemUpdated = false;
+          for (var item in cartItems) {
+            if (item is Map<String, dynamic> && item['id'] == itemId && item['status'] == 'OnProcessing') {
+              item['status'] = 'Cancelled';
+              itemUpdated = true;
+              break; // Exit loop once item is found and updated
+            }
+          }
+
+          if (itemUpdated) {
+            // Update Firestore with the modified items list for this order
+            await orderDoc.reference.update({
+              'items': jsonEncode(cartItems),
+            });
+            getOnProcessingItems();
+            // Emit success state if update was successful
+            emit(PrentaUpdateStatusSuccessState());
+            return;
+          }
+        }
+      }
+
+      emit(PrentaUpdateStatusErrorState('Item not found or status already completed'));
+    } catch (e) {
+      emit(PrentaUpdateStatusErrorState('Error updating item status: $e'));
+    }
+  }
 
 
+  void showCancelledOrderDialog(BuildContext context, Color color, item) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Align(
+            alignment: AlignmentDirectional.center,
+            child: Text('Warning'),
+          ),
+          content: Container(
+            height: 100,
+            child: Center(
+              child: Text(
+                'Are your sure you want to cancel order ?',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontWeight: FontWeight.w300),
+              ),
+            ),
+          ),
+          actions: [
+            Container(
+              height: 50,
+              width: 120,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30),
+                border: Border.all(color: firstColor),
+              ),
+              child: MaterialButton(
+                height: 50,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(30)),
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('No'),
+              ),
+            ),
+            Container(
+              height: 50,
+              width: 120,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30),
+                border: Border.all(color: color),
+              ),
+              child: MaterialButton(
+                color: color,
+                height: 50,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(30)),
+                ),
+                onPressed: () {
+                  updateStatusToCompleted(item);
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  'Yes',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
 }

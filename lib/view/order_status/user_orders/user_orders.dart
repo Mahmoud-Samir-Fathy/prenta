@@ -20,6 +20,7 @@ class UserOrders extends StatelessWidget{
          body:Column(
            children: [
              TabBar(
+
                indicator: UnderlineTabIndicator(
                  borderSide: BorderSide(
                      width: 4.0,
@@ -35,7 +36,9 @@ class UserOrders extends StatelessWidget{
                  ]),
 
              Expanded(
-               child: TabBarView(children: [
+               child: TabBarView(
+                 physics: NeverScrollableScrollPhysics(),
+                   children: [
                  ActiveOrder(),
                  CompletedOrder(),
                  CancelledOrder(),

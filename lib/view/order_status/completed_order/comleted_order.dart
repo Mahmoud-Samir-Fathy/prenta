@@ -12,7 +12,7 @@ class CompletedOrder extends StatelessWidget{
     return BlocConsumer<PrentaCubit, PrentaStates>(
       listener: (context,state){},
       builder: (context, state) {
-        if (state is PrentaLoadingState) {
+        if (state is PrentaGetCompletedItemsLoadingState) {
           return Center(child: CircularProgressIndicator());
         }
         else if (state is PrentaGetCompletedItemsSuccessState) {

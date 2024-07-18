@@ -88,6 +88,9 @@ class UploadBackDesignPickedErrorState extends PrentaStates{}
 class CartUpdatedState extends PrentaStates{}
 class CartUpdateErrorState extends PrentaStates{}
 
+
+class PrentaGetOnProcessingItemsLoadingState extends PrentaStates{}
+
 class PrentaGetOnProcessingItemsSuccessState extends PrentaStates {
   final List<Map<String, dynamic>> items;
 
@@ -99,6 +102,9 @@ class PrentaGetOnProcessingItemsErrorState extends PrentaStates {
 
   PrentaGetOnProcessingItemsErrorState(this.error);
 }
+
+class PrentaGetCancelledItemsLoadingState extends PrentaStates{}
+
 class PrentaGetCancelledItemsSuccessState extends PrentaStates {
   final List<Map<String, dynamic>> items;
 
@@ -111,6 +117,9 @@ class PrentaGetCancelledItemsErrorState extends PrentaStates {
   PrentaGetCancelledItemsErrorState(this.error);
 }
 
+
+class PrentaGetCompletedItemsLoadingState extends PrentaStates{}
+
 class PrentaGetCompletedItemsSuccessState extends PrentaStates {
   final List<Map<String, dynamic>> items;
 
@@ -121,4 +130,13 @@ class PrentaGetCompletedItemsErrorState extends PrentaStates {
   final String error;
 
   PrentaGetCompletedItemsErrorState(this.error);
+}
+
+
+class PrentaUpdateStatusSuccessState extends PrentaStates {}
+
+class PrentaUpdateStatusErrorState extends PrentaStates {
+  final String error;
+
+  PrentaUpdateStatusErrorState(this.error);
 }

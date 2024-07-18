@@ -13,7 +13,7 @@ class ActiveOrder extends StatelessWidget {
     return BlocConsumer<PrentaCubit, PrentaStates>(
       listener: (context,state){},
       builder: (context, state) {
-        if (state is PrentaLoadingState) {
+        if (state is PrentaGetOnProcessingItemsLoadingState) {
           return Center(child: CircularProgressIndicator());
         }
         else if (state is PrentaGetOnProcessingItemsSuccessState) {
@@ -22,7 +22,7 @@ class ActiveOrder extends StatelessWidget {
             return Center(child: Text('No processing items found.'));
           }
           return ListView.separated(
-            itemBuilder: (context, index) => buildActiveItem(onProcessingItems[index]),
+            itemBuilder: (context, index) => buildActiveItem(onProcessingItems[index],context),
             separatorBuilder: (context, index) => SizedBox(height: 10),
             itemCount: onProcessingItems.length,
           );
@@ -36,7 +36,7 @@ class ActiveOrder extends StatelessWidget {
     );
   }
 
-  Widget buildActiveItem(Map<String, dynamic> item) => Container(
+  Widget buildActiveItem(Map<String, dynamic> item,context) => Container(
     child: Padding(
       padding: const EdgeInsets.all(15.0),
       child: Column(
@@ -60,7 +60,22 @@ class ActiveOrder extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(item['title'] ?? 'Unknown Item'),
+                      Row(
+                        children: [
+                          Text(item['title'] ?? 'Unknown Item'),
+                          Spacer(),
+                          GestureDetector(
+                            onTap: () {
+                              PrentaCubit.get(context).showCancelledOrderDialog(context, Colors.red,item['id']); // Pass item['id'] as itemId
+
+                            },
+                            child: Icon(
+                              Icons.delete,
+                              size: 25,
+                            ),
+                          ),
+                        ],
+                      ),
                       Text(item['description'] ?? 'No description',maxLines: 1,overflow: TextOverflow.ellipsis,),
                       Spacer(),
                       Row(
