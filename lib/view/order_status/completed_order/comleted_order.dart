@@ -84,9 +84,16 @@ class CompletedOrder extends StatelessWidget{
                             ],
                           ),
                           Spacer(),
-                          TextButton(child:Text('Review', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18)),onPressed: (){
-                            navigateTo(context, ReviewAfter(item));
-                          },),
+                          if (item['description'] != null)
+                            TextButton(
+                              child: Text(
+                                'Review',
+                                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
+                              ),
+                              onPressed: () {
+                                navigateTo(context, ReviewAfter(item));
+                              },
+                            ),
                         ],
                       ),
                     ],

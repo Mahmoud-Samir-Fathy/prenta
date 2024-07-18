@@ -1006,4 +1006,11 @@ class PrentaCubit extends Cubit<PrentaStates> {
       },
     );
   }
+  void updateRating(double rating) {
+    emit(PrentaRatingUpdated(rating: rating));
+  }
+
+  void postReview(String review) {
+    emit(PrentaReviewPosted(review: review));
+  }
 }

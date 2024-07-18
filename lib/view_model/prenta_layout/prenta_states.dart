@@ -140,3 +140,14 @@ class PrentaUpdateStatusErrorState extends PrentaStates {
 
   PrentaUpdateStatusErrorState(this.error);
 }
+class PrentaRatingUpdated extends PrentaStates {
+  final double rating;
+
+  PrentaRatingUpdated({required this.rating});
+}
+
+class PrentaReviewPosted extends PrentaStates {
+  final String review;
+
+  PrentaReviewPosted({required this.review});
+}
