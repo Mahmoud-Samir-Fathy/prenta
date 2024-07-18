@@ -5,6 +5,10 @@ import 'package:hexcolor/hexcolor.dart';
 import '../../shared/components/components.dart';
 
 class ReviewAfter extends StatefulWidget {
+  final Map<String, dynamic> item;
+
+  ReviewAfter(this.item);
+
   @override
   _ReviewAfterState createState() => _ReviewAfterState();
 }
@@ -13,18 +17,45 @@ class _ReviewAfterState extends State<ReviewAfter> {
   double _rating = 0;
   final _reviewController = TextEditingController();
 
-  @override
-  void dispose() {
-    _reviewController.dispose();
-    super.dispose();
-  }
+
 
   @override
   Widget build(BuildContext context) {
+    final item = widget.item;
+
+    if (item == null) {
+      return Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          title: Text(
+            'Review',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          centerTitle: true,
+        ),
+        body: Center(
+          child: Text('No item data available'),
+        ),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: () {  },),
-        title: Text('Review',style: TextStyle(fontWeight: FontWeight.bold),),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        title: Text(
+          'Review',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -36,24 +67,32 @@ class _ReviewAfterState extends State<ReviewAfter> {
               Row(
                 children: [
                   Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Mustard Chunky \nCable Knit Sweater',style: TextStyle(fontSize: 20),),
-                      Text('25.00 L.E.',style: TextStyle(fontWeight: FontWeight.w300,fontSize: 16),)
+                      Text(
+                        item['title'] ?? 'Unknown Item',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      Text(
+                        '${item['price'] ?? '0.00'} L.E.',
+                        style: TextStyle(fontWeight: FontWeight.w300, fontSize: 16),
+                      ),
                     ],
                   ),
                   Spacer(),
-                  Image(image: AssetImage('images/testorder.png'),height: 100,)
+                  Image(
+                    image: NetworkImage(item['image'] ?? 'images/testorder.png'),
+                    height: 100,
+                  ),
                 ],
               ),
-              SizedBox(height: 25,),
+              SizedBox(height: 25),
               Container(
                 height: 1,
                 width: double.infinity,
                 color: Colors.grey[400],
               ),
-              SizedBox(height: 15,),
+              SizedBox(height: 15),
               Text(
                 'WRITE YOUR REVIEW',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -76,7 +115,6 @@ class _ReviewAfterState extends State<ReviewAfter> {
                   });
                 },
               ),
-        
               SizedBox(height: 20),
               Container(
                 decoration: BoxDecoration(
@@ -99,19 +137,19 @@ class _ReviewAfterState extends State<ReviewAfter> {
                     style: TextStyle(color: Colors.black),
                   ),
                 ),
-              )
-
-              ,
+              ),
               SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Center(
-                    child: defaultMaterialButton(
-                        text: 'Post Review',
-                        Function: () {
-                          print('Rating: $_rating');
-                          print('Review: ${_reviewController.text}');
-                         })),
+                  child: defaultMaterialButton(
+                    text: 'Post Review',
+                    Function: () {
+                      print('Rating: $_rating');
+                      print('Review: ${_reviewController.text}');
+                    },
+                  ),
+                ),
               ),
             ],
           ),

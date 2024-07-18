@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:printa/shared/components/components.dart';
 import 'package:printa/shared/styles/colors.dart';
+import 'package:printa/view/Reviewafterorder/reviewafter.dart';
 import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 
@@ -21,7 +23,7 @@ class CompletedOrder extends StatelessWidget{
             return Center(child: Text('No processing items found.'));
           }
           return ListView.separated(
-            itemBuilder: (context, index) => buildActiveItem(completedItems[index]),
+            itemBuilder: (context, index) => buildActiveItem(completedItems[index],context),
             separatorBuilder: (context, index) => SizedBox(height: 10),
             itemCount: completedItems.length,
           );
@@ -35,7 +37,7 @@ class CompletedOrder extends StatelessWidget{
     );
   }
 
-  Widget buildActiveItem(Map<String, dynamic> item) => Container(
+  Widget buildActiveItem(Map<String, dynamic> item,context) => Container(
     child: Padding(
       padding: const EdgeInsets.all(15.0),
       child: Column(
@@ -82,7 +84,9 @@ class CompletedOrder extends StatelessWidget{
                             ],
                           ),
                           Spacer(),
-                          TextButton(child:Text('Review', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18)),onPressed: (){},),
+                          TextButton(child:Text('Review', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18)),onPressed: (){
+                            navigateTo(context, ReviewAfter(item));
+                          },),
                         ],
                       ),
                     ],
