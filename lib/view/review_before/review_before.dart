@@ -1,52 +1,63 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
+import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 import 'package:readmore/readmore.dart';
 
 class ReviewBefore extends StatelessWidget{
   String text='asdaslk;djasldjaskl;dja;sldkjas;ldkasl/dklaskd;laskd;laskd;laskd;laskd;lasjdlasmd.,asmd.,asmd.,asmd.asmd.asd.,asmd.,asmd.,asdm.,asdm.,asdm.,asdm.,asdm.,asdm.,asdm.,asd\n';
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        surfaceTintColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: () {  },),
-        title: Text('Review'),
-        centerTitle: true,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Column(
-          children: [
-          Row(
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Mustard Chunky \nCable Knit Sweater',style: TextStyle(fontSize: 20),),
-                  Text('25.00 L.E.',style: TextStyle(fontWeight: FontWeight.w300,fontSize: 16),)
-                ],
-              ),
-              Spacer(),
-              Image(image: AssetImage('images/testorder.png'),height: 100,)
-            ],
+    return BlocConsumer<PrentaCubit,PrentaStates>(
+      listener: (context, state) {
+
+      },
+      builder: (context, state) {
+        var cubit=PrentaCubit.get(context);
+        return Scaffold(
+          appBar: AppBar(
+            surfaceTintColor: Colors.transparent,
+            elevation: 0,
+            leading: IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: () {  },),
+            title: Text('Review'),
+            centerTitle: true,
           ),
-            SizedBox(height: 25,),
-            Container(
-              height: 1,
-              width: double.infinity,
-              color: Colors.grey[400],
-            ),
-          SizedBox(height: 15,),
-            Expanded(
-              child: ListView.separated(
-                  itemBuilder: (context,index)=>buildReviewComments(text),
-                  separatorBuilder: (context,index)=>SizedBox(height: 10,),
-                  itemCount: 10),
-            )
-          ],),
-      ),
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Mustard Chunky \nCable Knit Sweater',style: TextStyle(fontSize: 20),),
+                        Text('25.00 L.E.',style: TextStyle(fontWeight: FontWeight.w300,fontSize: 16),)
+                      ],
+                    ),
+                    Spacer(),
+                    Image(image: AssetImage('images/testorder.png'),height: 100,)
+                  ],
+                ),
+                SizedBox(height: 25,),
+                Container(
+                  height: 1,
+                  width: double.infinity,
+                  color: Colors.grey[400],
+                ),
+                SizedBox(height: 15,),
+                Expanded(
+                  child: ListView.separated(
+                      itemBuilder: (context,index)=>buildReviewComments(text),
+                      separatorBuilder: (context,index)=>SizedBox(height: 10,),
+                      itemCount: 10),
+                )
+              ],),
+          ),
+        );
+      },
     );
   }
 }

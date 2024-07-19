@@ -1006,11 +1006,53 @@ class PrentaCubit extends Cubit<PrentaStates> {
       },
     );
   }
+   double rate=0;
   void updateRating(double rating) {
+    this.rate = rating;
     emit(PrentaRatingUpdated(rating: rating));
   }
-
   void postReview(String review) {
     emit(PrentaReviewPosted(review: review));
+  }
+
+
+  void sendProductReview({
+    required double stars,
+    required String review,
+    required String price,
+    required String size,
+    required String image,
+    required String description,
+    required String color,
+    required String quantity ,
+     String? frontDesign,
+     String? backDesign,
+    required String status,
+    required String id,
+    required String title,
+
+}){
+    ProductModel model=ProductModel(
+      review: review,
+      stars: stars,
+      price: price,
+      size: size,
+      description: description,
+      color: color,
+      quantity: quantity,
+      frontDesign: '',
+      backDesign: '',
+      status: status,
+      id: id,
+      title: title,
+      image: image
+
+    );
+    FirebaseFirestore.instance.collection('users').doc(uId).collection('review').doc().set(model.toMap()).then((value){
+
+      emit(PrentaSendReviewSuccessState());
+    }).catchError((error){
+      emit(PrentaSendReviewErrorState(error.toString()));
+    });
   }
 }

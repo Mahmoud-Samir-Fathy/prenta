@@ -151,3 +151,11 @@ class PrentaReviewPosted extends PrentaStates {
 
   PrentaReviewPosted({required this.review});
 }
+
+class PrentaSendReviewSuccessState extends PrentaStates {}
+
+class PrentaSendReviewErrorState extends PrentaStates {
+  final String error;
+
+  PrentaSendReviewErrorState(this.error);
+}

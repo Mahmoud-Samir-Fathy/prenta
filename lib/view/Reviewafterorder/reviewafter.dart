@@ -7,28 +7,20 @@ import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 
 import '../../shared/components/components.dart';
 
-class ReviewAfter extends StatefulWidget {
+class ReviewAfter extends StatelessWidget {
   final Map<String, dynamic> item;
 
   ReviewAfter(this.item);
 
-  @override
-  _ReviewAfterState createState() => _ReviewAfterState();
-}
-class _ReviewAfterState extends State<ReviewAfter> {
-  double rating = 0;
   final reviewController = TextEditingController();
-
 
   @override
   Widget build(BuildContext context) {
-    final item = widget.item;
-    return BlocConsumer<PrentaCubit,PrentaStates>(
-      listener: (context, state) {
-      },
+    return BlocConsumer<PrentaCubit, PrentaStates>(
+      listener: (context, state) {},
       builder: (context, state) {
-        var cubit=PrentaCubit.get(context);
-       return Scaffold(
+        var cubit = PrentaCubit.get(context);
+        return Scaffold(
           appBar: AppBar(
             leading: IconButton(
               icon: Icon(Icons.arrow_back_ios),
@@ -50,23 +42,35 @@ class _ReviewAfterState extends State<ReviewAfter> {
                 children: [
                   Row(
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            item['title'] ?? 'Unknown Item',
-                            style: TextStyle(fontSize: 20),
-                          ),
-                          Text(
-                            '${item['price'] ?? '0.00'} L.E.',
-                            style: TextStyle(fontWeight: FontWeight.w300, fontSize: 16),
-                          ),
-                        ],
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              item['title'] ?? 'Unknown Item',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            Text(
+                              item['description'] ?? 'Unknown Item',
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            Text(
+                              '${item['price'] ?? '0.00'} L.E.',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w300, fontSize: 16),
+                            ),
+                          ],
+                        ),
                       ),
-                      Spacer(),
-                      Image(
-                        image: NetworkImage(item['image'] ?? 'images/testorder.png'),
-                        height: 100,
+                      Container(
+                        child: Image(
+                          image: NetworkImage(item['image'] ??
+                              'https://via.placeholder.com/150'),
+                          height: 100,
+                          width: 100,
+                        ),
                       ),
                     ],
                   ),
@@ -83,7 +87,7 @@ class _ReviewAfterState extends State<ReviewAfter> {
                   ),
                   SizedBox(height: 10),
                   RatingBar.builder(
-                    initialRating: 3,
+                    initialRating: cubit.rate,
                     minRating: 1,
                     direction: Axis.horizontal,
                     allowHalfRating: true,
@@ -94,8 +98,9 @@ class _ReviewAfterState extends State<ReviewAfter> {
                       color: Colors.amber,
                     ),
                     onRatingUpdate: (rating) {
+                      print(rating);
                       cubit.updateRating(rating);
-                    }
+                    },
                   ),
                   SizedBox(height: 20),
                   Container(
@@ -127,9 +132,21 @@ class _ReviewAfterState extends State<ReviewAfter> {
                       child: defaultMaterialButton(
                         text: 'Post Review',
                         Function: () {
-                          print('Rating: $rating');
-                          print('Review: ${reviewController.text}');
-                        },
+                          cubit.sendProductReview(
+                            stars: cubit.rate,
+                            review: reviewController.text,
+                            color: item['color'],
+                            title: item['title'],
+                            id: item['id'],
+                            quantity: item['quantity'].toString(),
+                            description: item['description'],
+                            size: item['size'],
+                            price: item['size'],
+                            status: item['status'],
+                            image: item['image'],
+
+                          );
+                          },
                       ),
                     ),
                   ),

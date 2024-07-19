@@ -10,6 +10,8 @@ class ProductModel {
    String? frontDesign;
    String? backDesign;
    String? status;
+   String? review;
+   double? stars;
 
   ProductModel({
      this.id,
@@ -23,6 +25,8 @@ class ProductModel {
      this.frontDesign,
      this.backDesign,
      this.status,
+    this.review,
+    this.stars
   });
 
   ProductModel.fromJason(Map<String,dynamic>json){
@@ -37,6 +41,8 @@ class ProductModel {
     frontDesign=json['frontDesign'];
     backDesign=json['backDesign'];
     status=json['status'];
+    review = json['review'];
+    stars = json['stars']?.toDouble();
   }
 
   Map<String,dynamic>toMap(){
@@ -52,6 +58,8 @@ class ProductModel {
       'frontDesign':frontDesign,
       'backDesign':backDesign,
       'status':status,
+      'review': review,
+      'stars': stars,
     };
   }
 }
