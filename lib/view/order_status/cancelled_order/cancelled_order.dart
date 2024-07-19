@@ -35,7 +35,12 @@ class CancelledOrder extends StatelessWidget{
     );
   }
 
-  Widget buildActiveItem(Map<String, dynamic> item) => Container(
+  Widget buildActiveItem(Map<String, dynamic> item) {
+
+    final int quantity = item['quantity'] ?? 1;
+    final double price = double.tryParse(item['price'].toString()) ?? 0.0;
+
+    return Container(
     child: Padding(
       padding: const EdgeInsets.all(15.0),
       child: Column(
@@ -67,8 +72,8 @@ class CancelledOrder extends StatelessWidget{
                           Column(
                             children: [
                               Text('Qty(${item['quantity'] ?? 1})', style: TextStyle(fontSize: 16)),
-                              Text('${item['price'] ?? 0} L.E', style: TextStyle(fontWeight: FontWeight.w700)),
-                            ],
+                              Text('${price * quantity + 50} L.E',
+                                  style: TextStyle(fontWeight: FontWeight.w700)),                            ],
                           ),
                           SizedBox(width: 30),
                           Column(
@@ -95,4 +100,4 @@ class CancelledOrder extends StatelessWidget{
       ),
     ),
   );
-}
+}}
