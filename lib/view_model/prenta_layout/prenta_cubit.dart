@@ -2,12 +2,14 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:printa/models/product_model/product%20model.dart';
+import 'package:printa/models/review_model/review_model.dart';
 import 'package:printa/shared/components/components.dart';
 import 'package:printa/shared/components/constants.dart';
 import 'package:printa/shared/styles/colors.dart';
@@ -1015,7 +1017,6 @@ class PrentaCubit extends Cubit<PrentaStates> {
     emit(PrentaReviewPosted(review: review));
   }
 
-
   void sendProductReview({
     required double stars,
     required String review,
@@ -1023,36 +1024,53 @@ class PrentaCubit extends Cubit<PrentaStates> {
     required String size,
     required String image,
     required String description,
-    required String color,
-    required String quantity ,
-     String? frontDesign,
-     String? backDesign,
-    required String status,
-    required String id,
     required String title,
-
-}){
-    ProductModel model=ProductModel(
+  }) {
+    ReviewModel model = ReviewModel(
       review: review,
       stars: stars,
       price: price,
-      size: size,
-      description: description,
-      color: color,
-      quantity: quantity,
-      frontDesign: '',
-      backDesign: '',
-      status: status,
-      id: id,
-      title: title,
-      image: image
-
+      firstName: userInfo!.firstName,
+      lastName: userInfo!.lastName,
+      productDescription: description,
+      productImage: image,
+      productTitle: title,
+      id: uId,
     );
-    FirebaseFirestore.instance.collection('users').doc(uId).collection('review').doc().set(model.toMap()).then((value){
 
+    FirebaseFirestore.instance
+        .collection('reviews')
+        .doc(uId)
+        .collection('review')
+        .doc()
+        .set(model.toMap())
+        .then((value) {
       emit(PrentaSendReviewSuccessState());
-    }).catchError((error){
+    }).catchError((error) {
       emit(PrentaSendReviewErrorState(error.toString()));
     });
   }
+
+  List<ReviewModel> reviewModel = [];
+
+  void getReview() {
+    emit(PrentaGetReviewLoadingState());
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(uId)
+        .collection('review')
+        .get()
+        .then((value) {
+      print('Fetched ${value.docs.length} reviews');
+      reviewModel = value.docs
+          .map((doc) => ReviewModel.fromJason(doc.data()))
+          .toList();
+      print('Review Model: $reviewModel');
+      emit(PrentaGetReviewSuccessState());
+    }).catchError((error) {
+      print('Error fetching reviews: $error');
+      emit(PrentaGetReviewErrorState(error.toString()));
+    });
+  }
+
 }

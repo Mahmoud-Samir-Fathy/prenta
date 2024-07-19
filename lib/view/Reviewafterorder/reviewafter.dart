@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:printa/view/review_before/review_before.dart';
 import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 
@@ -135,18 +136,14 @@ class ReviewAfter extends StatelessWidget {
                           cubit.sendProductReview(
                             stars: cubit.rate,
                             review: reviewController.text,
-                            color: item['color'],
                             title: item['title'],
-                            id: item['id'],
-                            quantity: item['quantity'].toString(),
                             description: item['description'],
                             size: item['size'],
                             price: item['size'],
-                            status: item['status'],
                             image: item['image'],
-
                           );
-                          },
+
+                    navigateTo(context, ReviewBefore());                        },
                       ),
                     ),
                   ),
