@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:printa/models/product_model/product%20model.dart';
 import 'package:printa/shared/styles/colors.dart';
+import 'package:printa/view/product_details/product_details.dart';
 import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 
@@ -21,7 +23,7 @@ class CancelledOrder extends StatelessWidget{
             return Center(child: Text('No processing items found.'));
           }
           return ListView.separated(
-            itemBuilder: (context, index) => buildActiveItem(cancelledItems[index]),
+            itemBuilder: (context, index) => buildActiveItem(cancelledItems[index],context),
             separatorBuilder: (context, index) => SizedBox(height: 10),
             itemCount: cancelledItems.length,
           );
@@ -35,7 +37,7 @@ class CancelledOrder extends StatelessWidget{
     );
   }
 
-  Widget buildActiveItem(Map<String, dynamic> item) {
+  Widget buildActiveItem(Map<String, dynamic> item,context) {
 
     final int quantity = item['quantity'] ?? 1;
     final double price = double.tryParse(item['price'].toString()) ?? 0.0;
@@ -87,7 +89,10 @@ class CancelledOrder extends StatelessWidget{
                             ],
                           ),
                           Spacer(),
-                          TextButton(child:Text('Re-order', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18)),onPressed: (){},),
+                          TextButton(child:Text('Re-order', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18)),onPressed: (){
+                            navigateToProductDetails(context, item);
+
+                          },),
                         ],
                       ),
                     ],
@@ -100,4 +105,21 @@ class CancelledOrder extends StatelessWidget{
       ),
     ),
   );
-}}
+}
+}
+  void navigateToProductDetails(BuildContext context, Map<String, dynamic> item) {
+    Navigator.push(context,
+      MaterialPageRoute(
+        builder: (context) => ProductDetails(
+          product: ProductModel(
+            title: item['title'],
+            description: item['description'],
+            image: item['image'],
+            price: item['price'].toString(),
+          ),
+        ),
+      ),
+    );
+  }
+
+
