@@ -1025,6 +1025,7 @@ class PrentaCubit extends Cubit<PrentaStates> {
     required String image,
     required String description,
     required String title,
+    required BuildContext? context,
   }) {
     ReviewModel model = ReviewModel(
       review: review,
@@ -1039,38 +1040,52 @@ class PrentaCubit extends Cubit<PrentaStates> {
     );
 
     FirebaseFirestore.instance
-        .collection('reviews')
+        .collection('users')
         .doc(uId)
         .collection('review')
         .doc()
         .set(model.toMap())
         .then((value) {
+          showToast(context, title: 'Successfully sent', description: 'Now you can see your review in product details screen', state: ToastColorState.success, icon: Ionicons.thumbs_up_outline);
       emit(PrentaSendReviewSuccessState());
     }).catchError((error) {
+      showToast(context, title: 'Error', description: error.toString(), state: ToastColorState.error, icon: Ionicons.thumbs_down_outline);
+
       emit(PrentaSendReviewErrorState(error.toString()));
     });
   }
 
   List<ReviewModel> reviewModel = [];
 
-  void getReview() {
+  void getReview(String productTitle) {
     emit(PrentaGetReviewLoadingState());
+
+    List<ReviewModel> allReviews = [];
+
     FirebaseFirestore.instance
         .collection('users')
-        .doc(uId)
-        .collection('review')
         .get()
-        .then((value) {
-      print('Fetched ${value.docs.length} reviews');
-      reviewModel = value.docs
-          .map((doc) => ReviewModel.fromJason(doc.data()))
-          .toList();
-      print('Review Model: $reviewModel');
-      emit(PrentaGetReviewSuccessState());
+        .then((userSnapshot) {
+      final userFetches = userSnapshot.docs.map((userDoc) {
+        return userDoc.reference.collection('review').where('productTitle', isEqualTo: productTitle).get().then((reviewSnapshot) {
+          final userReviews = reviewSnapshot.docs
+              .map((reviewDoc) => ReviewModel.fromJason(reviewDoc.data()))
+              .toList();
+          allReviews.addAll(userReviews);
+        });
+      });
+
+      Future.wait(userFetches).then((_) {
+        print('Fetched ${allReviews.length} reviews for product: $productTitle');
+        reviewModel = allReviews;
+        print('Review Model: $reviewModel');
+        emit(PrentaGetReviewSuccessState());
+      });
     }).catchError((error) {
       print('Error fetching reviews: $error');
       emit(PrentaGetReviewErrorState(error.toString()));
     });
   }
+
 
 }

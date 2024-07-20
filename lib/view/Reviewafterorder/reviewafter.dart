@@ -134,6 +134,7 @@ class ReviewAfter extends StatelessWidget {
                         text: 'Post Review',
                         Function: () {
                           cubit.sendProductReview(
+                            context: context,
                             stars: cubit.rate,
                             review: reviewController.text,
                             title: item['title'],
@@ -142,8 +143,7 @@ class ReviewAfter extends StatelessWidget {
                             price: item['size'],
                             image: item['image'],
                           );
-
-                    navigateTo(context, ReviewBefore());                        },
+                          },
                       ),
                     ),
                   ),

@@ -7,6 +7,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:printa/models/product_model/product%20model.dart';
 import 'package:printa/shared/components/components.dart';
 import 'package:printa/shared/styles/colors.dart';
+import 'package:printa/view/review_before/review_before.dart';
 import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 
@@ -94,21 +95,12 @@ class ProductDetails extends StatelessWidget {
                               style: TextStyle(fontSize: 19, fontWeight: FontWeight.w400),
                             ),
                             SizedBox(width: 8),
-                            RatingBar.builder(
-                              initialRating: 3,
-                              minRating: 1,
-                              direction: Axis.horizontal,
-                              allowHalfRating: true,
-                              itemCount: 5,
-                              itemSize: 20,
-                              itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
-                              itemBuilder: (context, _) => Icon(
-                                Icons.star,
-                                color: Colors.amber,
-                              ),
-                              onRatingUpdate: (rating) {
-                                print(rating);
+                            Spacer(),
+                            InkWell(
+                              onTap: (){
+                                navigateTo(context, ReviewBefore(productTitle: product.title.toString()));
                               },
+                              child: Text('Reviews',style: TextStyle(color: Colors.blue),)
                             ),
                           ],
                         ),

@@ -7,11 +7,18 @@ import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 import 'package:readmore/readmore.dart';
 
 class ReviewBefore extends StatelessWidget {
+  final String productTitle;
+
+  ReviewBefore({required this.productTitle}) {
+    if (productTitle.isEmpty) {
+      throw ArgumentError('productTitle cannot be empty');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    // Fetch data if it's not already available
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      PrentaCubit.get(context).getReview();
+      PrentaCubit.get(context).getReview(productTitle );
     });
 
     return BlocConsumer<PrentaCubit, PrentaStates>(
@@ -75,12 +82,7 @@ class ReviewBefore extends StatelessWidget {
             child: Column(
               children: [
                 const SizedBox(height: 25),
-                Container(
-                  height: 1,
-                  width: double.infinity,
-                  color: Colors.grey[400],
-                ),
-                const SizedBox(height: 15),
+
                 Expanded(
                   child: ListView.separated(
                     itemBuilder: (context, index) => buildReviewComments(
@@ -99,6 +101,8 @@ class ReviewBefore extends StatelessWidget {
     );
   }
 }
+
+
 Widget buildReviewComments(ReviewModel? model) => Card(
   color: Colors.white,
   child: Padding(
@@ -115,7 +119,7 @@ Widget buildReviewComments(ReviewModel? model) => Card(
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(width: 30),
+            Spacer(),
             RatingBar.builder(
               itemSize: 25,
               initialRating: model.stars?.toDouble() ?? 0,
