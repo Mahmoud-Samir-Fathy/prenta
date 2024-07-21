@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context)=>PrentaCubit()..getUserData()..changeMode(fromShared:  isDark)..getProductData()..loadCartItems()),
+        BlocProvider(create: (context)=>PrentaCubit()..getUserData()..changeMode(fromShared:  isDark)..getProductData()..loadCartItems()..getFavouriteItems()),
       ],
       child: BlocConsumer<PrentaCubit,PrentaStates>(
         listener: (BuildContext context, PrentaStates state){},

@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:printa/models/favourite_model/favourite_model.dart';
 import 'package:printa/models/product_model/product%20model.dart';
 import 'package:printa/models/review_model/review_model.dart';
 import 'package:printa/shared/components/components.dart';
@@ -1087,5 +1088,73 @@ class PrentaCubit extends Cubit<PrentaStates> {
     });
   }
 
+  FavouriteModel? setFavouriteModel;
+  IconData? favouriteIcon=Ionicons.heart_dislike_outline;
+  bool? isFavourite=false;
 
+
+  void setFavouriteItems({required ProductModel product}) {
+    final isFavourite = !product.isFavourite;
+    product.isFavourite = isFavourite;
+
+    FavouriteModel favouriteModel = FavouriteModel(
+      isFavourite: isFavourite,
+      productTittle: product.title,
+      productDescription: product.description,
+      productImage: product.image,
+      productPrice: product.price
+    );
+
+    if (isFavourite) {
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(uId)
+          .collection('favourite')
+          .add(favouriteModel.toMap())
+          .then((value) {
+        favouriteIcon = Ionicons.heart;
+        emit(PrentaSendFavouriteItemSuccessState());
+      }).catchError((error) {
+        product.isFavourite = !isFavourite; // Revert if there was an error
+        emit(PrentaSendFavouriteItemErrorState(error.toString()));
+      });
+    } else {
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(uId)
+          .collection('favourite')
+          .where('productTittle', isEqualTo: product.title)
+          .get()
+          .then((querySnapshot) {
+        querySnapshot.docs.forEach((doc) {
+          doc.reference.delete();
+        });
+        favouriteIcon = Ionicons.heart_dislike_outline;
+        emit(PrentaDeleteFavouriteItemSuccessState());
+      }).catchError((error) {
+        product.isFavourite = !isFavourite;
+        emit(PrentaDeleteFavouriteItemErrorState(error.toString()));
+      });
+    }
+
+    emit(PrentaUpdateProductListState());
+  }
+
+  List<FavouriteModel?> getFavourite=[];
+  void getFavouriteItems() {
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(uId)
+        .collection('favourite')
+        .get()
+        .then((querySnapshot) {
+      getFavourite.clear(); // Clear the list before adding new data
+      for (var doc in querySnapshot.docs) {
+        getFavourite.add(FavouriteModel.fromJason(doc.data() as Map<String, dynamic>));
+      }
+      emit(PrentaGetFavouriteItemSuccessState());
+    }).catchError((error) {
+      emit(PrentaGetFavouriteItemErrorState(error.toString()));
+    });
+  }
 }

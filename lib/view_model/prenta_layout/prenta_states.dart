@@ -1,3 +1,4 @@
+import 'package:printa/models/favourite_model/favourite_model.dart';
 import 'package:printa/models/product_model/product%20model.dart';
 import 'package:printa/models/user_model/user_model.dart';
 
@@ -166,4 +167,40 @@ class PrentaGetReviewErrorState extends PrentaStates {
   final String error;
 
   PrentaGetReviewErrorState(this.error);
+}
+
+
+class PrentaSendFavouriteItemSuccessState extends PrentaStates {}
+
+class PrentaSendFavouriteItemErrorState extends PrentaStates {
+  final String error;
+
+  PrentaSendFavouriteItemErrorState(this.error);
+}
+class PrentaDeleteFavouriteItemSuccessState extends PrentaStates {}
+class PrentaDeleteFavouriteItemErrorState extends PrentaStates {
+  final String error;
+
+  PrentaDeleteFavouriteItemErrorState(this.error);
+}
+
+class PrentaGetFavouriteItemSuccessState extends PrentaStates {
+  final List<FavouriteModel?> getFavourite=[];
+
+  PrentaGetFavouriteItemSuccessState();
+}
+class PrentaGetFavouriteItemErrorState extends PrentaStates {
+  final String error;
+
+  PrentaGetFavouriteItemErrorState(this.error);
+}
+
+class PrentaUpdateProductListState extends PrentaStates {}
+
+
+class PrentaRemoveFavouriteItemSuccessState extends PrentaStates {}
+class PrentaRemoveFavouriteItemErrorState extends PrentaStates {
+  final String error;
+
+  PrentaRemoveFavouriteItemErrorState(this.error);
 }

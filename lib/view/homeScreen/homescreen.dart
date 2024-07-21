@@ -161,77 +161,98 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-Widget ItemCard(ProductModel product,context) => GestureDetector(
-  onTap: () {
-    navigateTo(context, ProductDetails(product: product,));
-  },
-  child: Container(
-    decoration: BoxDecoration(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(15.0),),
-    child: Column(
-      children: [
-        Stack(
-          clipBehavior: Clip.none,
-          children: [
-            Container(
-              width: double.infinity,
-              height: 200,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                image: DecorationImage(
-                  image: NetworkImage('${product.image}'),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-            Positioned(
-              top: 8,
-              right: 8,
-              child: Container(
+Widget ItemCard(ProductModel product, BuildContext context) {
+  return GestureDetector(
+    onTap: () {
+      navigateTo(context, ProductDetails(product: product));
+    },
+    child: Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15.0),
+      ),
+      child: Column(
+        children: [
+          Stack(
+            clipBehavior: Clip.none,
+            children: [
+              Container(
+                width: double.infinity,
+                height: 200,
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
-                ),
-                padding: EdgeInsets.all(5),
-                child: Icon(
-                  Ionicons.heart_outline,
-                  color: Colors.grey,
+                  borderRadius: BorderRadius.circular(20),
+                  image: DecorationImage(
+                    image: NetworkImage('${product.image}'),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
-            ),
-            Positioned(
-              bottom: -25,
-              left: 0,
-              right: 0,
-              child: Center(
+              Positioned(
+                top: 8,
+                right: 8,
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.blue,
+                    color: Colors.white,
                     shape: BoxShape.circle,
                   ),
-                  padding: EdgeInsets.all(12),
-                  child: Icon(
-                    Ionicons.cart,
-                    color: Colors.white,
+                  child: IconButton(
+                    padding: EdgeInsets.zero,
+                    onPressed: () {
+                      PrentaCubit.get(context).setFavouriteItems(
+                        product: product,
+                      );
+                    },
+                    icon: Icon(
+                      product.isFavourite ? Ionicons.heart : Ionicons.heart_outline,
+                      color: product.isFavourite ? Colors.red : Colors.grey,
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
-        SizedBox(height: 25),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('${product.title}', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,),),
-            SizedBox(width: 5,),
-            Text('${product.price}',style: TextStyle(fontSize: 10,fontWeight: FontWeight.w300,color: Colors.grey),)
-          ],
-        ),
-        SizedBox(height: 4),
-        Text('${product.description}',maxLines: 2,overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 16),),
-      ],
+              Positioned(
+                bottom: -25,
+                left: 0,
+                right: 0,
+                child: Center(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                      shape: BoxShape.circle,
+                    ),
+                    padding: EdgeInsets.all(12),
+                    child: Icon(
+                      Ionicons.cart,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 25),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                '${product.title}',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(width: 5),
+              Text(
+                '${product.price}',
+                style: TextStyle(fontSize: 10, fontWeight: FontWeight.w300, color: Colors.grey),
+              ),
+            ],
+          ),
+          SizedBox(height: 4),
+          Text(
+            '${product.description}',
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(fontSize: 16),
+          ),
+        ],
+      ),
     ),
-  ),
-);
+  );
+}
