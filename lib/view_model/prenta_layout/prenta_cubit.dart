@@ -1130,6 +1130,7 @@ class PrentaCubit extends Cubit<PrentaStates> {
       emit(PrentaSendFavouriteItemErrorState(error.toString()));
     });
   }
+
   List<FavouriteModel?> getFavourite = []; // Make sure this is a class-level variable
 
   void getFavouriteItems() {
@@ -1147,6 +1148,25 @@ class PrentaCubit extends Cubit<PrentaStates> {
       emit(PrentaGetFavouriteItemSuccessState());
     }).catchError((error) {
       emit(PrentaGetFavouriteItemErrorState(error.toString()));
+    });
+  }
+
+  void deleteFavouriteItem({required FavouriteModel model}) {
+    final favouritesCollection = FirebaseFirestore.instance
+        .collection('users')
+        .doc(uId)
+        .collection('favourite');
+
+    favouritesCollection.where('productTittle', isEqualTo: model.productTittle)
+        .get()
+        .then((value) {
+      for (var doc in value.docs) {
+        doc.reference.delete();
+      }
+      emit(PrentaDeleteFavouriteItemSuccessState());
+      getFavouriteItems(); // Refresh the list after deleting
+    }).catchError((error) {
+      emit(PrentaDeleteFavouriteItemErrorState(error.toString()));
     });
   }
 }

@@ -11,12 +11,12 @@ class Wishlist extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<PrentaCubit, PrentaStates>(
       listener: (context, state) {
-        if (state is PrentaRemoveFavouriteItemSuccessState) {
+        if (state is PrentaDeleteFavouriteItemSuccessState) {
           // Optionally show a success message or refresh the list
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('Item removed from wishlist')),
           );
-        } else if (state is PrentaRemoveFavouriteItemErrorState) {
+        } else if (state is PrentaDeleteFavouriteItemErrorState) {
           // Optionally show an error message
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('Failed to remove item from wishlist')),
@@ -83,6 +83,8 @@ class Wishlist extends StatelessWidget {
                   ),
                   IconButton(
                     onPressed: () {
+                      // Call the delete function with the correct product
+                      cubit.deleteFavouriteItem(model: item);
                     },
                     icon: Icon(Icons.cancel),
                   ),
