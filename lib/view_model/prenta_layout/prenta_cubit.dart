@@ -1088,11 +1088,7 @@ class PrentaCubit extends Cubit<PrentaStates> {
     });
   }
 
-
-  void setFavouriteItems({
-    required ProductModel product
-  })
-  {
+  void setFavouriteItems({required ProductModel product}) {
     final isFavourite = !product.isFavourite;
     product.isFavourite = isFavourite;
 
@@ -1101,41 +1097,44 @@ class PrentaCubit extends Cubit<PrentaStates> {
       productTittle: product.title,
       productDescription: product.description,
       productImage: product.image,
-      productPrice: product.price
+      productPrice: product.price,
     );
 
+    final favouritesCollection = FirebaseFirestore.instance
+        .collection('users')
+        .doc(uId)
+        .collection('favourite');
+
     if (isFavourite) {
-      FirebaseFirestore.instance
-          .collection('users')
-          .doc(uId)
-          .collection('favourite')
-          .add(favouriteModel.toMap())
-          .then((value) {
+      favouritesCollection.add(favouriteModel.toMap()).then((value) {
         emit(PrentaSendFavouriteItemSuccessState());
+        getFavouriteItems(); // Refresh the list after adding
       }).catchError((error) {
-        product.isFavourite = !isFavourite;
+        product.isFavourite = !isFavourite; // Revert the change
         emit(PrentaSendFavouriteItemErrorState(error.toString()));
       });
     } else {
-      FirebaseFirestore.instance
-          .collection('users')
-          .doc(uId)
-          .collection('favourite')
+      favouritesCollection
           .where('productTittle', isEqualTo: product.title)
           .get()
           .then((querySnapshot) {
+        if (querySnapshot.docs.isEmpty) {
+          // No document found to delete
+          return;
+        }
         for (var doc in querySnapshot.docs) {
           doc.reference.delete();
         }
         emit(PrentaDeleteFavouriteItemSuccessState());
+        getFavouriteItems(); // Refresh the list after deleting
       }).catchError((error) {
-        product.isFavourite = !isFavourite;
+        product.isFavourite = !isFavourite; // Revert the change
         emit(PrentaDeleteFavouriteItemErrorState(error.toString()));
       });
     }
-
-    emit(PrentaUpdateProductListState());
   }
+
+
 
   List<FavouriteModel?> getFavourite=[];
   void getFavouriteItems() {
