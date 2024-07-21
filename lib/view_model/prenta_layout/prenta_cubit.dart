@@ -1087,56 +1087,51 @@ class PrentaCubit extends Cubit<PrentaStates> {
       emit(PrentaGetReviewErrorState(error.toString()));
     });
   }
-
   void setFavouriteItems({required ProductModel product}) {
-    final isFavourite = !product.isFavourite;
-    product.isFavourite = isFavourite;
-
-    FavouriteModel favouriteModel = FavouriteModel(
-      isFavourite: isFavourite,
-      productTittle: product.title,
-      productDescription: product.description,
-      productImage: product.image,
-      productPrice: product.price,
-    );
-
     final favouritesCollection = FirebaseFirestore.instance
         .collection('users')
         .doc(uId)
         .collection('favourite');
 
-    if (isFavourite) {
-      favouritesCollection.add(favouriteModel.toMap()).then((value) {
-        emit(PrentaSendFavouriteItemSuccessState());
-        getFavouriteItems(); // Refresh the list after adding
-      }).catchError((error) {
-        product.isFavourite = !isFavourite; // Revert the change
-        emit(PrentaSendFavouriteItemErrorState(error.toString()));
-      });
-    } else {
-      favouritesCollection
-          .where('productTittle', isEqualTo: product.title)
-          .get()
-          .then((querySnapshot) {
-        if (querySnapshot.docs.isEmpty) {
-          // No document found to delete
-          return;
-        }
+    // Check if the product is currently a favorite
+    favouritesCollection
+        .where('productTittle', isEqualTo: product.title)
+        .get()
+        .then((querySnapshot) {
+      if (querySnapshot.docs.isNotEmpty) {
+        // Product is already a favorite, so delete it
         for (var doc in querySnapshot.docs) {
-          doc.reference.delete();
+          doc.reference.delete().then((_) {
+            print('Item removed from favorites');
+            emit(PrentaDeleteFavouriteItemSuccessState());
+            getFavouriteItems(); // Refresh the list after deleting
+          }).catchError((error) {
+            emit(PrentaDeleteFavouriteItemErrorState(error.toString()));
+          });
         }
-        emit(PrentaDeleteFavouriteItemSuccessState());
-        getFavouriteItems(); // Refresh the list after deleting
-      }).catchError((error) {
-        product.isFavourite = !isFavourite; // Revert the change
-        emit(PrentaDeleteFavouriteItemErrorState(error.toString()));
-      });
-    }
+      } else {
+        // Product is not a favorite, so add it
+        FavouriteModel favouriteModel = FavouriteModel(
+          isFavourite: true,
+          productTittle: product.title,
+          productDescription: product.description,
+          productImage: product.image,
+          productPrice: product.price,
+        );
+        favouritesCollection.add(favouriteModel.toMap()).then((_) {
+          print('Item added to favorites');
+          emit(PrentaSendFavouriteItemSuccessState());
+          getFavouriteItems(); // Refresh the list after adding
+        }).catchError((error) {
+          emit(PrentaSendFavouriteItemErrorState(error.toString()));
+        });
+      }
+    }).catchError((error) {
+      emit(PrentaSendFavouriteItemErrorState(error.toString()));
+    });
   }
+  List<FavouriteModel?> getFavourite = []; // Make sure this is a class-level variable
 
-
-
-  List<FavouriteModel?> getFavourite=[];
   void getFavouriteItems() {
     FirebaseFirestore.instance
         .collection('users')
@@ -1144,10 +1139,11 @@ class PrentaCubit extends Cubit<PrentaStates> {
         .collection('favourite')
         .get()
         .then((querySnapshot) {
-      getFavourite.clear();
+      List<FavouriteModel> updatedFavorites = [];
       for (var doc in querySnapshot.docs) {
-        getFavourite.add(FavouriteModel.fromJason(doc.data()));
+        updatedFavorites.add(FavouriteModel.fromJason(doc.data()));
       }
+      getFavourite = updatedFavorites;
       emit(PrentaGetFavouriteItemSuccessState());
     }).catchError((error) {
       emit(PrentaGetFavouriteItemErrorState(error.toString()));
