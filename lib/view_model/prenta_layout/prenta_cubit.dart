@@ -1088,12 +1088,11 @@ class PrentaCubit extends Cubit<PrentaStates> {
     });
   }
 
-  FavouriteModel? setFavouriteModel;
-  IconData? favouriteIcon=Ionicons.heart_dislike_outline;
-  bool? isFavourite=false;
 
-
-  void setFavouriteItems({required ProductModel product}) {
+  void setFavouriteItems({
+    required ProductModel product
+  })
+  {
     final isFavourite = !product.isFavourite;
     product.isFavourite = isFavourite;
 
@@ -1112,10 +1111,9 @@ class PrentaCubit extends Cubit<PrentaStates> {
           .collection('favourite')
           .add(favouriteModel.toMap())
           .then((value) {
-        favouriteIcon = Ionicons.heart;
         emit(PrentaSendFavouriteItemSuccessState());
       }).catchError((error) {
-        product.isFavourite = !isFavourite; // Revert if there was an error
+        product.isFavourite = !isFavourite;
         emit(PrentaSendFavouriteItemErrorState(error.toString()));
       });
     } else {
@@ -1126,10 +1124,9 @@ class PrentaCubit extends Cubit<PrentaStates> {
           .where('productTittle', isEqualTo: product.title)
           .get()
           .then((querySnapshot) {
-        querySnapshot.docs.forEach((doc) {
+        for (var doc in querySnapshot.docs) {
           doc.reference.delete();
-        });
-        favouriteIcon = Ionicons.heart_dislike_outline;
+        }
         emit(PrentaDeleteFavouriteItemSuccessState());
       }).catchError((error) {
         product.isFavourite = !isFavourite;
@@ -1148,9 +1145,9 @@ class PrentaCubit extends Cubit<PrentaStates> {
         .collection('favourite')
         .get()
         .then((querySnapshot) {
-      getFavourite.clear(); // Clear the list before adding new data
+      getFavourite.clear();
       for (var doc in querySnapshot.docs) {
-        getFavourite.add(FavouriteModel.fromJason(doc.data() as Map<String, dynamic>));
+        getFavourite.add(FavouriteModel.fromJason(doc.data()));
       }
       emit(PrentaGetFavouriteItemSuccessState());
     }).catchError((error) {
