@@ -13,3 +13,8 @@ class ChangePassVisibility extends LoginStates{}
 
 class UpdateUserPasswordSuccessState extends LoginStates{}
 class UpdateUserPasswordErrorState extends LoginStates{}
+class NotificationTokenReceived extends LoginStates {
+  final String token;
+
+  NotificationTokenReceived(this.token);
+}

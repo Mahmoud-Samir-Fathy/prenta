@@ -19,3 +19,4 @@ void printFullText(String text){
 }
 
 String? uId;
+String? deviceToken;

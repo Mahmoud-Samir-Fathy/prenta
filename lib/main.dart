@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:printa/shared/bloc_observer/bloc_observer.dart';
@@ -10,15 +11,22 @@ import 'firebase_options.dart';
 import 'shared/components/constants.dart';
 import 'shared/network/local/cache_helper.dart';
 
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async{
+  print('Handling a background message${message.messageId}');
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await FirebaseMessaging.instance.getInitialMessage();
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await CacheHelper.init();
   Bloc.observer = MyBlocObserver();
   uId = CacheHelper.getData(key: 'uId');
+  deviceToken=CacheHelper.getData(key: 'token');
+  print('My Device token is ==================$deviceToken');
   print(uId);
   bool? onBoarding = CacheHelper.getData(key: 'OnBoarding');
   bool? isDark=CacheHelper.getData(key:'isDark');
@@ -40,7 +48,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context)=>PrentaCubit()..getUserData()..changeMode(fromShared:  isDark)..getProductData()..loadCartItems()..getFavouriteItems()),
+        BlocProvider(create: (context)=>PrentaCubit()..getUserData()..changeMode(fromShared:  isDark)..getProductData()..loadCartItems()..getFavouriteItems()..initNotifications()),
       ],
       child: BlocConsumer<PrentaCubit,PrentaStates>(
         listener: (BuildContext context, PrentaStates state){},

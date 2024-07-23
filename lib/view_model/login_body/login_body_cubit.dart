@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:printa/shared/components/constants.dart';
+import 'package:printa/shared/network/local/cache_helper.dart';
 import 'package:printa/view/layout/prenta_layout.dart';
 import 'package:printa/view/login&register_screen/account_screen/account_screen.dart';
 import 'package:printa/view_model/login_body/login_body_states.dart';
@@ -32,6 +35,7 @@ void UserLogin({
           email: email,
           password: password).then((value) {
             emit(LoginSuccessState(value.user!.uid));
+            getDeviceToken();
       }).catchError((error){
         emit(LoginErrorState(error.toString()));
       });
@@ -133,5 +137,28 @@ void UserLogin({
       emit(UpdateUserPasswordErrorState());
 
     }
+  }
+  void getDeviceToken() async {
+    await FirebaseMessaging.instance.getToken().then((token) {
+      deviceToken = token;
+      print('My token is $deviceToken');
+      saveToken(token!);
+      CacheHelper.saveData(
+          key: 'token',
+          value: token);
+      emit(NotificationTokenReceived(token));
+    }).catchError((error) {
+      print('Error getting device token: $error');
+    });
+  }
+
+  void saveToken(String token) async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(uId)
+        .collection('user device token')
+        .add({
+      'token': token,
+    });
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:printa/shared/components/components.dart';
+import 'package:printa/shared/components/constants.dart';
 import 'package:printa/shared/styles/colors.dart';
 import 'package:printa/view/homeScreen/homescreen.dart';
 import 'package:printa/view/layout/prenta_layout.dart';
@@ -20,15 +21,21 @@ class CheckOut extends StatelessWidget {
     return BlocConsumer<PrentaCubit, PrentaStates>(
       listener: (context, state) {
         if (state is CartCheckedOutState) {
-          // Navigate to a confirmation screen or show a success message
-          ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Checkout successful!'))
-          );
+          // Check if deviceToken is not null
+          if (deviceToken != null) {
+            PrentaCubit.get(context).sendPushMessage(deviceToken!, 'Checkout successful', 'Order Completed');
+          } else {
+            print('Device token is not available.');
+          }
 
+          // Navigate or show success message
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Checkout successful!')),
+          );
 
         } else if (state is CartCheckoutErrorState) {
           ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Checkout failed. Please try again.'))
+            SnackBar(content: Text('Checkout failed. Please try again.')),
           );
         }
       },

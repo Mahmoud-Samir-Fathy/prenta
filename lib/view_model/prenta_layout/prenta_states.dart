@@ -206,3 +206,8 @@ class PrentaRemoveFavouriteItemErrorState extends PrentaStates {
 }
 class PrentaDeleteFavouriteItemNotFoundState extends PrentaStates {}
 class PrentaSendFavouriteItemAlreadyExistsState extends PrentaStates {}
+class NotificationTokenReceived extends PrentaStates {
+  final String token;
+
+  NotificationTokenReceived(this.token);
+}
