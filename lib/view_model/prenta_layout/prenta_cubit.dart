@@ -135,6 +135,7 @@ class PrentaCubit extends Cubit<PrentaStates> {
             phoneNumber: phoneNumber,
             image: value,
           );
+
         }).catchError((error) {
           emit(UploadProfileImageErrorState());
         });
@@ -171,6 +172,7 @@ class PrentaCubit extends Cubit<PrentaStates> {
         .update(model.toMap())
         .then((value) {
       getUserData();
+      sendPushMessage(deviceToken!, 'Information Successfully Changed', 'Personal Information', DateTime.now().toString(), 'person');
     }).catchError((error) {
       emit(UpdateUserInfoErrorState());
     });
@@ -223,6 +225,7 @@ class PrentaCubit extends Cubit<PrentaStates> {
         .update(model.toMap())
         .then((value) {
       getUserData();
+      sendPushMessage(deviceToken!, 'Your Address Changed Successfully', 'Address Changed', DateTime.now().toString(), 'address');
     }).catchError((error) {
       emit(UpdateUserAddressErrorState());
     });
@@ -891,7 +894,8 @@ class PrentaCubit extends Cubit<PrentaStates> {
       emit(PrentaGetCompletedItemsErrorState(e.toString()));
     }
   }
-  void updateStatusToCompleted(String itemId) async {
+
+  void updateStatusToCancelled(String itemId) async {
     try {
       User? user = FirebaseAuth.instance.currentUser;
       if (user == null) {
@@ -949,7 +953,7 @@ class PrentaCubit extends Cubit<PrentaStates> {
   }
 
 
-  void showCancelledOrderDialog(BuildContext context, Color color, item) {
+  void showCancelledOrderDialog(BuildContext context, Color color, item,title) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -1001,8 +1005,10 @@ class PrentaCubit extends Cubit<PrentaStates> {
                   borderRadius: BorderRadius.all(Radius.circular(30)),
                 ),
                 onPressed: () {
-                  updateStatusToCompleted(item);
+                  updateStatusToCancelled(item);
                   Navigator.pop(context);
+                 sendPushMessage(deviceToken!, 'order '+ title +' has been successfully cancelled', 'Order Cancelled', DateTime.now().toString(), 'cancelled');
+
                 },
                 child: Text(
                   'Yes',
@@ -1055,6 +1061,8 @@ class PrentaCubit extends Cubit<PrentaStates> {
         .then((value) {
           showToast(context, title: 'Successfully sent', description: 'Now you can see your review in product details screen', state: ToastColorState.success, icon: Ionicons.thumbs_up_outline);
       emit(PrentaSendReviewSuccessState());
+          sendPushMessage(deviceToken!, 'Check your Review if you wanna', 'Review Submitted', DateTime.now().toString(), 'review');
+
     }).catchError((error) {
       showToast(context, title: 'Error', description: error.toString(), state: ToastColorState.error, icon: Ionicons.thumbs_down_outline);
 

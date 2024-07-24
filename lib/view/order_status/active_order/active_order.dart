@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:printa/shared/components/constants.dart';
 import 'package:printa/shared/styles/colors.dart';
 import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
@@ -71,7 +72,7 @@ class ActiveOrder extends StatelessWidget {
                                 PrentaCubit.get(context)
                                     .showCancelledOrderDialog(
                                     context, Colors.red,
-                                    item['id']); // Pass item['id'] as itemId
+                                    item['id'],item['title']); // Pass item['id'] as itemId
                               },
                               child: Icon(
                                 Icons.delete,

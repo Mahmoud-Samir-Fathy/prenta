@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:printa/shared/components/constants.dart';
 import 'package:printa/shared/styles/colors.dart';
 import 'package:printa/view/forget_password/forget_password_in_edit.dart';
 import 'package:printa/view/user_profile/profile.dart';
@@ -23,6 +24,7 @@ class ChangePassword extends StatelessWidget{
         if (state is UpdateUserInfoSuccessState) {
           navigateTo(context, Profile());
           showToast(context, title: 'Success', description: 'Password has been updated', state: ToastColorState.success, icon: Ionicons.thumbs_up_outline);
+          PrentaCubit.get(context).sendPushMessage(deviceToken!, 'Password has been updated successfully', 'Password Updated', DateTime.now().toString(), 'password');
         } else if (state is UpdateUserInfoErrorState) {
           showToast(context, title: 'Error', description: 'Failed to update password', state: ToastColorState.error, icon: Ionicons.alert_circle_outline);
         }

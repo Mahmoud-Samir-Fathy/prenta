@@ -46,7 +46,8 @@ Widget buildNotification(NotificationModel model)=>Padding(
       CircleAvatar(
         radius: 25,
         backgroundColor: Colors.grey.shade200,
-        child: Icon(Icons.email, color: Colors.blue),
+        child: Icon(getIconForNotification(model.image.toString()),
+            color: Colors.blue,),
       ),
       SizedBox(width: 15),
       Column(
@@ -81,3 +82,19 @@ Widget buildNotification(NotificationModel model)=>Padding(
     ],
   ),
 );
+
+IconData getIconForNotification(String imageType) {
+  switch (imageType) {
+    case 'email':
+      return Icons.email;
+    case 'password':
+      return Icons.lock;
+    case 'person':
+      return Icons.person;
+    case 'address':
+      return Icons.home;
+  // Add more cases as needed
+    default:
+      return Icons.notifications;
+  }
+}

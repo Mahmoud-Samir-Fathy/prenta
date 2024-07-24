@@ -24,7 +24,7 @@ class CheckOut extends StatelessWidget {
         if (state is CartCheckedOutState) {
           // Check if deviceToken is not null
           if (deviceToken != null) {
-            PrentaCubit.get(context).sendPushMessage(deviceToken!, 'Checkout successful', 'Order Completed',date.toString(),'asdasdads');
+            PrentaCubit.get(context).sendPushMessage(deviceToken!, 'Checkout successful', 'Order Completed',date.toString(),'email');
           } else {
             print('Device token is not available.');
           }

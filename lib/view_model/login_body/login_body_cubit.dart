@@ -10,6 +10,7 @@ import 'package:printa/shared/network/local/cache_helper.dart';
 import 'package:printa/view/layout/prenta_layout.dart';
 import 'package:printa/view/login&register_screen/account_screen/account_screen.dart';
 import 'package:printa/view_model/login_body/login_body_states.dart';
+import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 
 import '../../shared/components/components.dart';
 import '../../view/login&register_screen/login_body/login_body.dart';
@@ -96,6 +97,7 @@ void UserLogin({
             .then((_) {
           print('Password updated successfully in Firestore for user: ${user.uid}');
           emit(UpdateUserPasswordSuccessState());
+          PrentaCubit.get(context).sendPushMessage(deviceToken!, 'Password has been updated successfully', 'Password Updated', DateTime.now().toString(), 'password');
           navigateAndFinish(context, PrentaLayout());
           // Navigate to profile or home screen here if needed
         }).catchError((error) {
