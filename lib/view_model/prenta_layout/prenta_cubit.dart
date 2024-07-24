@@ -9,6 +9,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:printa/models/favourite_model/favourite_model.dart';
+import 'package:printa/models/notification_model/notification_model.dart';
 import 'package:printa/models/product_model/product%20model.dart';
 import 'package:printa/models/review_model/review_model.dart';
 import 'package:printa/shared/components/components.dart';
@@ -1256,8 +1257,8 @@ class PrentaCubit extends Cubit<PrentaStates> {
     }
   }
 
-
-  Future<void> sendPushMessage(String token, String body, String title) async {
+NotificationModel? notificationModel;
+  Future<void> sendPushMessage(String token, String body, String title,String date,String image) async {
     const String projectId = 'prenta-842a9';
     const String url = 'https://fcm.googleapis.com/v1/projects/$projectId/messages:send';
     final String keyFilePath = 'assets/service-account-file.json'; // Ensure this path matches your assets location
@@ -1310,14 +1311,56 @@ class PrentaCubit extends Cubit<PrentaStates> {
       );
 
       if (response.statusCode == 200) {
+        NotificationModel notificationModel=NotificationModel(
+          title: title,
+          body: body,
+          image: image,
+          date: date,
+        );
         print('Notification sent successfully');
       } else {
         print('Failed to send notification');
         print('Response status: ${response.statusCode}');
         print('Response body: ${response.body}');
       }
+      NotificationModel notificationModel=NotificationModel(
+        title: title,
+        body: body,
+        image: image,
+        date: date,
+      );
+      FirebaseFirestore.instance.collection('users').doc(uId).collection('notification').doc().set(notificationModel.toMap()).then((value){
+        getNotificationList();
+      });
     } catch (e) {
       print('Error sending push message: $e');
     }
+  }
+  List<NotificationModel> notificationList = [];
+
+  void getNotificationList() {
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(uId)
+        .collection('notification')
+        .get()
+        .then((value) {
+          notificationList=[];
+      // Iterate through each document in the collection
+      value.docs.forEach((doc) {
+        // Access the data in the document
+        Map<String, dynamic> notificationData = doc.data();
+        // Convert the data to a NotificationModel instance
+        NotificationModel notification = NotificationModel.fromJason(notificationData);
+        // Add the instance to the list
+        notificationList.add(notification);
+      });
+      emit(PrentaGetNotificationSuccessState(notificationList));
+      // You can print the list or use it as needed
+      print(notificationList);
+    }).catchError((error) {
+      emit(PrentaGetNotificationErrorState(error.toString()));
+      print('Error getting notifications: $error');
+    });
   }
 }

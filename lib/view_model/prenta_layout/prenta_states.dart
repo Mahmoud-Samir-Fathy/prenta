@@ -1,4 +1,5 @@
 import 'package:printa/models/favourite_model/favourite_model.dart';
+import 'package:printa/models/notification_model/notification_model.dart';
 import 'package:printa/models/product_model/product%20model.dart';
 import 'package:printa/models/user_model/user_model.dart';
 
@@ -210,4 +211,14 @@ class NotificationTokenReceived extends PrentaStates {
   final String token;
 
   NotificationTokenReceived(this.token);
+}
+class PrentaGetNotificationSuccessState extends PrentaStates {
+  final List <NotificationModel> notificationModel;
+  PrentaGetNotificationSuccessState(this.notificationModel);
+
+}
+class PrentaGetNotificationErrorState extends PrentaStates {
+  final String error;
+
+  PrentaGetNotificationErrorState(this.error);
 }

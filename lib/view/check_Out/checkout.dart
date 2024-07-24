@@ -18,12 +18,13 @@ class CheckOut extends StatelessWidget {
   Widget build(BuildContext context) {
     Future.microtask(() => BlocProvider.of<PrentaCubit>(context).loadCartItems());
 
+    var date=DateTime.now();
     return BlocConsumer<PrentaCubit, PrentaStates>(
       listener: (context, state) {
         if (state is CartCheckedOutState) {
           // Check if deviceToken is not null
           if (deviceToken != null) {
-            PrentaCubit.get(context).sendPushMessage(deviceToken!, 'Checkout successful', 'Order Completed');
+            PrentaCubit.get(context).sendPushMessage(deviceToken!, 'Checkout successful', 'Order Completed',date.toString(),'asdasdads');
           } else {
             print('Device token is not available.');
           }

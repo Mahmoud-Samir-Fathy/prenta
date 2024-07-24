@@ -1,84 +1,83 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:printa/models/notification_model/notification_model.dart';
+import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
+import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 
-class NotificationScreen extends StatefulWidget {
+class NotificationScreen extends StatelessWidget {
   const NotificationScreen({super.key});
-
-  @override
-  State<NotificationScreen> createState() => _NotificationScreenState();
-}
-
-class _NotificationScreenState extends State<NotificationScreen> {
   @override
   Widget build(BuildContext context) {
-    final today = DateTime.now();
-    final yesterday = today.subtract(Duration(days: 1));
-    final dateFormat = DateFormat('yyyy-MM-dd');
+    return BlocConsumer<PrentaCubit,PrentaStates>(
+      listener: (context, state) {
 
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: Colors.black, size: 25),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-        title: Text('Notification'),
-        centerTitle: true,
-      ),
-      body: ListView(
-        children: [
-          ListTile(
-            leading: CircleAvatar(
-              radius: 25,
-              backgroundColor: Colors.grey.shade200,
-              child: Icon(Icons.email, color: Colors.blue),
+      },
+      builder: (context, state) {
+        var cubit=PrentaCubit.get(context);
+        return Scaffold(
+            appBar: AppBar(
+              leading: IconButton(
+                icon: Icon(Icons.arrow_back_ios, color: Colors.black, size: 25),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              title: Text('Notification'),
+              centerTitle: true,
             ),
-            title: Text('Email Notification'),
-            subtitle: Text(dateFormat.format(today)),
-          ),
-          Divider(color: Colors.grey.shade300, thickness: 1),
-          ListTile(
-            leading: CircleAvatar(
-              radius: 25,
-              backgroundColor: Colors.grey.shade200,
-              child: Icon(Icons.message, color: Colors.green),
-            ),
-            title: Text('Message Notification'),
-            subtitle: Text(dateFormat.format(today)),
-          ),
-          Divider(color: Colors.grey.shade300, thickness: 1),
-          ListTile(
-            leading: CircleAvatar(
-              radius: 25,
-              backgroundColor: Colors.grey.shade200,
-              child: Icon(Icons.warning, color: Colors.red),
-            ),
-            title: Text('Warning Notification'),
-            subtitle: Text(dateFormat.format(yesterday)),
-          ),
-          Divider(color: Colors.grey.shade300, thickness: 1),
-          ListTile(
-            leading: CircleAvatar(
-              radius: 25,
-              backgroundColor: Colors.grey.shade200,
-              child: Icon(Icons.calendar_today, color: Colors.orange),
-            ),
-            title: Text('Event Notification'),
-            subtitle: Text(dateFormat.format(yesterday)),
-          ),
-          Divider(color: Colors.grey.shade300, thickness: 1),
-          ListTile(
-            leading: CircleAvatar(
-              radius: 25,
-              backgroundColor: Colors.grey.shade200,
-              child: Icon(Icons.alarm, color: Colors.purple),
-            ),
-            title: Text('Alarm Notification'),
-            subtitle: Text(dateFormat.format(today)),
-          ),
-        ],
-      ),
+            body:SingleChildScrollView(
+              child: ListView.separated(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemBuilder: (context,index)=>buildNotification(cubit.notificationList[index]),
+                  separatorBuilder: (context,index)=> Divider(color: Colors.grey.shade300, thickness: 1),
+                  itemCount: cubit.notificationList.length),
+            )
+        );
+      },
     );
   }
 }
+Widget buildNotification(NotificationModel model)=>Padding(
+  padding: const EdgeInsets.all(16.0),
+  child: Row(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      CircleAvatar(
+        radius: 25,
+        backgroundColor: Colors.grey.shade200,
+        child: Icon(Icons.email, color: Colors.blue),
+      ),
+      SizedBox(width: 15),
+      Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '${model.title}',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
+          ),
+          SizedBox(height: 4),
+          Text(
+            '${model.body}',
+            style: TextStyle(
+              color: Colors.grey,
+              fontSize: 14,
+            ),
+          ),
+          SizedBox(height: 4),
+          Text(
+            '${model.date}',
+            style: TextStyle(
+              color: Colors.grey.shade600,
+              fontSize: 12,
+            ),
+          ),
+        ],
+      ),
+    ],
+  ),
+);
