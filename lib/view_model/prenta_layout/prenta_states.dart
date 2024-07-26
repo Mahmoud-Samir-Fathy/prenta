@@ -7,8 +7,8 @@ abstract class PrentaStates{}
 class PrentaInitialState extends PrentaStates{}
 
 class ChangeCurrentPasswordVisibility extends PrentaStates{}
-
 class PrentaChangeBottomNav extends PrentaStates{}
+
 class PrentaLoadingState extends PrentaStates{}
 class PrentaGetUserSuccessState extends PrentaStates{
   final UserModel userModel;
@@ -18,25 +18,18 @@ class PrentaGetUserErrorState extends PrentaStates{
   final String error;
   PrentaGetUserErrorState(this.error);
 }
+
 class GetProfileImagePickedSuccessState extends PrentaStates{}
 class GetProfileImagePickedErrorState extends PrentaStates{}
 
 class UploadProfileImageSuccessState extends PrentaStates{}
 class UploadProfileImageErrorState extends PrentaStates{}
 
+class UpdateUserInfoLoadingState extends PrentaStates{}
 class UpdateUserInfoErrorState extends PrentaStates{}
 class UpdateUserInfoSuccessState extends PrentaStates{}
-
-class UpdateUserInfoLoadingState extends PrentaStates{}
-
-
 class UpdateUserPasswordErrorState extends PrentaStates{}
-
 class UpdateUserAddressErrorState extends PrentaStates{}
-
-
-class ReauthenticationSuccessState extends PrentaStates{}
-class ReauthenticationErrorState extends PrentaStates{}
 
 class ThemeBrightnessChange extends PrentaStates{}
 
@@ -50,8 +43,8 @@ class PrentaGetProductErrorState extends PrentaStates {
 
   PrentaGetProductErrorState(this.error);
 }
-class PrentaSizeUpdated extends PrentaStates {}
 
+class PrentaSizeUpdated extends PrentaStates {}
 class PrentaColorUpdated extends PrentaStates {}
 
 
@@ -62,43 +55,32 @@ class PrentaSaveToCartErrorState extends PrentaStates{
 
   PrentaSaveToCartErrorState(this.error);
 }
-class CartLoadedState extends PrentaStates{}
-class PrentaRemoveFromCartSuccessState extends PrentaStates{}
-class PrentaUpdateCartSuccessState extends PrentaStates{}
 
+class CartLoadedState extends PrentaStates{}
+class PrentaUpdateCartSuccessState extends PrentaStates{}
 
 class CartCheckedOutState extends PrentaStates{}
 class CartCheckoutErrorState extends PrentaStates{}
-
-
-class PrentaFrontDesignUpdated extends PrentaStates{}
-class PrentaBackDesignUpdated extends PrentaStates{}
-
 
 class GetFrontDesignPickedSuccessState extends PrentaStates{}
 class GetFrontDesignPickedErrorState extends PrentaStates{}
 class UploadFrontDesignPickedSuccessState extends PrentaStates{}
 class UploadFrontDesignPickedErrorState extends PrentaStates{}
 
-
 class GetBackDesignPickedSuccessState extends PrentaStates{}
 class GetBackDesignPickedErrorState extends PrentaStates{}
 class UploadBackDesignPickedSuccessState extends PrentaStates{}
 class UploadBackDesignPickedErrorState extends PrentaStates{}
 
-
 class CartUpdatedState extends PrentaStates{}
 class CartUpdateErrorState extends PrentaStates{}
 
-
 class PrentaGetOnProcessingItemsLoadingState extends PrentaStates{}
-
 class PrentaGetOnProcessingItemsSuccessState extends PrentaStates {
   final List<Map<String, dynamic>> items;
 
   PrentaGetOnProcessingItemsSuccessState(this.items);
 }
-
 class PrentaGetOnProcessingItemsErrorState extends PrentaStates {
   final String error;
 
@@ -106,73 +88,62 @@ class PrentaGetOnProcessingItemsErrorState extends PrentaStates {
 }
 
 class PrentaGetCancelledItemsLoadingState extends PrentaStates{}
-
 class PrentaGetCancelledItemsSuccessState extends PrentaStates {
   final List<Map<String, dynamic>> items;
 
   PrentaGetCancelledItemsSuccessState(this.items);
 }
-
 class PrentaGetCancelledItemsErrorState extends PrentaStates {
   final String error;
 
   PrentaGetCancelledItemsErrorState(this.error);
 }
 
-
 class PrentaGetCompletedItemsLoadingState extends PrentaStates{}
-
 class PrentaGetCompletedItemsSuccessState extends PrentaStates {
   final List<Map<String, dynamic>> items;
 
   PrentaGetCompletedItemsSuccessState(this.items);
 }
-
 class PrentaGetCompletedItemsErrorState extends PrentaStates {
   final String error;
 
   PrentaGetCompletedItemsErrorState(this.error);
 }
 
-
 class PrentaUpdateStatusSuccessState extends PrentaStates {}
-
 class PrentaUpdateStatusErrorState extends PrentaStates {
   final String error;
 
   PrentaUpdateStatusErrorState(this.error);
 }
+
 class PrentaRatingUpdated extends PrentaStates {
   final double rating;
 
   PrentaRatingUpdated({required this.rating});
 }
-
 class PrentaReviewPosted extends PrentaStates {
   final String review;
 
   PrentaReviewPosted({required this.review});
 }
-
 class PrentaSendReviewSuccessState extends PrentaStates {}
-
 class PrentaSendReviewErrorState extends PrentaStates {
   final String error;
 
   PrentaSendReviewErrorState(this.error);
 }
+
 class PrentaGetReviewLoadingState extends PrentaStates {}
 class PrentaGetReviewSuccessState extends PrentaStates {}
-
 class PrentaGetReviewErrorState extends PrentaStates {
   final String error;
 
   PrentaGetReviewErrorState(this.error);
 }
 
-
 class PrentaSendFavouriteItemSuccessState extends PrentaStates {}
-
 class PrentaSendFavouriteItemErrorState extends PrentaStates {
   final String error;
 
@@ -184,10 +155,8 @@ class PrentaDeleteFavouriteItemErrorState extends PrentaStates {
 
   PrentaDeleteFavouriteItemErrorState(this.error);
 }
-
 class PrentaGetFavouriteItemSuccessState extends PrentaStates {
   final List<FavouriteModel?> getFavourite=[];
-
   PrentaGetFavouriteItemSuccessState();
 }
 class PrentaGetFavouriteItemErrorState extends PrentaStates {
@@ -196,22 +165,6 @@ class PrentaGetFavouriteItemErrorState extends PrentaStates {
   PrentaGetFavouriteItemErrorState(this.error);
 }
 
-class PrentaUpdateProductListState extends PrentaStates {}
-
-
-class PrentaRemoveFavouriteItemSuccessState extends PrentaStates {}
-class PrentaRemoveFavouriteItemErrorState extends PrentaStates {
-  final String error;
-
-  PrentaRemoveFavouriteItemErrorState(this.error);
-}
-class PrentaDeleteFavouriteItemNotFoundState extends PrentaStates {}
-class PrentaSendFavouriteItemAlreadyExistsState extends PrentaStates {}
-class NotificationTokenReceived extends PrentaStates {
-  final String token;
-
-  NotificationTokenReceived(this.token);
-}
 class PrentaGetNotificationSuccessState extends PrentaStates {
   final List <NotificationModel> notificationModel;
   PrentaGetNotificationSuccessState(this.notificationModel);
