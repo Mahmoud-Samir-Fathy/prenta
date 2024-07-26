@@ -36,7 +36,6 @@ class _prenta_layoutState extends State<PrentaLayout> {
           bottomNavigationBar: AnimatedBottomNavigationBar(
             leftCornerRadius: 20,
             rightCornerRadius: 20,
-
             backgroundColor: PrentaCubit.get(context).isDark?thirdColor:firstColor,
               inactiveColor: PrentaCubit.get(context).isDark?secondColor:forthColor,
               activeColor: PrentaCubit.get(context).isDark?firstColor:thirdColor,
@@ -48,81 +47,8 @@ class _prenta_layoutState extends State<PrentaLayout> {
                  PrentaCubit.get(context).ChangeBottomNav(index);
               }),
           body: PrentaCubit.get(context).screens[PrentaCubit.get(context).currentIndex],
-
-          // Stack(
-          //   children: [
-          //     Positioned.fill(
-          //       child: PersistentTabView(
-          //         context,
-          //         controller: PersistentTabController(initialIndex: PrentaCubit.get(context).currentIndex),
-          //         screens:PrentaCubit.get(context).screens,
-          //         items: navBarsItems(),
-          //         backgroundColor: firstColor,
-          //         navBarStyle: NavBarStyle.style19,
-          //         confineInSafeArea: true,
-          //         handleAndroidBackButtonPress: true,
-          //         resizeToAvoidBottomInset: true,
-          //         stateManagement: true,
-          //         hideNavigationBarWhenKeyboardShows: true,
-          //         decoration: NavBarDecoration(
-          //           colorBehindNavBar: Colors.transparent,
-          //         ),
-          //         popAllScreensOnTapOfSelectedTab: true,
-          //         itemAnimationProperties: ItemAnimationProperties(
-          //           duration: Duration(milliseconds: 200),
-          //           curve: Curves.ease,
-          //         ),
-          //         screenTransitionAnimation: ScreenTransitionAnimation(
-          //           animateTabTransition: true,
-          //           curve: Curves.ease,
-          //           duration: Duration(milliseconds: 200),
-          //         ),
-          //       ),
-          //     ),
-          //     Positioned(
-          //       bottom: MediaQuery.of(context).size.height * 0.09,
-          //       right: MediaQuery.of(context).size.width * 0.05,
-          //       child: FloatingActionButton(
-          //         backgroundColor: firstColor,
-          //         onPressed: (){
-          //           navigateTo(context, customize());
-          //         },
-          //         child: Icon(Ionicons.shirt,color: Colors.white,),
-          //       ),
-          //     ),
-          //   ],
-          // ),
         );
       },
     );
   }
-
-  // List<PersistentBottomNavBarItem> navBarsItems() {
-  //   return [
-  //     PersistentBottomNavBarItem(
-  //       icon: Icon(Ionicons.home),
-  //       title: "Home",
-  //       activeColorPrimary: thirdColor,
-  //       inactiveColorPrimary: forthColor,
-  //     ),
-  //     PersistentBottomNavBarItem(
-  //       icon: Icon(Ionicons.bag),
-  //       title: "Search",
-  //       activeColorPrimary: thirdColor,
-  //       inactiveColorPrimary: forthColor,
-  //     ),
-  //     PersistentBottomNavBarItem(
-  //       icon: Icon(Ionicons.archive),
-  //       title: "History",
-  //       activeColorPrimary: thirdColor,
-  //       inactiveColorPrimary: forthColor,
-  //     ),
-  //     PersistentBottomNavBarItem(
-  //       icon: Icon(Ionicons.person),
-  //       title: "Profile",
-  //       activeColorPrimary: thirdColor,
-  //       inactiveColorPrimary: forthColor,
-  //     ),
-  //   ];
-  // }
 }
