@@ -1,3 +1,4 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:printa/models/product_model/product%20model.dart';
@@ -9,31 +10,23 @@ import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 class CancelledOrder extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
-    context.read<PrentaCubit>().getCancelledItems();
 
     return BlocConsumer<PrentaCubit, PrentaStates>(
       listener: (context,state){},
       builder: (context, state) {
-        if (state is PrentaGetCancelledItemsLoadingState) {
-          return Center(child: CircularProgressIndicator());
-        }
-        else if (state is PrentaGetCancelledItemsSuccessState) {
-          final cancelledItems = state.items;
-          if (cancelledItems.isEmpty) {
-            return Center(child: Text('No processing items found.'));
-          }
-          return ListView.separated(
-            itemBuilder: (context, index) => buildActiveItem(cancelledItems[index],context),
-            separatorBuilder: (context, index) => SizedBox(height: 10),
-            itemCount: cancelledItems.length,
+        var cubit=PrentaCubit.get(context);
+        var cancelledItems=cubit.cancelledItems;
+
+          return ConditionalBuilder(
+            condition: cancelledItems.isNotEmpty,
+            builder: (context)=>ListView.separated(
+              itemBuilder: (context, index) => buildActiveItem(cancelledItems[index],context),
+              separatorBuilder: (context, index) => SizedBox(height: 10),
+              itemCount: cancelledItems.length,
+            ),
+            fallback: (context)=>Center(child: Text('No items here')),
           );
         }
-        else if (state is PrentaGetCancelledItemsErrorState) {
-          return Center(child: Text('Error: ${state.error}'));
-        } else {
-          return Center(child: Text('Unexpected state'));
-        }
-      },
     );
   }
 

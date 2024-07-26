@@ -1,3 +1,4 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:printa/shared/components/constants.dart';
@@ -8,29 +9,23 @@ import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 class ActiveOrder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    context.read<PrentaCubit>().getOnProcessingItems();
 
     return BlocConsumer<PrentaCubit, PrentaStates>(
       listener: (context, state) {},
       builder: (context, state) {
-        if (state is PrentaGetOnProcessingItemsLoadingState) {
-          return Center(child: CircularProgressIndicator());
-        } else if (state is PrentaGetOnProcessingItemsSuccessState) {
-          final onProcessingItems = state.items;
-          if (onProcessingItems.isEmpty) {
-            return Center(child: Text('No processing items found.'));
-          }
-          return ListView.separated(
-            itemBuilder: (context, index) =>
-                buildActiveItem(onProcessingItems[index], context),
-            separatorBuilder: (context, index) => SizedBox(height: 10),
-            itemCount: onProcessingItems.length,
+        var cubit=PrentaCubit.get(context);
+        var onProcessingItems = cubit.onProcessingItems;
+
+          return ConditionalBuilder(
+            condition: onProcessingItems.isNotEmpty,
+            builder: (context)=>ListView.separated(
+              itemBuilder: (context, index) =>
+                  buildActiveItem(onProcessingItems[index], context),
+              separatorBuilder: (context, index) => SizedBox(height: 10),
+              itemCount: onProcessingItems.length,
+            ),
+            fallback: (context)=>Center(child: Text('No items here')),
           );
-        } else if (state is PrentaGetOnProcessingItemsErrorState) {
-          return Center(child: Text('Error: ${state.error}'));
-        } else {
-          return Center(child: Text('Unexpected state'));
-        }
       },
     );
   }

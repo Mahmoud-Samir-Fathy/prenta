@@ -1,3 +1,4 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:printa/shared/components/components.dart';
@@ -9,31 +10,24 @@ import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 class CompletedOrder extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
-    context.read<PrentaCubit>().getCompletedItems();
 
     return BlocConsumer<PrentaCubit, PrentaStates>(
       listener: (context,state){},
       builder: (context, state) {
-        if (state is PrentaGetCompletedItemsLoadingState) {
-          return Center(child: CircularProgressIndicator());
-        }
-        else if (state is PrentaGetCompletedItemsSuccessState) {
-          final completedItems = state.items;
-          if (completedItems.isEmpty) {
-            return Center(child: Text('No processing items found.'));
-          }
-          return ListView.separated(
+        var cubit=PrentaCubit.get(context);
+        var completedItems = cubit.completedItems;
+
+
+        return ConditionalBuilder(
+          condition: completedItems.isNotEmpty,
+          builder: (context)=>ListView.separated(
             itemBuilder: (context, index) => buildActiveItem(completedItems[index],context),
             separatorBuilder: (context, index) => SizedBox(height: 10),
             itemCount: completedItems.length,
-          );
+          ),
+          fallback: (context)=>Center(child: Text('No items here')),
+        );
         }
-        else if (state is PrentaGetCompletedItemsErrorState) {
-          return Center(child: Text('Error: ${state.error}'));
-        } else {
-          return Center(child: Text('Unexpected state'));
-        }
-      },
     );
   }
 

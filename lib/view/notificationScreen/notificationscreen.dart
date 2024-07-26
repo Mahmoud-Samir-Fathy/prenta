@@ -50,34 +50,36 @@ Widget buildNotification(NotificationModel model)=>Padding(
             color: Colors.blue,),
       ),
       SizedBox(width: 15),
-      Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            '${model.title}',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
+      Expanded(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              '${model.title}',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
             ),
-          ),
-          SizedBox(height: 4),
-          Text(
-            '${model.body}',
-            style: TextStyle(
-              color: Colors.grey,
-              fontSize: 14,
+            SizedBox(height: 4),
+            Text(
+              '${model.body}',
+              style: TextStyle(
+                color: Colors.grey,
+                fontSize: 14,
+              ),
             ),
-          ),
-          SizedBox(height: 4),
-          Text(
-            '${model.date}',
-            style: TextStyle(
-              color: Colors.grey.shade600,
-              fontSize: 12,
+            SizedBox(height: 4),
+            Text(
+              '${model.date}',
+              style: TextStyle(
+                color: Colors.grey.shade600,
+                fontSize: 12,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     ],
   ),

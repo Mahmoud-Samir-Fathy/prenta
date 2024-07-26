@@ -593,6 +593,8 @@ class PrentaCubit extends Cubit<PrentaStates> {
 
     emit(PrentaColorUpdated());
   }
+
+
   void showAddToCartDialog(BuildContext context, Color color) {
     showDialog(
       context: context,
@@ -730,6 +732,7 @@ class PrentaCubit extends Cubit<PrentaStates> {
                 onPressed: () {
                   checkout();
                   Navigator.pop(context);
+                  getOnProcessingItems();
                 },
                 child: Text(
                   'ChickOut',
@@ -742,6 +745,7 @@ class PrentaCubit extends Cubit<PrentaStates> {
       },
     );
   }
+
   List<Map<String, dynamic>> onProcessingItems = [];
   Future<void> getOnProcessingItems() async {
     try {
@@ -791,10 +795,7 @@ class PrentaCubit extends Cubit<PrentaStates> {
     }
   }
 
-
-
   List<Map<String, dynamic>> cancelledItems = [];
-
   Future<void> getCancelledItems() async {
     try {
       emit(PrentaGetCancelledItemsLoadingState());
@@ -843,10 +844,7 @@ class PrentaCubit extends Cubit<PrentaStates> {
     }
   }
 
-
-
   List<Map<String, dynamic>> completedItems = [];
-
   Future<void> getCompletedItems() async {
     try {
       emit(PrentaGetCompletedItemsLoadingState());
@@ -939,13 +937,13 @@ class PrentaCubit extends Cubit<PrentaStates> {
               'items': jsonEncode(cartItems),
             });
             getOnProcessingItems();
+            getCancelledItems();
             // Emit success state if update was successful
             emit(PrentaUpdateStatusSuccessState());
             return;
           }
         }
       }
-
       emit(PrentaUpdateStatusErrorState('Item not found or status already completed'));
     } catch (e) {
       emit(PrentaUpdateStatusErrorState('Error updating item status: $e'));
@@ -1101,6 +1099,8 @@ class PrentaCubit extends Cubit<PrentaStates> {
       emit(PrentaGetReviewErrorState(error.toString()));
     });
   }
+
+
   void setFavouriteItems({required ProductModel product}) {
     final favouritesCollection = FirebaseFirestore.instance
         .collection('users')
@@ -1144,9 +1144,7 @@ class PrentaCubit extends Cubit<PrentaStates> {
       emit(PrentaSendFavouriteItemErrorState(error.toString()));
     });
   }
-
   List<FavouriteModel?> getFavourite = []; // Make sure this is a class-level variable
-
   void getFavouriteItems() {
     FirebaseFirestore.instance
         .collection('users')
@@ -1164,7 +1162,6 @@ class PrentaCubit extends Cubit<PrentaStates> {
       emit(PrentaGetFavouriteItemErrorState(error.toString()));
     });
   }
-
   void deleteFavouriteItem({required FavouriteModel model}) {
     final favouritesCollection = FirebaseFirestore.instance
         .collection('users')
@@ -1184,14 +1181,14 @@ class PrentaCubit extends Cubit<PrentaStates> {
     });
   }
 
+
+
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
   FlutterLocalNotificationsPlugin();
-
   void initNotifications() {
     requestPermission();
     initInfo();
   }
-
   void initInfo() {
     var androidInitialize = const AndroidInitializationSettings('@mipmap/ic_launcher'); // Update with your icon resource
     var iosInitialize = const DarwinInitializationSettings();
@@ -1244,7 +1241,6 @@ class PrentaCubit extends Cubit<PrentaStates> {
       );
     });
   }
-
   void requestPermission() async {
     FirebaseMessaging messaging = FirebaseMessaging.instance;
     NotificationSettings settings = await messaging.requestPermission(
@@ -1264,25 +1260,21 @@ class PrentaCubit extends Cubit<PrentaStates> {
       print('User declined or has not accepted permission');
     }
   }
-
 NotificationModel? notificationModel;
   Future<void> sendPushMessage(String token, String body, String title,String date,String image) async {
     const String projectId = 'prenta-842a9';
     const String url = 'https://fcm.googleapis.com/v1/projects/$projectId/messages:send';
     final String keyFilePath = 'assets/service-account-file.json'; // Ensure this path matches your assets location
-
     if (token.isEmpty) {
       print('Invalid token');
       return;
     }
-
     try {
       // Load the service account JSON file from assets
       final serviceAccountJson = await rootBundle.loadString(keyFilePath);
       final accountCredentials = ServiceAccountCredentials.fromJson(
         json.decode(serviceAccountJson),
       );
-
       final scopes = [
         'https://www.googleapis.com/auth/firebase.messaging',
       ];
@@ -1319,12 +1311,7 @@ NotificationModel? notificationModel;
       );
 
       if (response.statusCode == 200) {
-        NotificationModel notificationModel=NotificationModel(
-          title: title,
-          body: body,
-          image: image,
-          date: date,
-        );
+
         print('Notification sent successfully');
       } else {
         print('Failed to send notification');
@@ -1345,7 +1332,6 @@ NotificationModel? notificationModel;
     }
   }
   List<NotificationModel> notificationList = [];
-
   void getNotificationList() {
     FirebaseFirestore.instance
         .collection('users')
@@ -1365,7 +1351,6 @@ NotificationModel? notificationModel;
       });
       emit(PrentaGetNotificationSuccessState(notificationList));
       // You can print the list or use it as needed
-      print(notificationList);
     }).catchError((error) {
       emit(PrentaGetNotificationErrorState(error.toString()));
       print('Error getting notifications: $error');
