@@ -150,6 +150,7 @@ class PrentaSendFavouriteItemErrorState extends PrentaStates {
   PrentaSendFavouriteItemErrorState(this.error);
 }
 class PrentaDeleteFavouriteItemSuccessState extends PrentaStates {}
+
 class PrentaDeleteFavouriteItemErrorState extends PrentaStates {
   final String error;
 
@@ -175,3 +176,6 @@ class PrentaGetNotificationErrorState extends PrentaStates {
 
   PrentaGetNotificationErrorState(this.error);
 }
+
+class SearchResultsUpdated extends PrentaStates {}
+class SearchCleared extends PrentaStates {}

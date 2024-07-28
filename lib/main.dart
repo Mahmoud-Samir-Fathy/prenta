@@ -10,6 +10,7 @@ import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 import 'firebase_options.dart';
 import 'shared/components/constants.dart';
 import 'shared/network/local/cache_helper.dart';
+import 'view/search_screen/search_screen.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async{
   print('Handling a background message${message.messageId}');

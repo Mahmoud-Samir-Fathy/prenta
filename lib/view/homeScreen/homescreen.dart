@@ -10,6 +10,7 @@ import 'package:printa/shared/components/components.dart';
 import 'package:printa/view/check_Out/checkout.dart';
 import 'package:printa/view/notificationScreen/notificationscreen.dart';
 import 'package:printa/view/product_details/product_details.dart';
+import 'package:printa/view/search_screen/search_screen.dart';
 import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 
@@ -59,17 +60,33 @@ class HomeScreen extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: 30),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: HexColor('F6F6F6'),
-                        borderRadius: BorderRadius.circular(25.0),
-                      ),
-                      padding: EdgeInsets.symmetric(horizontal: 10.0),
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'What are you looking for...',
-                          border: InputBorder.none,
-                          prefixIcon: Icon(Ionicons.search),
+                    GestureDetector(
+                      onTap: (){
+                        navigateTo(context, SearchScreen());
+                      },
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 16.0),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 2,
+                              blurRadius: 5,
+                              offset: Offset(0, 3),
+                            ),
+                          ],
+                        ),
+                        child: Row(
+                          children: [
+                            Icon(Ionicons.search),
+                            SizedBox(width: 8.0),
+                            Text(
+                              'What are you looking for...',
+                              style: TextStyle(color: Colors.grey),
+                            ),
+                          ],
                         ),
                       ),
                     ),

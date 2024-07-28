@@ -1356,4 +1356,27 @@ NotificationModel? notificationModel;
       print('Error getting notifications: $error');
     });
   }
+  List<ProductModel> searchResults = [];
+  TextEditingController searchController = TextEditingController();
+  FocusNode searchFocusNode = FocusNode();
+
+  void searchProduct(String query) {
+    searchResults = productInfo.where((product) {
+      return product.title!.toLowerCase().contains(query.toLowerCase());
+    }).toList();
+    emit(SearchResultsUpdated());
+  }
+
+  void clearSearch() {
+    searchController.clear();
+    searchResults = [];
+    emit(SearchCleared());
+  }
+
+  void requestFocus() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      searchFocusNode.requestFocus();
+    });
+  }
+
 }
