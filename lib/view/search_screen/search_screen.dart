@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:printa/models/product_model/product%20model.dart';
+import 'package:printa/shared/components/components.dart';
+import 'package:printa/view/product_details/product_details.dart';
 import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 
@@ -59,7 +61,7 @@ class SearchScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: ListView.separated(
                       itemBuilder: (context, index) =>
-                          buildSearchItem(cubit.searchResults[index]),
+                          buildSearchItem(cubit.searchResults[index],context),
                       separatorBuilder: (context, index) => SizedBox(height: 10),
                       itemCount: cubit.searchResults.length,
                     ),
@@ -74,36 +76,41 @@ class SearchScreen extends StatelessWidget {
   }
 }
 
-Widget buildSearchItem(ProductModel model) => Padding(
-  padding: const EdgeInsetsDirectional.symmetric(horizontal: 8),
-  child: Card(
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Image.network(model.image!, width: 100, height: 100),
-        SizedBox(width: 16),
-        Expanded(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(model.title!, style: TextStyle(fontSize: 22)),
-              Text(
-                '${model.description!}',
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-              SizedBox(height: 10),
-              Row(
-                children: [
-                  Spacer(),
-                  Text('Price: ${model.price.toString()}'),
-                ],
-              ),
-            ],
+Widget buildSearchItem(ProductModel model,context) => GestureDetector(
+  onTap: (){
+    navigateTo(context, ProductDetails(product: model));
+  },
+  child: Padding(
+    padding: const EdgeInsetsDirectional.symmetric(horizontal: 8),
+    child: Card(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Image.network(model.image!, width: 100, height: 100),
+          SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(model.title!, style: TextStyle(fontSize: 22)),
+                Text(
+                  '${model.description!}',
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                SizedBox(height: 10),
+                Row(
+                  children: [
+                    Spacer(),
+                    Text('Price: ${model.price.toString()}'),
+                  ],
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     ),
   ),
 );

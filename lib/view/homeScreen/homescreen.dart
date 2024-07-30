@@ -65,6 +65,7 @@ class HomeScreen extends StatelessWidget {
                         navigateTo(context, SearchScreen());
                       },
                       child: Container(
+                        height: 50,
                         padding: EdgeInsets.symmetric(horizontal: 16.0),
                         decoration: BoxDecoration(
                           color: Colors.white,
