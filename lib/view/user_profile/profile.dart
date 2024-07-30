@@ -82,7 +82,7 @@ class Profile extends StatelessWidget {
                             Spacer(),
                             IconButton(
                               onPressed: () {
-                                navigateTo(context, edit_profile());
+                                navigateTo(context, EditUserProfile());
                               },
                               icon: Icon(Ionicons.chevron_forward_outline),
                             ),

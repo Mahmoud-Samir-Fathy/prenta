@@ -8,7 +8,7 @@ import 'package:printa/view/user_profile/profile.dart';
 import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 
-class edit_profile extends StatelessWidget {
+class EditUserProfile extends StatelessWidget {
 
   var firstNameController = TextEditingController();
   var lastNameController = TextEditingController();

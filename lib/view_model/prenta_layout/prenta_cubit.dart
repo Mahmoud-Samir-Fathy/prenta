@@ -710,7 +710,7 @@ class PrentaCubit extends Cubit<PrentaStates> {
                   borderRadius: BorderRadius.all(Radius.circular(30)),
                 ),
                 onPressed: () {
-                  navigateTo(context, edit_profile());
+                  navigateTo(context, EditUserProfile());
 
                 },
                 child: Text('Edit Profile'),
