@@ -11,9 +11,7 @@ import 'package:printa/view/layout/prenta_layout.dart';
 import 'package:printa/view/login&register_screen/account_screen/account_screen.dart';
 import 'package:printa/view_model/login_body/login_body_states.dart';
 import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
-
 import '../../shared/components/components.dart';
-import '../../view/login&register_screen/login_body/login_body.dart';
 
 class LoginCubit extends Cubit<LoginStates>{
   LoginCubit():super(LoginInitialState());
