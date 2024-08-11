@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:printa/view_model/change_mode/mode_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 
@@ -25,12 +26,11 @@ class Wishlist extends StatelessWidget {
       },
       builder: (context, state) {
         var cubit = PrentaCubit.get(context);
+        var mCubit=ModeCubit.get(context);
         final wishlistItems = cubit.getFavourite;
 
         return Scaffold(
-          backgroundColor: Colors.white,
           appBar: AppBar(
-            backgroundColor: Colors.white,
             title: Text('Wishlist'),
             centerTitle: true,
             elevation: 0.0,
@@ -44,7 +44,7 @@ class Wishlist extends StatelessWidget {
           body: wishlistItems.isEmpty
               ? Center(child: Text('No items in wishlist'))
               : ListView.separated(
-            separatorBuilder: (context, index) => SizedBox(height: 25),
+            separatorBuilder: (context, index) => SizedBox(height: 1),
             itemCount: wishlistItems.length,
             itemBuilder: (context, index) {
               final item = wishlistItems[index];
@@ -52,7 +52,7 @@ class Wishlist extends StatelessWidget {
                 alignment: AlignmentDirectional.topEnd,
                 children: [
                   Card(
-                    color: Colors.white,
+                    color:mCubit.isDark?Colors.grey[700]: Colors.white,
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Row(

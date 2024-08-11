@@ -6,10 +6,12 @@ import 'package:ionicons/ionicons.dart';
 import 'package:printa/models/favourite_model/favourite_model.dart';
 import 'package:printa/models/product_model/product%20model.dart';
 import 'package:printa/shared/components/components.dart';
+import 'package:printa/shared/styles/colors.dart';
 import 'package:printa/view/check_Out/checkout.dart';
 import 'package:printa/view/notificationScreen/notificationscreen.dart';
 import 'package:printa/view/product_details/product_details.dart';
 import 'package:printa/view/search_screen/search_screen.dart';
+import 'package:printa/view_model/change_mode/mode_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 
@@ -17,20 +19,16 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<PrentaCubit, PrentaStates>(
-      listener: (context, state) {
-        // Handle states if needed
-      },
+      listener: (context, state) {},
       builder: (context, state) {
-
         var cubit = PrentaCubit.get(context);
-
+        var mCubit=ModeCubit.get(context);
 
         if (cubit.productInfo.isEmpty) {
           return Center(child: CircularProgressIndicator());
         }
 
         return Scaffold(
-          backgroundColor: Colors.white,
           body: SafeArea(
             child: SingleChildScrollView(
               child: Padding(
@@ -44,7 +42,7 @@ class HomeScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text('Welcome Back!'),
-                            Text('${cubit.userInfo?.firstName ?? ''} ${cubit.userInfo?.lastName ?? ''}'),
+                            Text('${cubit.toCamelCase(cubit.userInfo?.firstName ?? '')} ${cubit.toCamelCase(cubit.userInfo?.lastName ?? '')}'),
                           ],
                         ),
                         Spacer(),
@@ -80,7 +78,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                         child: Row(
                           children: [
-                            Icon(Ionicons.search),
+                            Icon(Ionicons.search,color: Colors.grey,),
                             SizedBox(width: 8.0),
                             Text(
                               'What are you looking for...',
@@ -93,7 +91,6 @@ class HomeScreen extends StatelessWidget {
                     SizedBox(height: 30),
                     Container(
                       decoration: BoxDecoration(
-                        color: HexColor('D9D9D9'),
                         borderRadius: BorderRadius.circular(25.0),
                       ),
                       padding: EdgeInsets.all(16.0),
@@ -133,7 +130,7 @@ class HomeScreen extends StatelessWidget {
                       enableShape: true,
                       unSelectedBorderColor: Colors.white,
                       absoluteZeroSpacing: false,
-                      unSelectedColor: HexColor('526D82').withOpacity(0.2),
+                      unSelectedColor: mCubit.isDark?forthColor:HexColor('526D82').withOpacity(0.2),
                       buttonLables: ['All', 'T-Shirt', 'Hoodle', 'Special'],
                       buttonValues: ['All', 'T-Shirt', 'Hoodle', 'Special'],
                       buttonTextStyle: ButtonTextStyle(
@@ -186,7 +183,6 @@ Widget ItemCard(ProductModel product, BuildContext context, FavouriteModel model
     },
     child: Container(
       decoration: BoxDecoration(
-        color: Colors.white,
         borderRadius: BorderRadius.circular(15.0),
       ),
       child: Column(
@@ -208,20 +204,14 @@ Widget ItemCard(ProductModel product, BuildContext context, FavouriteModel model
               Positioned(
                 top: 8,
                 right: 8,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
-                  ),
-                  child: IconButton(
-                    padding: EdgeInsets.zero,
-                    onPressed: () {
-                      PrentaCubit.get(context).setFavouriteItems(product: product);
-                    },
-                    icon: Icon(
-                      model.isFavourite! ? Ionicons.heart : Ionicons.heart_outline,
-                      color: model.isFavourite! ? Colors.red : Colors.grey,
-                    ),
+                child: IconButton(
+                  padding: EdgeInsets.zero,
+                  onPressed: () {
+                    PrentaCubit.get(context).setFavouriteItems(product: product);
+                  },
+                  icon: Icon(
+                    model.isFavourite! ? Ionicons.heart : Ionicons.heart_outline,
+                    color: model.isFavourite! ? Colors.red : Colors.grey,
                   ),
                 ),
               ),
@@ -256,7 +246,7 @@ Widget ItemCard(ProductModel product, BuildContext context, FavouriteModel model
               SizedBox(width: 5),
               Text(
                 '${product.price}',
-                style: TextStyle(fontSize: 10, fontWeight: FontWeight.w300, color: Colors.grey),
+                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w300, color: Colors.grey),
               ),
             ],
           ),

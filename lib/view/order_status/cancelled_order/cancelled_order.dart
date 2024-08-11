@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:printa/models/product_model/product%20model.dart';
 import 'package:printa/shared/styles/colors.dart';
 import 'package:printa/view/product_details/product_details.dart';
+import 'package:printa/view_model/change_mode/mode_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 
@@ -74,7 +75,7 @@ class CancelledOrder extends StatelessWidget{
                           Column(
                             children: [
                               CircleAvatar(
-                                backgroundColor: firstColor,
+                                backgroundColor: ModeCubit.get(context).isDark?secondColor:firstColor,
                                 child: Text(item['size'] ?? 'N/A', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
                                 radius: 16,
                               ),
@@ -82,7 +83,7 @@ class CancelledOrder extends StatelessWidget{
                             ],
                           ),
                           Spacer(),
-                          TextButton(child:Text('Re-order', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18)),onPressed: (){
+                          TextButton(child:Text('Re-order', style: TextStyle(color: ModeCubit.get(context).isDark?forthColor:Colors.black,fontWeight: FontWeight.bold, fontSize: 18)),onPressed: (){
                             navigateToProductDetails(context, item);
 
                           },),

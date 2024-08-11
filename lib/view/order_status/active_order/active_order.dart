@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:printa/shared/components/constants.dart';
 import 'package:printa/shared/styles/colors.dart';
+import 'package:printa/view_model/change_mode/mode_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 
@@ -96,7 +97,7 @@ class ActiveOrder extends StatelessWidget {
                             Column(
                               children: [
                                 CircleAvatar(
-                                  backgroundColor: firstColor,
+                                  backgroundColor: ModeCubit.get(context).isDark?secondColor:firstColor,
                                   child: Text(item['size'] ?? 'N/A',
                                       style: TextStyle(
                                           color: Colors.white,
@@ -110,7 +111,7 @@ class ActiveOrder extends StatelessWidget {
                             Spacer(),
                             Text('Processing',
                                 style: TextStyle(
-                                    color: Colors.black,
+                                    color: ModeCubit.get(context).isDark?forthColor:Colors.black,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 18)),
                           ],

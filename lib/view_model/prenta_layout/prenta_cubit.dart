@@ -38,6 +38,15 @@ class PrentaCubit extends Cubit<PrentaStates> {
   PrentaCubit() : super(PrentaInitialState());
   static PrentaCubit get(context) => BlocProvider.of(context);
 
+  String toCamelCase(String input) {
+    return input.split(' ').map((word) {
+      if (word.isNotEmpty) {
+        return word[0].toUpperCase() + word.substring(1).toLowerCase();
+      }
+      return word;
+    }).join(' ');
+  }
+
   IconData suffixIcon=Ionicons.eye_off_outline;
   bool isPasswordShown=true;
   void ChangePasswordVisibility(){
