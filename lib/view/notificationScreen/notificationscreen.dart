@@ -8,33 +8,36 @@ class NotificationScreen extends StatelessWidget {
   const NotificationScreen({super.key});
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<PrentaCubit,PrentaStates>(
-      listener: (context, state) {
+    return BlocProvider(
+      create: (context) => PrentaCubit()..getNotificationList(),
+      child: BlocConsumer<PrentaCubit,PrentaStates>(
+        listener: (context, state) {
 
-      },
-      builder: (context, state) {
-        var cubit=PrentaCubit.get(context);
-        return Scaffold(
-            appBar: AppBar(
-              leading: IconButton(
-                icon: Icon(Icons.arrow_back_ios, color: Colors.black, size: 25),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
+        },
+        builder: (context, state) {
+          var cubit=PrentaCubit.get(context);
+          return Scaffold(
+              appBar: AppBar(
+                leading: IconButton(
+                  icon: Icon(Icons.arrow_back_ios, color: Colors.black, size: 25),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                title: Text('Notification'),
+                centerTitle: true,
               ),
-              title: Text('Notification'),
-              centerTitle: true,
-            ),
-            body:SingleChildScrollView(
-              child: ListView.separated(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemBuilder: (context,index)=>buildNotification(cubit.notificationList[index]),
-                  separatorBuilder: (context,index)=> Divider(color: Colors.grey.shade300, thickness: 1),
-                  itemCount: cubit.notificationList.length),
-            )
-        );
-      },
+              body:SingleChildScrollView(
+                child: ListView.separated(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (context,index)=>buildNotification(cubit.notificationList[index]),
+                    separatorBuilder: (context,index)=> Divider(color: Colors.grey.shade300, thickness: 1),
+                    itemCount: cubit.notificationList.length),
+              )
+          );
+        },
+      ),
     );
   }
 }

@@ -5,6 +5,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:printa/shared/components/components.dart';
 import 'package:printa/shared/components/constants.dart';
 import 'package:printa/shared/styles/colors.dart';
+import 'package:printa/view_model/change_mode/mode_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 import '../edit_user_profile/edit_user_profile.dart';
@@ -96,7 +97,7 @@ class Profile extends StatelessWidget {
                             Spacer(),
                             IconButton(
                               onPressed: () {
-                                cubit.changeMode();
+                                ModeCubit.get(context).changeMode();
                               },
                               icon: Icon(Ionicons.chevron_forward_outline),
                             ),
@@ -165,7 +166,7 @@ class Profile extends StatelessWidget {
                             width: 200,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(30),
-                              border: Border.all(color: cubit.isDark ? Colors.white : firstColor),
+                              border: Border.all(color: ModeCubit.get(context).isDark ? Colors.white : firstColor),
                             ),
                             child: MaterialButton(
                               height: 60,
@@ -180,7 +181,7 @@ class Profile extends StatelessWidget {
                                 ],
                               ),
                               onPressed: () {
-                                _showSignOutDialog(context, cubit.isDark ? Colors.white : firstColor);
+                                _showSignOutDialog(context,  ModeCubit.get(context).isDark ? Colors.white : firstColor);
                               },
                             ),
                           ),

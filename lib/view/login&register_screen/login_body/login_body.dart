@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:printa/shared/components/components.dart';
+import 'package:printa/shared/components/constants.dart';
 import 'package:printa/shared/network/local/cache_helper.dart';
 import 'package:printa/view/forget_password/forget_password.dart';
 import 'package:printa/view/layout/prenta_layout.dart';
@@ -40,6 +41,9 @@ class LoginBody extends StatelessWidget {
                 key: 'uId',
                 value: state.uId,
               ).then((value) {
+                uId=state.uId;
+                print('my ID is ################ ${state.uId}');
+                print('And This my id in main ########################## ${uId}');
                 navigateAndFinish(context, PrentaLayout());
               });
             } else {

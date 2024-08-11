@@ -4,6 +4,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
 import 'package:printa/shared/styles/colors.dart';
+import 'package:printa/view_model/change_mode/mode_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 import '../../shared/components/components.dart';
@@ -14,7 +15,7 @@ class Customize extends StatelessWidget {
     return BlocConsumer<PrentaCubit, PrentaStates>(
       listener: (context, state) {
         if (state is PrentaSaveToCartSuccessState){
-          PrentaCubit.get(context).showAddToCartDialog(context, PrentaCubit.get(context).isDark ? Colors.white : firstColor);
+          PrentaCubit.get(context).showAddToCartDialog(context, ModeCubit.get(context).isDark ? Colors.white : firstColor);
         }
         if(state is PrentaSaveToCartErrorState){
           showToast(context, title: 'Error', description: state.error, state:ToastColorState.error , icon: Ionicons.thumbs_down_outline);

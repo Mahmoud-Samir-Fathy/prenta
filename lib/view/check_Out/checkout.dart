@@ -7,6 +7,7 @@ import 'package:printa/shared/components/constants.dart';
 import 'package:printa/shared/styles/colors.dart';
 import 'package:printa/view/homeScreen/homescreen.dart';
 import 'package:printa/view/layout/prenta_layout.dart';
+import 'package:printa/view_model/change_mode/mode_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 
@@ -215,7 +216,7 @@ class CheckOut extends StatelessWidget {
                   child: defaultMaterialButton(
                     text: 'Check out',
                     Function: () {
-                      cubit.showCheckOutDialog(context, cubit.isDark ? Colors.white : firstColor);
+                      cubit.showCheckOutDialog(context,  ModeCubit.get(context).isDark ? Colors.white : firstColor);
                     },
                   ),
                 ),

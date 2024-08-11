@@ -7,6 +7,7 @@ import 'package:printa/models/product_model/product%20model.dart';
 import 'package:printa/shared/components/components.dart';
 import 'package:printa/shared/styles/colors.dart';
 import 'package:printa/view/review_before/review_before.dart';
+import 'package:printa/view_model/change_mode/mode_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 
@@ -19,9 +20,7 @@ class ProductDetails extends StatelessWidget {
     return BlocConsumer<PrentaCubit, PrentaStates>(
         listener: (context, state) {
           if (state is PrentaSaveToCartSuccessState) {
-            PrentaCubit.get(context).showAddToCartDialog(context, PrentaCubit
-                .get(context)
-                .isDark ? Colors.white : firstColor);
+            PrentaCubit.get(context).showAddToCartDialog(context,  ModeCubit.get(context).isDark ? Colors.white : firstColor);
           }
           if (state is PrentaSaveToCartErrorState) {
             showToast(context, title: 'Error',
