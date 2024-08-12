@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:printa/shared/components/components.dart';
 import 'package:printa/view/send_email_verification/send_email_verification.dart';
+import 'package:printa/view_model/change_mode/mode_cubit.dart';
 import 'package:printa/view_model/register_body/register_body_cubit.dart';
 import 'package:printa/view_model/register_body/register_body_states.dart';
 
@@ -30,6 +31,7 @@ class RegisterBody extends StatelessWidget {
           }
         },
         builder: (context, state) {
+          var mCubit=ModeCubit.get(context);
           return Container(
             child: SingleChildScrollView(
               child: Padding(
@@ -221,7 +223,8 @@ class RegisterBody extends StatelessWidget {
                                   image: AssetImage('images/google.png'),
                                 ),
                                 SizedBox(width: 3),
-                                Text('Google', style: TextStyle(fontSize: 18)),
+                                Text('Google',style: TextStyle(fontSize: 18,color:mCubit.isDark?Colors.black:Colors.black ),
+                                ),
                               ],
                             ),
                           ),

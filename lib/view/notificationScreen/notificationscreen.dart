@@ -19,7 +19,7 @@ class NotificationScreen extends StatelessWidget {
           return Scaffold(
               appBar: AppBar(
                 leading: IconButton(
-                  icon: Icon(Icons.arrow_back_ios, color: Colors.black, size: 25),
+                  icon: Icon(Icons.arrow_back_ios, size: 25),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },

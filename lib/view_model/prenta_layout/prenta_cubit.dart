@@ -19,6 +19,7 @@ import 'package:printa/view/check_Out/checkout.dart';
 import 'package:printa/view/edit_user_profile/edit_user_profile.dart';
 import 'package:printa/view/layout/prenta_layout.dart';
 import 'package:printa/view/login&register_screen/account_screen/account_screen.dart';
+import 'package:printa/view_model/change_mode/mode_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 import 'package:uuid/uuid.dart';
 import '../../models/user_model/user_model.dart';
@@ -604,7 +605,6 @@ class PrentaCubit extends Cubit<PrentaStates> {
     emit(PrentaColorUpdated());
   }
 
-
   void showAddToCartDialog(BuildContext context, Color color) {
     showDialog(
       context: context,
@@ -629,6 +629,7 @@ class PrentaCubit extends Cubit<PrentaStates> {
               height: 50,
               width: 120,
               decoration: BoxDecoration(
+                color: ModeCubit.get(context).isDark?Colors.grey[700]:Colors.white,
                 borderRadius: BorderRadius.circular(30),
                 border: Border.all(color: firstColor),
               ),
@@ -713,6 +714,8 @@ class PrentaCubit extends Cubit<PrentaStates> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30),
                 border: Border.all(color: firstColor),
+                color: ModeCubit.get(context).isDark?Colors.grey[700]:Colors.white,
+
               ),
               child: MaterialButton(
                 height: 50,

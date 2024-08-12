@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:printa/view/login&register_screen/register_body/register_body.dart';
+import 'package:printa/view_model/change_mode/mode_cubit.dart';
 import '../../../shared/styles/colors.dart';
 import '../login_body/login_body.dart';
 
@@ -10,6 +11,7 @@ class AccountScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var mCubit=ModeCubit.get(context);
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -65,7 +67,7 @@ class AccountScreen extends StatelessWidget {
               right: 0,
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: mCubit.isDark?Colors.grey[700]:Colors.white,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(30),
                     topRight: Radius.circular(30),

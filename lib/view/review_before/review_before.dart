@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:printa/models/review_model/review_model.dart';
+import 'package:printa/view_model/change_mode/mode_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 import 'package:readmore/readmore.dart';
@@ -86,7 +87,7 @@ class ReviewBefore extends StatelessWidget {
                 Expanded(
                   child: ListView.separated(
                     itemBuilder: (context, index) => buildReviewComments(
-                      cubit.reviewModel[index],
+                      cubit.reviewModel[index],context
                     ),
                     separatorBuilder: (context, index) =>
                     const SizedBox(height: 10),
@@ -103,8 +104,8 @@ class ReviewBefore extends StatelessWidget {
 }
 
 
-Widget buildReviewComments(ReviewModel? model) => Card(
-  color: Colors.white,
+Widget buildReviewComments(ReviewModel? model,context) => Card(
+  color: ModeCubit.get(context).isDark?Colors.grey[700]:Colors.white,
   child: Padding(
     padding: const EdgeInsets.all(8.0),
     child: Column(
@@ -113,7 +114,7 @@ Widget buildReviewComments(ReviewModel? model) => Card(
         Row(
           children: [
             Text(
-              '${model!.firstName ?? 'No Name'} ${model.lastName ?? ''}',
+              PrentaCubit.get(context).toCamelCase('${model!.firstName ?? 'No Name'} ${model.lastName ?? ''}'),
               style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,

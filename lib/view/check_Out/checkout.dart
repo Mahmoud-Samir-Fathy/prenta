@@ -42,14 +42,15 @@ class CheckOut extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        final cubit = PrentaCubit.get(context);
+        var cubit = PrentaCubit.get(context);
         final cartItems = cubit.cartItems;
+        var mCubit=ModeCubit.get(context);
+
 
         return Scaffold(
-          backgroundColor: HexColor('FCFCFC'),
           appBar: AppBar(
             centerTitle: true,
-            backgroundColor: Colors.white,
+            backgroundColor: Colors.transparent,
             leading: IconButton(
               icon: Icon(Ionicons.chevron_back_outline),
               onPressed: () {
@@ -68,13 +69,13 @@ class CheckOut extends StatelessWidget {
               Expanded(
                 child: ListView.separated(
                   itemCount: cartItems.length,
-                  separatorBuilder: (context, index) => Divider(),
+                  separatorBuilder: (context, index) => SizedBox(height: 1,),
                   itemBuilder: (context, index) {
                     final item = cartItems[index];
                     return Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: Card(
-                        color: HexColor('FFFFFF'),
+                        color:mCubit.isDark?Colors.grey[700]: HexColor('FFFFFF'),
                         child: ListTile(
                           leading: Container(
                             width: 70,
@@ -95,7 +96,7 @@ class CheckOut extends StatelessWidget {
                               SizedBox(width: 15),
                               CircleAvatar(
                                 radius: 16,
-                                backgroundColor: firstColor,
+                                backgroundColor: ModeCubit.get(context).isDark?secondColor:firstColor,
                                 child: Text(
                                   '${item['size']}',
                                   style: TextStyle(fontSize: 15, color: Colors.white),
@@ -216,7 +217,7 @@ class CheckOut extends StatelessWidget {
                   child: defaultMaterialButton(
                     text: 'Check out',
                     Function: () {
-                      cubit.showCheckOutDialog(context,  ModeCubit.get(context).isDark ? Colors.white : firstColor);
+                      cubit.showCheckOutDialog(context,  ModeCubit.get(context).isDark ? secondColor : firstColor);
                     },
                   ),
                 ),

@@ -9,6 +9,7 @@ import 'package:printa/shared/network/local/cache_helper.dart';
 import 'package:printa/view/forget_password/forget_password.dart';
 import 'package:printa/view/layout/prenta_layout.dart';
 import 'package:printa/view/send_email_verification/send_email_verification.dart';
+import 'package:printa/view_model/change_mode/mode_cubit.dart';
 import 'package:printa/view_model/login_body/login_body_cubit.dart';
 import 'package:printa/view_model/login_body/login_body_states.dart';
 import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
@@ -55,6 +56,7 @@ class LoginBody extends StatelessWidget {
           }
         },
         builder: (BuildContext context, state) {
+          var mCubit=ModeCubit.get(context);
           return SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -95,7 +97,7 @@ class LoginBody extends StatelessWidget {
                         onPressed: () {
                           navigateTo(context, ForgetPassword());
                         },
-                        child: Text('Forget Password?'),
+                        child: Text('Forget Password?',style: TextStyle(color: mCubit.isDark?Colors.white:Colors.blueAccent),),
                       ),
                     ),
                     SizedBox(height: 30),
@@ -174,7 +176,7 @@ class LoginBody extends StatelessWidget {
                               SizedBox(width: 3),
                               Text(
                                 'Google',
-                                style: TextStyle(fontSize: 18),
+                                style: TextStyle(fontSize: 18,color:mCubit.isDark?Colors.black:Colors.black ),
                               ),
                             ],
                           ),

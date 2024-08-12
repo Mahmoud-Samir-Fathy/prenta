@@ -20,7 +20,7 @@ class ProductDetails extends StatelessWidget {
     return BlocConsumer<PrentaCubit, PrentaStates>(
         listener: (context, state) {
           if (state is PrentaSaveToCartSuccessState) {
-            PrentaCubit.get(context).showAddToCartDialog(context,  ModeCubit.get(context).isDark ? Colors.white : firstColor);
+            PrentaCubit.get(context).showAddToCartDialog(context,  ModeCubit.get(context).isDark ? secondColor : firstColor);
           }
           if (state is PrentaSaveToCartErrorState) {
             showToast(context, title: 'Error',

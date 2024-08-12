@@ -39,6 +39,7 @@ Widget defaultTextFormField({
       onTap: onTap,
       validator: validate,
       decoration: InputDecoration(
+        hintStyle: TextStyle(color: Colors.grey),
         border: InputBorder.none,
         prefixIcon: Icon(prefix,color: Colors.black,),
         hintText: lable,
