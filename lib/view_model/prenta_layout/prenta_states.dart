@@ -14,6 +14,7 @@ class PrentaGetUserSuccessState extends PrentaStates{
   final UserModel userModel;
 
   PrentaGetUserSuccessState(this.userModel);}
+
 class PrentaGetUserErrorState extends PrentaStates{
   final String error;
   PrentaGetUserErrorState(this.error);
@@ -29,6 +30,7 @@ class UpdateUserInfoLoadingState extends PrentaStates{}
 class UpdateUserInfoErrorState extends PrentaStates{}
 class UpdateUserInfoSuccessState extends PrentaStates{}
 class UpdateUserPasswordErrorState extends PrentaStates{}
+class UpdateUserAddressSuccessState extends PrentaStates{}
 class UpdateUserAddressErrorState extends PrentaStates{}
 
 class ThemeBrightnessChange extends PrentaStates{}

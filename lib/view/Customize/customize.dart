@@ -22,7 +22,8 @@ class Customize extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        final cubit = PrentaCubit.get(context);
+        var cubit = PrentaCubit.get(context);
+        var mCubit=ModeCubit.get(context);
         return Scaffold(
           appBar: AppBar(
             leading: IconButton(
@@ -77,7 +78,7 @@ class Customize extends StatelessWidget {
                   enableShape: true,
                   unSelectedBorderColor: Colors.white,
                   absoluteZeroSpacing: false,
-                  unSelectedColor: HexColor('526D82').withOpacity(0.2),
+                  unSelectedColor:mCubit.isDark?thirdColor: firstColor.withOpacity(0.2),
                   buttonLables: ['XS', 'S', 'M', 'L', 'XL'],
                   buttonValues: ['XS', 'S', 'M', 'L', 'XL'],
                   buttonTextStyle: ButtonTextStyle(

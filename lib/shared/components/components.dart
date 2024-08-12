@@ -40,14 +40,14 @@ Widget defaultTextFormField({
       validator: validate,
       decoration: InputDecoration(
         border: InputBorder.none,
-        prefixIcon: Icon(prefix),
+        prefixIcon: Icon(prefix,color: Colors.black,),
         hintText: lable,
         focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30.0),borderSide: BorderSide.none),
         suffixIcon: suffix !=null?IconButton(icon: Icon(suffix),onPressed: suffixpressed,):null,
         contentPadding: EdgeInsets.symmetric(vertical: 11.0),
 
       ),
-      style: TextStyle(fontSize: 14),
+      style: TextStyle(fontSize: 14,color: Colors.black),
     ),
   ),
 );

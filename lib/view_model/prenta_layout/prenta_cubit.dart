@@ -235,6 +235,7 @@ class PrentaCubit extends Cubit<PrentaStates> {
         .then((value) {
       getUserData();
       sendPushMessage(deviceToken!, 'Your Address Changed Successfully', 'Address Changed', DateTime.now().toString(), 'address');
+      emit(UpdateUserAddressSuccessState());
     }).catchError((error) {
       emit(UpdateUserAddressErrorState());
     });

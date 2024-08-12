@@ -17,20 +17,17 @@ class EditUserProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<PrentaCubit,PrentaStates>(
-      listener: (context,state){
+    // Call getUserData to fetch the user data when the screen is built
+    PrentaCubit.get(context).getUserData();
 
-      },
-      builder: (context,state){
-        var cubit=PrentaCubit.get(context).userInfo;
-        var userImage=PrentaCubit.get(context).userImage;
-        firstNameController.text=cubit!.firstName!;
-        lastNameController.text=cubit.lastName!;
-        emailController.text=cubit.email!;
-        phoneController.text=cubit.phoneNumber.toString();
+    return BlocConsumer<PrentaCubit, PrentaStates>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        var cubit = PrentaCubit.get(context);
 
-        return
-          Scaffold(
+        // Handle loading state
+        if (state is PrentaLoadingState || cubit.userInfo == null) {
+          return Scaffold(
             appBar: AppBar(
               surfaceTintColor: Colors.transparent,
               elevation: 0,
@@ -43,167 +40,223 @@ class EditUserProfile extends StatelessWidget {
               title: Text('Edit Profile'),
               centerTitle: true,
             ),
-            body: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    if(state is UpdateUserInfoLoadingState) LinearProgressIndicator(),
-                    Stack(
-                      alignment: AlignmentDirectional.bottomEnd,
-                      children: [
-                        CircleAvatar(
-                          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                          radius: 64,
-                          child: CircleAvatar(
-                            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                            radius: 60,
-                            backgroundImage: userImage == null
-                                ? NetworkImage('${cubit.profileImage}') as ImageProvider<Object>
-                                : FileImage(userImage) as ImageProvider<Object>,
-                          ),
-                        ),
-                        IconButton(onPressed: (){
-                          PrentaCubit.get(context).getProfileImage();
-                        }, icon: Icon(Ionicons.camera))
+            body: Center(child: CircularProgressIndicator()),
+          );
+        }
 
-                      ],
-                    ),
-                    SizedBox(height: 40),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('First Name', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
-                              SizedBox(height: 8),
-                              defaultTextFormField(
-                                controller: firstNameController,
-                                KeyboardType: TextInputType.text,
-                                validate: (value) {
-                                  if (value!.isEmpty) {
-                                    return 'Please enter your first name';
-                                  } else {
-                                    return null;
-                                  }
-                                },
-                                lable: 'First Name',
-                                prefix: Icons.person,
-                              ),
-                            ],
-                          ),
+        var userInfo = cubit.userInfo;
+        var userImage = cubit.userImage;
+
+        // Populate the text controllers with user data
+        firstNameController.text = userInfo!.firstName!;
+        lastNameController.text = userInfo.lastName!;
+        emailController.text = userInfo.email!;
+        phoneController.text = userInfo.phoneNumber.toString();
+
+        return Scaffold(
+          appBar: AppBar(
+            surfaceTintColor: Colors.transparent,
+            elevation: 0,
+            leading: IconButton(
+              icon: Icon(Ionicons.chevron_back_outline),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            title: Text('Edit Profile'),
+            centerTitle: true,
+          ),
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  if (state is UpdateUserInfoLoadingState)
+                    LinearProgressIndicator(),
+                  Stack(
+                    alignment: AlignmentDirectional.bottomEnd,
+                    children: [
+                      CircleAvatar(
+                        backgroundColor:
+                        Theme.of(context).scaffoldBackgroundColor,
+                        radius: 64,
+                        child: CircleAvatar(
+                          backgroundColor:
+                          Theme.of(context).scaffoldBackgroundColor,
+                          radius: 60,
+                          backgroundImage: userImage == null
+                              ? NetworkImage('${userInfo.profileImage}')
+                          as ImageProvider<Object>
+                              : FileImage(userImage) as ImageProvider<Object>,
                         ),
-                        SizedBox(width: 20,),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('Last Name', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
-                              SizedBox(height: 8),
-                              defaultTextFormField(
-                                controller: lastNameController,
-                                KeyboardType: TextInputType.text,
-                                validate: (value) {
-                                  if (value!.isEmpty) {
-                                    return 'Please enter your Last name';
-                                  } else {
-                                    return null;
-                                  }
-                                },
-                                lable: 'Last Name',
-                                prefix: Icons.person,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 15,),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Your Email', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
-                        SizedBox(height: 8),
-                        defaultTextFormField(
-                          enabled: false,
-                          controller: emailController,
-                          KeyboardType: TextInputType.emailAddress,
-                          validate: (value) {
-                            if (value!.isEmpty) {
-                              return 'Please enter your email address';
-                            } else {
-                              return null;
-                            }
+                      ),
+                      IconButton(
+                          onPressed: () {
+                            PrentaCubit.get(context).getProfileImage();
                           },
-                          lable: 'xxx@gmail.com',
-                          prefix: Icons.email_outlined,
+                          icon: Icon(Ionicons.camera))
+                    ],
+                  ),
+                  SizedBox(height: 40),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('First Name',
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w500)),
+                            SizedBox(height: 8),
+                            defaultTextFormField(
+                              controller: firstNameController,
+                              KeyboardType: TextInputType.text,
+                              validate: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Please enter your first name';
+                                } else {
+                                  return null;
+                                }
+                              },
+                              lable: 'First Name',
+                              prefix: Icons.person,
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                    SizedBox(height: 15,),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Phone Number', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
-                        SizedBox(height: 8),
-                        defaultTextFormField(
-                          controller: phoneController,
-                          KeyboardType: TextInputType.phone,
-                          validate: (value) {
-                            if (value!.isEmpty) {
-                              return 'Please enter your phone number';
-                            } else {
-                              return null;
-                            }
+                      ),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Last Name',
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w500)),
+                            SizedBox(height: 8),
+                            defaultTextFormField(
+                              controller: lastNameController,
+                              KeyboardType: TextInputType.text,
+                              validate: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Please enter your Last name';
+                                } else {
+                                  return null;
+                                }
+                              },
+                              lable: 'Last Name',
+                              prefix: Icons.person,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Your Email',
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w500)),
+                      SizedBox(height: 8),
+                      defaultTextFormField(
+                        enabled: false,
+                        controller: emailController,
+                        KeyboardType: TextInputType.emailAddress,
+                        validate: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter your email address';
+                          } else {
+                            return null;
+                          }
+                        },
+                        lable: 'xxx@gmail.com',
+                        prefix: Icons.email_outlined,
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Phone Number',
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w500)),
+                      SizedBox(height: 8),
+                      defaultTextFormField(
+                        controller: phoneController,
+                        KeyboardType: TextInputType.phone,
+                        validate: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter your phone number';
+                          } else {
+                            return null;
+                          }
+                        },
+                        lable: '+02*******',
+                        prefix: Icons.phone,
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Row(
+                    children: [
+                      Icon(Icons.password),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Text('Change Password'),
+                      Spacer(),
+                      IconButton(
+                          onPressed: () {
+                            navigateTo(context, ChangePassword());
                           },
-                          lable: '+02*******',
-                          prefix: Icons.phone,
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 15,),
-
-                    Row(
-                      children: [
-                        Icon(Icons.password),
-                        SizedBox(width: 15,),
-                        Text('Change Password'),
-                        Spacer(),
-                        IconButton(onPressed: (){
-                          navigateTo(context, ChangePassword());
-                        }, icon:Icon( Icons.arrow_forward_ios_sharp))
-                      ],
-                    ),
-                    SizedBox(height: 15,),
-
-                    Row(
-                      children: [
-                        Icon(Icons.home),
-                        SizedBox(width: 15,),
-                        Text('Change Address'),
-                        Spacer(),
-                        IconButton(onPressed: (){
-                          navigateTo(context, EditAddress());
-                        }, icon:Icon( Icons.arrow_forward_ios_sharp))
-                      ],
-                    ),
-                    SizedBox(height: 30),
-                    defaultMaterialButton(text: 'Submit', Function: (){
-                      PrentaCubit.get(context).UploadUserImage(
-                        password: cubit.password.toString(),
-                          firstName: firstNameController.text,
-                          lastName: lastNameController.text,
-                          email: emailController.text,
-                          phoneNumber: phoneController.text);
-                    })
-                  ],
-                ),
+                          icon: Icon(Icons.arrow_forward_ios_sharp))
+                    ],
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Row(
+                    children: [
+                      Icon(Icons.home),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Text('Change Address'),
+                      Spacer(),
+                      IconButton(
+                          onPressed: () {
+                            navigateTo(context, EditAddress());
+                          },
+                          icon: Icon(Icons.arrow_forward_ios_sharp))
+                    ],
+                  ),
+                  SizedBox(height: 30),
+                  defaultMaterialButton(text: 'Submit', Function: () {
+                    PrentaCubit.get(context).UploadUserImage(
+                      password: userInfo.password.toString(),
+                      firstName: firstNameController.text,
+                      lastName: lastNameController.text,
+                      email: emailController.text,
+                      phoneNumber: phoneController.text,
+                    );
+                  }),
+                ],
               ),
             ),
-          );
+          ),
+        );
       },
     );
   }

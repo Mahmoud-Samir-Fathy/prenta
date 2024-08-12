@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context)=>PrentaCubit()..initNotifications()),
+        BlocProvider(create: (context)=>PrentaCubit()..initNotifications()..userInfo),
         BlocProvider(create: (context) => ModeCubit()..changeMode(fromShared:isDark),)
       ],
       child: BlocConsumer<ModeCubit,ModeStates>(

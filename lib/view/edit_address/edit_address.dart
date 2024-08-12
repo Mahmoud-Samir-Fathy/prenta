@@ -4,6 +4,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:printa/shared/styles/colors.dart';
 import 'package:printa/view/edit_user_profile/edit_user_profile.dart';
 import 'package:printa/view/user_profile/profile.dart';
+import 'package:printa/view_model/change_mode/mode_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 import '../../shared/components/components.dart';
@@ -21,7 +22,7 @@ class EditAddress extends StatelessWidget{
     return BlocConsumer<PrentaCubit,PrentaStates>(
 
       listener: (context,state){
-        if(state is PrentaGetUserSuccessState) {
+        if(state is UpdateUserAddressSuccessState) {
           navigateTo(context, Profile());
           showToast(context, title: 'Success', description: 'Address has been updated', state: ToastColorState.success, icon: Ionicons.thumbs_up_outline);
         }
@@ -29,15 +30,17 @@ class EditAddress extends StatelessWidget{
       builder: (context,state){
 
         var cubit=PrentaCubit.get(context);
+        var mCubit=ModeCubit.get(context);
+
         cityController.text= PrentaCubit.get(context).userInfo!.city.toString();
         areaController.text= PrentaCubit.get(context).userInfo!.area.toString();
         stController.text= PrentaCubit.get(context).userInfo!.streetName.toString();
         buildingController.text= PrentaCubit.get(context).userInfo!.building.toString();
         floorController.text= PrentaCubit.get(context).userInfo!.floor.toString();
         return Scaffold(
-          backgroundColor: thirdColor,
+          backgroundColor: mCubit.isDark?secondColor:thirdColor,
           appBar: AppBar(
-            backgroundColor: thirdColor,
+            backgroundColor: mCubit.isDark?secondColor:thirdColor,
             leading: IconButton(icon: Icon(Ionicons.chevron_back_outline),onPressed: (){
               Navigator.pop(context);
             },),
@@ -151,7 +154,7 @@ class EditAddress extends StatelessWidget{
               ),
             ),
             decoration: BoxDecoration(
-                color: Colors.white,
+                color: mCubit.isDark?Colors.grey[700]:Colors.white,
                 borderRadius: BorderRadius.only(
                     topRight: Radius.circular(40),
                     topLeft: Radius.circular(40)

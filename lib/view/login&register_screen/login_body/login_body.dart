@@ -11,6 +11,7 @@ import 'package:printa/view/layout/prenta_layout.dart';
 import 'package:printa/view/send_email_verification/send_email_verification.dart';
 import 'package:printa/view_model/login_body/login_body_cubit.dart';
 import 'package:printa/view_model/login_body/login_body_states.dart';
+import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 
 class LoginBody extends StatelessWidget {
   final bool fromResetPassword;
@@ -45,6 +46,8 @@ class LoginBody extends StatelessWidget {
                 print('my ID is ################ ${state.uId}');
                 print('And This my id in main ########################## ${uId}');
                 navigateAndFinish(context, PrentaLayout());
+                print('This is user info ${PrentaCubit.get(context).userInfo}');
+
               });
             } else {
               navigateTo(context, SendEmailVerification());

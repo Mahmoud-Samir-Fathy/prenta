@@ -5,6 +5,7 @@ import 'package:printa/shared/components/constants.dart';
 import 'package:printa/shared/styles/colors.dart';
 import 'package:printa/view/forget_password/forget_password_in_edit.dart';
 import 'package:printa/view/user_profile/profile.dart';
+import 'package:printa/view_model/change_mode/mode_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 import '../../shared/components/components.dart';
@@ -31,10 +32,11 @@ class ChangePassword extends StatelessWidget{
       },
       builder:(context,state){
         var cubit=PrentaCubit.get(context);
+        var mCubit=ModeCubit.get(context);
         return  Scaffold(
-          backgroundColor: thirdColor,
+          backgroundColor: mCubit.isDark?secondColor:thirdColor,
           appBar: AppBar(
-            backgroundColor: thirdColor,
+            backgroundColor:  mCubit.isDark?secondColor:thirdColor,
             leading: IconButton(icon: Icon(Ionicons.chevron_back_outline),onPressed: (){
               Navigator.pop(context);
             },),
@@ -77,7 +79,7 @@ class ChangePassword extends StatelessWidget{
                       Align(alignment: AlignmentDirectional.bottomEnd,
                           child: TextButton(onPressed: (){
                             navigateTo(context, Reset_password_in_edit());
-                          }, child: Text('Forget Password?'))),
+                          }, child: Text('Forget Password?',style: TextStyle(color: mCubit.isDark?Colors.white:Colors.blueAccent),))),
                       SizedBox(height: 15,),
                       Text('New Password', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
                       SizedBox(height: 8),
@@ -139,7 +141,7 @@ class ChangePassword extends StatelessWidget{
               ),
             ),
             decoration: BoxDecoration(
-                color: Colors.white,
+                color: mCubit.isDark?Colors.grey[700]:Colors.white,
                 borderRadius: BorderRadius.only(
                     topRight: Radius.circular(40),
                     topLeft: Radius.circular(40)
