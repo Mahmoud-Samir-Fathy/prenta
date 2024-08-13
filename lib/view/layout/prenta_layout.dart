@@ -11,6 +11,8 @@ import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 
 class PrentaLayout extends StatelessWidget {
+  const PrentaLayout({super.key});
+
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,7 @@ class PrentaLayout extends StatelessWidget {
                     borderRadius: BorderRadius.circular(30.0), // Adjust as per your requirement
                   ),
                   onPressed: () {
-                    navigateTo(context, Customize());
+                    navigateTo(context, const Customize());
                   },
                   backgroundColor: ModeCubit.get(context).isDark ? thirdColor : firstColor,
                   child: Icon(Ionicons.shirt, color: ModeCubit.get(context).isDark ? secondColor : forthColor),

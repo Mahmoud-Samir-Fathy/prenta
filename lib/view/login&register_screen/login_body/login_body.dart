@@ -45,8 +45,8 @@ class LoginBody extends StatelessWidget {
               ).then((value) {
                 uId=state.uId;
                 print('my ID is ################ ${state.uId}');
-                print('And This my id in main ########################## ${uId}');
-                navigateAndFinish(context, PrentaLayout());
+                print('And This my id in main ########################## $uId');
+                navigateAndFinish(context, const PrentaLayout());
                 print('This is user info ${PrentaCubit.get(context).userInfo}');
 
               });
@@ -68,19 +68,25 @@ class LoginBody extends StatelessWidget {
                       controller: emailController,
                       KeyboardType: TextInputType.emailAddress,
                       validate: (value) {
-                        if (value!.isEmpty) return 'Please enter your email';
-                        else return null;
+                        if (value!.isEmpty) {
+                          return 'Please enter your email';
+                        } else {
+                          return null;
+                        }
                       },
                       lable: 'Email',
                       prefix: Ionicons.mail_outline,
                     ),
-                    SizedBox(height: 15),
+                    const SizedBox(height: 15),
                     defaultTextFormField(
                       controller: passwordController,
                       KeyboardType: TextInputType.visiblePassword,
                       validate: (value) {
-                        if (value!.isEmpty) return 'Please type the correct password';
-                        else return null;
+                        if (value!.isEmpty) {
+                          return 'Please type the correct password';
+                        } else {
+                          return null;
+                        }
                       },
                       lable: 'Password',
                       isPassword: LoginCubit.get(context).isPasswordShown,
@@ -90,7 +96,7 @@ class LoginBody extends StatelessWidget {
                         LoginCubit.get(context).ChangePasswordVisibility();
                       },
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Align(
                       alignment: Alignment.centerRight,
                       child: TextButton(
@@ -100,7 +106,7 @@ class LoginBody extends StatelessWidget {
                         child: Text('Forget Password?',style: TextStyle(color: mCubit.isDark?Colors.white:Colors.blueAccent),),
                       ),
                     ),
-                    SizedBox(height: 30),
+                    const SizedBox(height: 30),
                     ConditionalBuilder(
                       condition: (state is! LoginLoadingState),
                       builder: (context) => defaultMaterialButton(
@@ -122,9 +128,9 @@ class LoginBody extends StatelessWidget {
                           }
                         },
                       ),
-                      fallback: (context) => Center(child: CircularProgressIndicator()),
+                      fallback: (context) => const Center(child: CircularProgressIndicator()),
                     ),
-                    SizedBox(height: 40),
+                    const SizedBox(height: 40),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -133,9 +139,9 @@ class LoginBody extends StatelessWidget {
                           width: 70,
                           color: Colors.blueGrey.withOpacity(0.4),
                         ),
-                        SizedBox(width: 10),
-                        Text('or login with'),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
+                        const Text('or login with'),
+                        const SizedBox(width: 10),
                         Container(
                           height: 1,
                           width: 70,
@@ -143,7 +149,7 @@ class LoginBody extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 15),
+                    const SizedBox(height: 15),
                     Container(
                       width: double.infinity,
                       decoration: BoxDecoration(
@@ -152,14 +158,14 @@ class LoginBody extends StatelessWidget {
                           width: 0.3,
                         ),
                         color: Colors.white,
-                        borderRadius: BorderRadius.all(
+                        borderRadius: const BorderRadius.all(
                           Radius.circular(30),
                         ),
                       ),
                       child: MaterialButton(
                         color: Colors.white,
                         height: 60,
-                        shape: RoundedRectangleBorder(
+                        shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(30)),
                         ),
                         onPressed: () {},
@@ -168,12 +174,12 @@ class LoginBody extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Image(
+                              const Image(
                                 height: 30,
                                 width: 30,
                                 image: AssetImage('images/google.png'),
                               ),
-                              SizedBox(width: 3),
+                              const SizedBox(width: 3),
                               Text(
                                 'Google',
                                 style: TextStyle(fontSize: 18,color:mCubit.isDark?Colors.black:Colors.black ),
@@ -183,7 +189,7 @@ class LoginBody extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                   ],
                 ),
               ),

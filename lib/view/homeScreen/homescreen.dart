@@ -16,6 +16,8 @@ import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 
 class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<PrentaCubit, PrentaStates>(
@@ -25,7 +27,7 @@ class HomeScreen extends StatelessWidget {
         var mCubit=ModeCubit.get(context);
 
         if (cubit.productInfo.isEmpty) {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         }
 
         return Scaffold(
@@ -41,29 +43,29 @@ class HomeScreen extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Welcome Back!'),
+                            const Text('Welcome Back!'),
                             Text('${cubit.toCamelCase(cubit.userInfo?.firstName ?? '')} ${cubit.toCamelCase(cubit.userInfo?.lastName ?? '')}'),
                           ],
                         ),
-                        Spacer(),
+                        const Spacer(),
                         IconButton(
-                          onPressed: () => navigateTo(context, NotificationScreen()),
-                          icon: Icon(Ionicons.notifications),
+                          onPressed: () => navigateTo(context, const NotificationScreen()),
+                          icon: const Icon(Ionicons.notifications),
                         ),
                         IconButton(
-                          onPressed: () => navigateTo(context, CheckOut()),
-                          icon: Icon(Ionicons.cart),
+                          onPressed: () => navigateTo(context, const CheckOut()),
+                          icon: const Icon(Ionicons.cart),
                         ),
                       ],
                     ),
-                    SizedBox(height: 30),
+                    const SizedBox(height: 30),
                     GestureDetector(
                       onTap: (){
                         navigateTo(context, SearchScreen());
                       },
                       child: Container(
                         height: 50,
-                        padding: EdgeInsets.symmetric(horizontal: 16.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(8.0),
@@ -72,11 +74,11 @@ class HomeScreen extends StatelessWidget {
                               color: Colors.grey.withOpacity(0.5),
                               spreadRadius: 2,
                               blurRadius: 5,
-                              offset: Offset(0, 3),
+                              offset: const Offset(0, 3),
                             ),
                           ],
                         ),
-                        child: Row(
+                        child: const Row(
                           children: [
                             Icon(Ionicons.search,color: Colors.grey,),
                             SizedBox(width: 8.0),
@@ -88,17 +90,17 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: 30),
+                    const SizedBox(height: 30),
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(25.0),
                       ),
-                      padding: EdgeInsets.all(16.0),
+                      padding: const EdgeInsets.all(16.0),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Column(
+                          const Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -120,10 +122,10 @@ class HomeScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SizedBox(height: 15),
+                    const SizedBox(height: 15),
                     CustomRadioButton(
                       elevation: 0,
-                      margin: EdgeInsets.symmetric(horizontal: 6.0),
+                      margin: const EdgeInsets.symmetric(horizontal: 6.0),
                       defaultSelected: 'All',
                       radius: 4,
                       shapeRadius: 40,
@@ -131,12 +133,12 @@ class HomeScreen extends StatelessWidget {
                       unSelectedBorderColor: Colors.white,
                       absoluteZeroSpacing: false,
                       unSelectedColor: mCubit.isDark?forthColor:HexColor('526D82').withOpacity(0.2),
-                      buttonLables: ['All', 'T-Shirt', 'Hoodle', 'Special'],
-                      buttonValues: ['All', 'T-Shirt', 'Hoodle', 'Special'],
+                      buttonLables: const ['All', 'T-Shirt', 'Hoodle', 'Special'],
+                      buttonValues: const ['All', 'T-Shirt', 'Hoodle', 'Special'],
                       buttonTextStyle: ButtonTextStyle(
                         selectedColor: Colors.white,
                         unSelectedColor: HexColor('252525'),
-                        textStyle: TextStyle(fontSize: 16),
+                        textStyle: const TextStyle(fontSize: 16),
                       ),
                       radioButtonValue: (value) {
                         print(value);
@@ -145,11 +147,11 @@ class HomeScreen extends StatelessWidget {
                       width: 90,
                       selectedColor: HexColor('27374D'),
                     ),
-                    SizedBox(height: 15),
+                    const SizedBox(height: 15),
                     GridView.builder(
                       shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      physics: const NeverScrollableScrollPhysics(),
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 8,
                         mainAxisSpacing: 30,
@@ -162,7 +164,7 @@ class HomeScreen extends StatelessWidget {
                               (favourite) => favourite?.productTittle == product.title,
                           orElse: () => FavouriteModel(isFavourite: false),
                         );
-                        return ItemCard(product, context, model!);
+                        return itemCard(product, context, model!);
                       },
                     ),
                   ],
@@ -176,7 +178,7 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-Widget ItemCard(ProductModel product, BuildContext context, FavouriteModel model) {
+Widget itemCard(ProductModel product, BuildContext context, FavouriteModel model) {
   return GestureDetector(
     onTap: () {
       navigateTo(context, ProductDetails(product: product));
@@ -221,12 +223,12 @@ Widget ItemCard(ProductModel product, BuildContext context, FavouriteModel model
                 right: 0,
                 child: Center(
                   child: Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Colors.blue,
                       shape: BoxShape.circle,
                     ),
-                    padding: EdgeInsets.all(12),
-                    child: Icon(
+                    padding: const EdgeInsets.all(12),
+                    child: const Icon(
                       Ionicons.cart,
                       color: Colors.white,
                     ),
@@ -235,27 +237,27 @@ Widget ItemCard(ProductModel product, BuildContext context, FavouriteModel model
               ),
             ],
           ),
-          SizedBox(height: 25),
+          const SizedBox(height: 25),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
                 '${product.title}',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
-              SizedBox(width: 5),
+              const SizedBox(width: 5),
               Text(
                 '${product.price}',
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w300, color: Colors.grey),
+                style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w300, color: Colors.grey),
               ),
             ],
           ),
-          SizedBox(height: 4),
+          const SizedBox(height: 4),
           Text(
             '${product.description}',
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(fontSize: 16),
+            style: const TextStyle(fontSize: 16),
           ),
         ],
       ),

@@ -11,6 +11,8 @@ import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 import '../edit_user_profile/edit_user_profile.dart';
 
 class Profile extends StatelessWidget {
+  const Profile({super.key});
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<PrentaCubit, PrentaStates>(
@@ -22,7 +24,7 @@ class Profile extends StatelessWidget {
           appBar: AppBar(
             surfaceTintColor: Colors.transparent,
             elevation: 0,
-            title: Text(
+            title: const Text(
               'Profile Settings',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
@@ -45,14 +47,14 @@ class Profile extends StatelessWidget {
                           radius: 60,
                           backgroundImage: cubit.userInfo!.profileImage != null
                               ? NetworkImage('${cubit.userInfo!.profileImage}')
-                              : AssetImage('assets/images/default_profile.png') as ImageProvider,
+                              : const AssetImage('assets/images/default_profile.png') as ImageProvider,
                         ),
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Text('${cubit.userInfo!.firstName} ${cubit.userInfo!.lastName}'),
-                      SizedBox(height: 5),
+                      const SizedBox(height: 5),
                       Text('${cubit.userInfo!.email}'),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 15.0),
                         child: Container(
@@ -61,7 +63,7 @@ class Profile extends StatelessWidget {
                           color: Colors.grey.withOpacity(0.3),
                         ),
                       ),
-                      SizedBox(height: 30),
+                      const SizedBox(height: 30),
                     ],
                   ),
                   Padding(
@@ -69,98 +71,98 @@ class Profile extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           'Profile',
                           style: TextStyle(fontWeight: FontWeight.w400),
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         Row(
                           children: [
-                            Icon(Ionicons.person),
-                            SizedBox(width: 15),
-                            Text('Edit Profile'),
-                            Spacer(),
+                            const Icon(Ionicons.person),
+                            const SizedBox(width: 15),
+                            const Text('Edit Profile'),
+                            const Spacer(),
                             IconButton(
                               onPressed: () {
                                 navigateTo(context, EditUserProfile());
                               },
-                              icon: Icon(Ionicons.chevron_forward_outline),
+                              icon: const Icon(Ionicons.chevron_forward_outline),
                             ),
                           ],
                         ),
-                        SizedBox(height: 15),
+                        const SizedBox(height: 15),
                         Row(
                           children: [
-                            Icon(Ionicons.settings),
-                            SizedBox(width: 15),
-                            Text('Change Themes'),
-                            Spacer(),
+                            const Icon(Ionicons.settings),
+                            const SizedBox(width: 15),
+                            const Text('Change Themes'),
+                            const Spacer(),
                             IconButton(
                               onPressed: () {
                                 ModeCubit.get(context).changeMode();
                               },
-                              icon: Icon(Ionicons.chevron_forward_outline),
+                              icon: const Icon(Ionicons.chevron_forward_outline),
                             ),
                           ],
                         ),
-                        SizedBox(height: 15),
+                        const SizedBox(height: 15),
                         Row(
                           children: [
-                            Icon(Ionicons.wallet),
-                            SizedBox(width: 15),
-                            Text('Orders'),
-                            Spacer(),
+                            const Icon(Ionicons.wallet),
+                            const SizedBox(width: 15),
+                            const Text('Orders'),
+                            const Spacer(),
                             IconButton(
                               onPressed: () {},
-                              icon: Icon(Ionicons.chevron_forward_outline),
+                              icon: const Icon(Ionicons.chevron_forward_outline),
                             ),
                           ],
                         ),
-                        SizedBox(height: 20),
-                        Text(
+                        const SizedBox(height: 20),
+                        const Text(
                           'Support',
                           style: TextStyle(fontWeight: FontWeight.w400),
                         ),
-                        SizedBox(height: 15),
+                        const SizedBox(height: 15),
                         Row(
                           children: [
-                            Icon(Ionicons.information),
-                            SizedBox(width: 15),
-                            Text('Help Center'),
-                            Spacer(),
+                            const Icon(Ionicons.information),
+                            const SizedBox(width: 15),
+                            const Text('Help Center'),
+                            const Spacer(),
                             IconButton(
                               onPressed: () {},
-                              icon: Icon(Ionicons.chevron_forward_outline),
+                              icon: const Icon(Ionicons.chevron_forward_outline),
                             ),
                           ],
                         ),
-                        SizedBox(height: 15),
+                        const SizedBox(height: 15),
                         Row(
                           children: [
-                            Icon(Ionicons.information),
-                            SizedBox(width: 15),
-                            Text('Terms of Service'),
-                            Spacer(),
+                            const Icon(Ionicons.information),
+                            const SizedBox(width: 15),
+                            const Text('Terms of Service'),
+                            const Spacer(),
                             IconButton(
                               onPressed: () {},
-                              icon: Icon(Ionicons.chevron_forward_outline),
+                              icon: const Icon(Ionicons.chevron_forward_outline),
                             ),
                           ],
                         ),
-                        SizedBox(height: 15),
+                        const SizedBox(height: 15),
                         Row(
                           children: [
-                            Icon(Ionicons.chatbox_outline),
-                            SizedBox(width: 15),
-                            Text('Support Chat'),
-                            Spacer(),
+                            const Icon(Ionicons.chatbox_outline),
+                            const SizedBox(width: 15),
+                            const Text('Support Chat'),
+                            const Spacer(),
                             IconButton(
                               onPressed: () {},
-                              icon: Icon(Ionicons.chevron_forward_outline),
+                              icon: const Icon(Ionicons.chevron_forward_outline),
                             ),
                           ],
                         ),
-                        SizedBox(height: 30),
+                        const SizedBox(height: 30),
                         Center(
                           child: Container(
                             width: 200,
@@ -170,10 +172,10 @@ class Profile extends StatelessWidget {
                             ),
                             child: MaterialButton(
                               height: 60,
-                              shape: RoundedRectangleBorder(
+                              shape: const RoundedRectangleBorder(
                                 borderRadius: BorderRadius.all(Radius.circular(30)),
                               ),
-                              child: Row(
+                              child: const Row(
                                 children: [
                                   Icon(Ionicons.exit_outline),
                                   SizedBox(width: 15),
@@ -186,14 +188,14 @@ class Profile extends StatelessWidget {
                             ),
                           ),
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                       ],
                     ),
                   ),
                 ],
               ),
             ),
-            fallback: (context) => Center(child: CircularProgressIndicator()),
+            fallback: (context) => const Center(child: CircularProgressIndicator()),
           ),
         );
       },
@@ -206,13 +208,13 @@ void _showSignOutDialog(BuildContext context, Color color) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Align(
+        title: const Align(
           alignment: AlignmentDirectional.center,
           child: Text('Sign Out'),
         ),
         content: Container(
           height: 100,
-          child: Center(
+          child: const Center(
             child: Text(
               'Do you want to sign out?',
               style: TextStyle(fontWeight: FontWeight.w300),
@@ -229,13 +231,13 @@ void _showSignOutDialog(BuildContext context, Color color) {
             ),
             child: MaterialButton(
               height: 50,
-              shape: RoundedRectangleBorder(
+              shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(30)),
               ),
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
             ),
           ),
           Container(
@@ -248,13 +250,13 @@ void _showSignOutDialog(BuildContext context, Color color) {
             child: MaterialButton(
               color: color,
               height: 50,
-              shape: RoundedRectangleBorder(
+              shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(30)),
               ),
               onPressed: () {
                   signOut(context);
               },
-              child: Text(
+              child: const Text(
                 'Sign Out',
                 style: TextStyle(color: Colors.white),
               ),

@@ -10,6 +10,8 @@ import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 import '../../shared/components/components.dart';
 
 class Customize extends StatelessWidget {
+  const Customize({super.key});
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<PrentaCubit, PrentaStates>(
@@ -27,7 +29,7 @@ class Customize extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             leading: IconButton(
-              icon: Icon(Ionicons.chevron_back_outline),
+              icon: const Icon(Ionicons.chevron_back_outline),
               onPressed: () {
                 Navigator.pop(context);
               },
@@ -56,7 +58,7 @@ class Customize extends StatelessWidget {
                     ),
                   ),
                 ),
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.baseline,
                   textBaseline: TextBaseline.alphabetic,
@@ -66,12 +68,12 @@ class Customize extends StatelessWidget {
                     Text('LE'),
                   ],
                 ),
-                SizedBox(height: 15),
-                Text('Size:'),
-                SizedBox(height: 10),
+                const SizedBox(height: 15),
+                const Text('Size:'),
+                const SizedBox(height: 10),
                 CustomRadioButton(
                   elevation: 0,
-                  margin: EdgeInsets.symmetric(horizontal: 6.0),
+                  margin: const EdgeInsets.symmetric(horizontal: 6.0),
                   defaultSelected: 'M',
                   radius: 5,
                   shapeRadius: 10,
@@ -79,12 +81,12 @@ class Customize extends StatelessWidget {
                   unSelectedBorderColor: Colors.white,
                   absoluteZeroSpacing: false,
                   unSelectedColor:mCubit.isDark?thirdColor: firstColor.withOpacity(0.2),
-                  buttonLables: ['XS', 'S', 'M', 'L', 'XL'],
-                  buttonValues: ['XS', 'S', 'M', 'L', 'XL'],
+                  buttonLables: const ['XS', 'S', 'M', 'L', 'XL'],
+                  buttonValues: const ['XS', 'S', 'M', 'L', 'XL'],
                   buttonTextStyle: ButtonTextStyle(
                     selectedColor: Colors.white,
                     unSelectedColor: HexColor('252525'),
-                    textStyle: TextStyle(fontSize: 16),
+                    textStyle: const TextStyle(fontSize: 16),
                   ),
                   radioButtonValue: (value) {
                     cubit.updateSize(value); // Update size in cubit
@@ -93,8 +95,8 @@ class Customize extends StatelessWidget {
                   width: 55,
                   selectedColor: HexColor('27374D'),
                 ),
-                SizedBox(height: 10),
-                Text('Colors available:'),
+                const SizedBox(height: 10),
+                const Text('Colors available:'),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
@@ -105,7 +107,7 @@ class Customize extends StatelessWidget {
                           cubit.setSelectedCircle(index); // Update selected color
                         },
                         child: Container(
-                          margin: EdgeInsets.all(8),
+                          margin: const EdgeInsets.all(8),
                           width: 50,
                           height: 50,
                           decoration: BoxDecoration(
@@ -126,9 +128,9 @@ class Customize extends StatelessWidget {
                     }),
                   ),
                 ),
-                SizedBox(height: 10),
-                Text('Insert Front Design'),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
+                const Text('Insert Front Design'),
+                const SizedBox(height: 10),
                 GestureDetector(
                   onTap: () => cubit.getFrontDesignImage(),
                   child: Center(
@@ -140,7 +142,7 @@ class Customize extends StatelessWidget {
                         borderRadius: BorderRadius.circular(40),
                       ),
                       child: cubit.frontDesign == null
-                          ? Icon(Icons.image, color: Colors.white, size: 50)
+                          ? const Icon(Icons.image, color: Colors.white, size: 50)
                           : ClipRRect(
                         borderRadius: BorderRadius.circular(40),
                         child: Image.file(
@@ -151,9 +153,9 @@ class Customize extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: 30),
-                Text('Insert Back Design'),
-                SizedBox(height: 10),
+                const SizedBox(height: 30),
+                const Text('Insert Back Design'),
+                const SizedBox(height: 10),
                 GestureDetector(
                   onTap: () => cubit.getBackDesignImage(),
                   child: Center(
@@ -165,7 +167,7 @@ class Customize extends StatelessWidget {
                         borderRadius: BorderRadius.circular(40),
                       ),
                       child: cubit.backDesign == null
-                          ? Icon(Icons.image, color: Colors.white, size: 50)
+                          ? const Icon(Icons.image, color: Colors.white, size: 50)
                           : ClipRRect(
                         borderRadius: BorderRadius.circular(40),
                         child: Image.file(
@@ -176,7 +178,7 @@ class Customize extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 Center(
                   child: defaultMaterialButton(
                     text: 'Confirm',
@@ -186,15 +188,15 @@ class Customize extends StatelessWidget {
                         color: cubit.selectedColorName,
                         price: '300',
                         size: cubit.selectedSize,
-                        image: '${cubit.imagePath}',
+                        image: cubit.imagePath,
                         status: 'OnProcessing'
                       );
 
                     },
                   ),
                 ),
-                SizedBox(height: 15),
-                if(state is PrentaSaveToCartLoadingState) LinearProgressIndicator(),
+                const SizedBox(height: 15),
+                if(state is PrentaSaveToCartLoadingState) const LinearProgressIndicator(),
               ],
             ),
           ),

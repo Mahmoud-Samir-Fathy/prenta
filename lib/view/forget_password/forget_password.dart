@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
@@ -8,6 +7,8 @@ import 'package:printa/view_model/login_body/login_body_states.dart';
 
 class ForgetPassword extends StatelessWidget {
   var emailController = TextEditingController();
+
+  ForgetPassword({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,16 +26,16 @@ class ForgetPassword extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
+                    const Text(
                       'Reset Password',
                       style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(height: 15),
-                    Text(
+                    const SizedBox(height: 15),
+                    const Text(
                       'Enter your registered email below so we can send an email to reset your password',
                       style: TextStyle(color: Colors.grey, fontSize: 16),
                     ),
-                    SizedBox(height: 25),
+                    const SizedBox(height: 25),
                     defaultTextFormField(
                       controller: emailController,
                       KeyboardType: TextInputType.emailAddress,
@@ -48,9 +49,9 @@ class ForgetPassword extends StatelessWidget {
                       lable: 'Email Address',
                       prefix: Ionicons.mail_outline,
                     ),
-                    SizedBox(height: 25),
-                    Center(child: Image(image: AssetImage('images/change_password.png'))),
-                    SizedBox(height: 40),
+                    const SizedBox(height: 25),
+                    const Center(child: Image(image: AssetImage('images/change_password.png'))),
+                    const SizedBox(height: 40),
                     Center(
                       child: defaultMaterialButton(
                         text: 'Send',

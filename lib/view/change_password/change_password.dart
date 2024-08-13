@@ -16,6 +16,8 @@ class ChangePassword extends StatelessWidget{
   var confirmNewPasswordController=TextEditingController();
   var formKey=GlobalKey<FormState>();
 
+  ChangePassword({super.key});
+
 
   @override
   Widget build(BuildContext context) {
@@ -37,10 +39,10 @@ class ChangePassword extends StatelessWidget{
           backgroundColor: mCubit.isDark?secondColor:thirdColor,
           appBar: AppBar(
             backgroundColor:  mCubit.isDark?secondColor:thirdColor,
-            leading: IconButton(icon: Icon(Ionicons.chevron_back_outline),onPressed: (){
+            leading: IconButton(icon: const Icon(Ionicons.chevron_back_outline),onPressed: (){
               Navigator.pop(context);
             },),
-            title: Text('Change Password'),
+            title: const Text('Change Password'),
             centerTitle:true ,
           ),
           body: Container(
@@ -53,8 +55,8 @@ class ChangePassword extends StatelessWidget{
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Current Password', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500,)),
-                      SizedBox(height: 8),
+                      const Text('Current Password', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500,)),
+                      const SizedBox(height: 8),
                       defaultTextFormField(
                           controller: oldPasswordController,
                           KeyboardType: TextInputType.visiblePassword,
@@ -75,14 +77,14 @@ class ChangePassword extends StatelessWidget{
                             cubit.ChangePasswordVisibility();
                         }
                       ),
-                      SizedBox(height: 8,),
+                      const SizedBox(height: 8,),
                       Align(alignment: AlignmentDirectional.bottomEnd,
                           child: TextButton(onPressed: (){
                             navigateTo(context, Reset_password_in_edit());
                           }, child: Text('Forget Password?',style: TextStyle(color: mCubit.isDark?Colors.white:Colors.blueAccent),))),
-                      SizedBox(height: 15,),
-                      Text('New Password', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 15,),
+                      const Text('New Password', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
+                      const SizedBox(height: 8),
                       defaultTextFormField(
                           controller: newPasswordController,
                           KeyboardType: TextInputType.visiblePassword,
@@ -102,9 +104,9 @@ class ChangePassword extends StatelessWidget{
                             cubit.ChangePasswordVisibility();
                           }
                       ),
-                      SizedBox(height: 15,),
-                      Text('Confirm Password', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 15,),
+                      const Text('Confirm Password', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
+                      const SizedBox(height: 8),
                       defaultTextFormField(
                           controller: confirmNewPasswordController,
                           KeyboardType: TextInputType.visiblePassword,
@@ -126,7 +128,7 @@ class ChangePassword extends StatelessWidget{
                         }
                       ),
 
-                      SizedBox(height: 40,),
+                      const SizedBox(height: 40,),
                       Center(
                           child: defaultMaterialButton(text: 'Submit', Function: ()
                       {
@@ -142,7 +144,7 @@ class ChangePassword extends StatelessWidget{
             ),
             decoration: BoxDecoration(
                 color: mCubit.isDark?Colors.grey[700]:Colors.white,
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                     topRight: Radius.circular(40),
                     topLeft: Radius.circular(40)
                 )

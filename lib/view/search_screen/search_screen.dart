@@ -4,12 +4,17 @@ import 'package:ionicons/ionicons.dart';
 import 'package:printa/models/product_model/product%20model.dart';
 import 'package:printa/shared/components/components.dart';
 import 'package:printa/view/product_details/product_details.dart';
+import 'package:printa/view_model/change_mode/mode_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 
 class SearchScreen extends StatelessWidget {
+  const SearchScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
+    PrentaCubit.get(context).getProductData();
+
     var cubit = PrentaCubit.get(context);
     cubit.requestFocus(); // Request focus when the screen is built
 
@@ -20,11 +25,11 @@ class SearchScreen extends StatelessWidget {
           body: SafeArea(
             child: Column(
               children: [
-                SizedBox(height: 30,),
+                const SizedBox(height: 30,),
                 Row(
                   children: [
                     IconButton(
-                      icon: Icon(Ionicons.chevron_back_outline),
+                      icon: const Icon(Ionicons.chevron_back_outline),
                       onPressed: () {
                         Navigator.pop(context);
                       },
@@ -43,7 +48,7 @@ class SearchScreen extends StatelessWidget {
                         onChanged: (value) {
                           cubit.searchProduct(value);
                         },
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: 'Search',
                         ),
                       ),
@@ -52,7 +57,7 @@ class SearchScreen extends StatelessWidget {
                       onPressed: () {
                         cubit.clearSearch();
                       },
-                      icon: Icon(Icons.close),
+                      icon: const Icon(Icons.close),
                     ),
                   ],
                 ),
@@ -62,7 +67,7 @@ class SearchScreen extends StatelessWidget {
                     child: ListView.separated(
                       itemBuilder: (context, index) =>
                           buildSearchItem(cubit.searchResults[index],context),
-                      separatorBuilder: (context, index) => SizedBox(height: 10),
+                      separatorBuilder: (context, index) => const SizedBox(height: 1),
                       itemCount: cubit.searchResults.length,
                     ),
                   ),
@@ -76,37 +81,53 @@ class SearchScreen extends StatelessWidget {
   }
 }
 
-Widget buildSearchItem(ProductModel model,context) => GestureDetector(
-  onTap: (){
+Widget buildSearchItem(ProductModel model, context) => GestureDetector(
+  onTap: () {
     navigateTo(context, ProductDetails(product: model));
   },
   child: Padding(
-    padding: const EdgeInsetsDirectional.symmetric(horizontal: 8),
+    padding: const EdgeInsetsDirectional.symmetric(horizontal: 5),
     child: Card(
+      color: ModeCubit.get(context).isDark ? Colors.grey[700] : Colors.white,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Image.network(model.image!, width: 100, height: 100),
-          SizedBox(width: 16),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(8.0), // Adjust the radius as needed
+            clipBehavior: Clip.antiAlias, // Smooth clipping
+            child: Image.network(
+              model.image!,
+              width: 100,
+              height: 100,
+              fit: BoxFit.cover, // Ensures the image fits well within the container
+            ),
+          ),
+          const SizedBox(width: 16),
           Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(model.title!, style: TextStyle(fontSize: 22)),
-                Text(
-                  '${model.description!}',
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                SizedBox(height: 10),
-                Row(
-                  children: [
-                    Spacer(),
-                    Text('Price: ${model.price.toString()}'),
-                  ],
-                ),
-              ],
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    model.title!,
+                    style: const TextStyle(fontSize: 22),
+                  ),
+                  Text(
+                    model.description!,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
+                      const Spacer(),
+                      Text('Price: ${model.price.toString()}'),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ],

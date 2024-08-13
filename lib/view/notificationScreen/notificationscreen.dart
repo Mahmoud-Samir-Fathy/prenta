@@ -19,18 +19,18 @@ class NotificationScreen extends StatelessWidget {
           return Scaffold(
               appBar: AppBar(
                 leading: IconButton(
-                  icon: Icon(Icons.arrow_back_ios, size: 25),
+                  icon: const Icon(Icons.arrow_back_ios, size: 25),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
                 ),
-                title: Text('Notification'),
+                title: const Text('Notification'),
                 centerTitle: true,
               ),
               body:SingleChildScrollView(
                 child: ListView.separated(
                     shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (context,index)=>buildNotification(cubit.notificationList[index]),
                     separatorBuilder: (context,index)=> Divider(color: Colors.grey.shade300, thickness: 1),
                     itemCount: cubit.notificationList.length),
@@ -52,7 +52,7 @@ Widget buildNotification(NotificationModel model)=>Padding(
         child: Icon(getIconForNotification(model.image.toString()),
             color: Colors.blue,),
       ),
-      SizedBox(width: 15),
+      const SizedBox(width: 15),
       Expanded(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -60,20 +60,20 @@ Widget buildNotification(NotificationModel model)=>Padding(
           children: [
             Text(
               '${model.title}',
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
               ),
             ),
-            SizedBox(height: 4),
+            const SizedBox(height: 4),
             Text(
               '${model.body}',
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.grey,
                 fontSize: 14,
               ),
             ),
-            SizedBox(height: 4),
+            const SizedBox(height: 4),
             Text(
               '${model.date}',
               style: TextStyle(

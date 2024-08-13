@@ -10,7 +10,7 @@ import 'package:readmore/readmore.dart';
 class ReviewBefore extends StatelessWidget {
   final String productTitle;
 
-  ReviewBefore({required this.productTitle}) {
+  ReviewBefore({super.key, required this.productTitle}) {
     if (productTitle.isEmpty) {
       throw ArgumentError('productTitle cannot be empty');
     }
@@ -120,7 +120,7 @@ Widget buildReviewComments(ReviewModel? model,context) => Card(
                 fontWeight: FontWeight.bold,
               ),
             ),
-            Spacer(),
+            const Spacer(),
             RatingBar.builder(
               itemSize: 25,
               initialRating: model.stars?.toDouble() ?? 0,

@@ -1,13 +1,14 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:printa/shared/components/constants.dart';
 import 'package:printa/shared/styles/colors.dart';
 import 'package:printa/view_model/change_mode/mode_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 
 class ActiveOrder extends StatelessWidget {
+  const ActiveOrder({super.key});
+
   @override
   Widget build(BuildContext context) {
 
@@ -22,10 +23,10 @@ class ActiveOrder extends StatelessWidget {
             builder: (context)=>ListView.separated(
               itemBuilder: (context, index) =>
                   buildActiveItem(onProcessingItems[index], context),
-              separatorBuilder: (context, index) => SizedBox(height: 10),
+              separatorBuilder: (context, index) => const SizedBox(height: 10),
               itemCount: onProcessingItems.length,
             ),
-            fallback: (context)=>Center(child: Text('No items here')),
+            fallback: (context)=>const Center(child: Text('No items here')),
           );
       },
     );
@@ -51,7 +52,7 @@ class ActiveOrder extends StatelessWidget {
                     fit: BoxFit.cover,
                   ),
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 Expanded(
                   child: Container(
                     height: 100,
@@ -62,7 +63,7 @@ class ActiveOrder extends StatelessWidget {
                         Row(
                           children: [
                             Text(item['title'] ?? 'Unknown Item'),
-                            Spacer(),
+                            const Spacer(),
                             GestureDetector(
                               onTap: () {
                                 PrentaCubit.get(context)
@@ -70,7 +71,7 @@ class ActiveOrder extends StatelessWidget {
                                     context, Colors.red,
                                     item['id'],item['title']); // Pass item['id'] as itemId
                               },
-                              child: Icon(
+                              child: const Icon(
                                 Icons.delete,
                                 size: 25,
                               ),
@@ -82,24 +83,24 @@ class ActiveOrder extends StatelessWidget {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
-                        Spacer(),
+                        const Spacer(),
                         Row(
                           children: [
                             Column(
                               children: [
                                 Text('Qty(${item['quantity'] ?? 1})',
-                                    style: TextStyle(fontSize: 16)),
+                                    style: const TextStyle(fontSize: 16)),
                                 Text('${price * quantity + 50} L.E',
-                                    style: TextStyle(fontWeight: FontWeight.w700)),
+                                    style: const TextStyle(fontWeight: FontWeight.w700)),
                               ],
                             ),
-                            SizedBox(width: 30),
+                            const SizedBox(width: 30),
                             Column(
                               children: [
                                 CircleAvatar(
                                   backgroundColor: ModeCubit.get(context).isDark?secondColor:firstColor,
                                   child: Text(item['size'] ?? 'N/A',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           color: Colors.white,
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold)),
@@ -108,7 +109,7 @@ class ActiveOrder extends StatelessWidget {
                                 Text(item['color'] ?? 'N/A')
                               ],
                             ),
-                            Spacer(),
+                            const Spacer(),
                             Text('Processing',
                                 style: TextStyle(
                                     color: ModeCubit.get(context).isDark?forthColor:Colors.black,

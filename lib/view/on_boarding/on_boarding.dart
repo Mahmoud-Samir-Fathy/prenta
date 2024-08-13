@@ -8,6 +8,8 @@ import '../../shared/network/local/cache_helper.dart';
 import '../login&register_screen/account_screen/account_screen.dart';
 
 class OnBoarding extends StatefulWidget{
+  const OnBoarding({super.key});
+
   @override
   State<OnBoarding> createState() => _on_boardingState();
 }
@@ -18,7 +20,7 @@ class _on_boardingState extends State<OnBoarding> {
     CacheHelper.saveData(key: 'OnBoarding', value: true).then((value) {
       if(value)
       {
-        navigateAndFinish(context, AccountScreen()
+        navigateAndFinish(context, const AccountScreen()
         );
       }
     });
@@ -71,7 +73,7 @@ class _on_boardingState extends State<OnBoarding> {
                    }
                  },
                  controller: boardController,
-                 physics: BouncingScrollPhysics(),
+                 physics: const BouncingScrollPhysics(),
                  itemBuilder:(context,index)=> buildBoardingItem(boarding[index]),
                  itemCount: boarding.length,),
              ),
@@ -89,17 +91,17 @@ class _on_boardingState extends State<OnBoarding> {
                      ) ,
                      controller: boardController,
                      count: boarding.length),
-                 Spacer(),
+                 const Spacer(),
                  FloatingActionButton(
-                   shape: CircleBorder(),
+                   shape: const CircleBorder(),
                    backgroundColor: firstColor,
                    elevation: 0,
                    onPressed: (){
                      if(isLast) {
                      submit();
                    }else{
-                     boardController.nextPage(duration: Duration(milliseconds: 750), curve:Curves.fastEaseInToSlowEaseOut );
-                   };
+                     boardController.nextPage(duration: const Duration(milliseconds: 750), curve:Curves.fastEaseInToSlowEaseOut );
+                   }
                    },
                    child: Icon(Ionicons.chevron_forward_outline,color: forthColor,),)
                ],
@@ -114,13 +116,13 @@ class _on_boardingState extends State<OnBoarding> {
     children: [
       Expanded(
         child: Image(
-          image: AssetImage('${onboard.image}'),
+          image: AssetImage(onboard.image),
         ),
       ),
-      Text('${onboard.tittle}',style: TextStyle(fontSize:30,fontWeight: FontWeight.bold),),
-      SizedBox(height: 40,),
-      Text('${onboard.description}',style: TextStyle(fontSize: 20),),
-      SizedBox(height: 30,),
+      Text(onboard.tittle,style: const TextStyle(fontSize:30,fontWeight: FontWeight.bold),),
+      const SizedBox(height: 40,),
+      Text(onboard.description,style: const TextStyle(fontSize: 20),),
+      const SizedBox(height: 30,),
     ],
   );
 }

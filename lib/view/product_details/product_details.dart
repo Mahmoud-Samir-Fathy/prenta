@@ -36,7 +36,7 @@ class ProductDetails extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             leading: IconButton(
-              icon: Icon(Ionicons.chevron_back_outline),
+              icon: const Icon(Ionicons.chevron_back_outline),
               onPressed: () {
                 Navigator.pop(context);
               },
@@ -47,7 +47,7 @@ class ProductDetails extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(
                   color: mCubit.isDark?Colors.grey[700]:Colors.white,
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(30.0),
                     topRight: Radius.circular(30.0),
                   ),
@@ -56,7 +56,7 @@ class ProductDetails extends StatelessWidget {
                   child: Column(
                     children: [
                       ClipRRect(
-                        borderRadius: BorderRadius.only(
+                        borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(30.0),
                           topRight: Radius.circular(30.0),
                         ),
@@ -71,19 +71,19 @@ class ProductDetails extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(height: 16),
+                            const SizedBox(height: 16),
                             Row(
                               children: [
                                 Text(
                                   product.title ?? '',
-                                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                                  style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                                 ),
-                                Spacer(),
+                                const Spacer(),
                                 IconButton(
                                   onPressed: () {
                                     // Add your onPressed logic here
                                   },
-                                  icon: Icon(
+                                  icon: const Icon(
                                     Icons.favorite,
                                     color: Colors.red,
                                     size: 23,
@@ -95,40 +95,40 @@ class ProductDetails extends StatelessWidget {
                               children: [
                                 Text(
                                   product.price ?? '',
-                                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                                  style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                                 ),
-                                SizedBox(width: 8),
-                                Text(
+                                const SizedBox(width: 8),
+                                const Text(
                                   'LE',
                                   style: TextStyle(fontSize: 19, fontWeight: FontWeight.w400),
                                 ),
-                                SizedBox(width: 8),
-                                Spacer(),
+                                const SizedBox(width: 8),
+                                const Spacer(),
                                 InkWell(
                                   onTap: (){
                                     navigateTo(context, ReviewBefore(productTitle: product.title.toString()));
                                   },
-                                  child: Text('Reviews',style: TextStyle(color: Colors.blue),)
+                                  child: const Text('Reviews',style: TextStyle(color: Colors.blue),)
                                 ),
                               ],
                             ),
-                            SizedBox(height: 10),
+                            const SizedBox(height: 10),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                const Text(
                                   'Description:',
                                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                                 ),
-                                SizedBox(height: 8),
+                                const SizedBox(height: 8),
                                 Text(
                                   product.description ?? '',
-                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
+                                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
                                 ),
-                                SizedBox(height: 8),
+                                const SizedBox(height: 8),
                                 Row(
                                   children: [
-                                    Text(
+                                    const Text(
                                       'Size:',
                                       style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                                     ),
@@ -144,7 +144,7 @@ class ProductDetails extends StatelessWidget {
                                               children: [
                                                 Expanded(
                                                   child: InteractiveViewer(
-                                                    boundaryMargin: EdgeInsets.all(20),
+                                                    boundaryMargin: const EdgeInsets.all(20),
                                                     minScale: 0.1,
                                                     maxScale: 4,
                                                     child: Image.asset(
@@ -161,18 +161,18 @@ class ProductDetails extends StatelessWidget {
                                                         Navigator.of(context).pop();
                                                       },
                                                       icon: Container(
-                                                        padding: EdgeInsets.all(8),
-                                                        decoration: BoxDecoration(
+                                                        padding: const EdgeInsets.all(8),
+                                                        decoration: const BoxDecoration(
                                                           shape: BoxShape.circle,
                                                           color: Colors.red,
                                                         ),
-                                                        child: Icon(
+                                                        child: const Icon(
                                                           Icons.close,
                                                           color: Colors.white,
                                                         ),
                                                       ),
                                                     ),
-                                                    Text('You Can Zoom', style: TextStyle(color: Colors.grey)),
+                                                    const Text('You Can Zoom', style: TextStyle(color: Colors.grey)),
                                                   ],
                                                 ),
                                               ],
@@ -180,15 +180,15 @@ class ProductDetails extends StatelessWidget {
                                           ),
                                         );
                                       },
-                                      icon: Icon(Icons.info_outline,color: Colors.red,),
-                                      label: Text(' '),
+                                      icon: const Icon(Icons.info_outline,color: Colors.red,),
+                                      label: const Text(' '),
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: 8),
+                                const SizedBox(height: 8),
                                 CustomRadioButton(
                                   elevation: 0,
-                                  margin: EdgeInsets.symmetric(horizontal: 6.0),
+                                  margin: const EdgeInsets.symmetric(horizontal: 6.0),
                                   defaultSelected: cubit.selectedSize,
                                   radius: 5,
                                   shapeRadius: 10,
@@ -196,14 +196,14 @@ class ProductDetails extends StatelessWidget {
                                   unSelectedBorderColor: Colors.white,
                                   absoluteZeroSpacing: false,
                                   unSelectedColor:mCubit.isDark?thirdColor: firstColor.withOpacity(0.2),
-                                  buttonLables: [
+                                  buttonLables: const [
                                     'XS',
                                     'S',
                                     'M',
                                     'L',
                                     'XL',
                                   ],
-                                  buttonValues: [
+                                  buttonValues: const [
                                     'XS',
                                     'S',
                                     'M',
@@ -213,7 +213,7 @@ class ProductDetails extends StatelessWidget {
                                   buttonTextStyle: ButtonTextStyle(
                                       selectedColor: Colors.white,
                                       unSelectedColor: HexColor('252525'),
-                                      textStyle: TextStyle(fontSize: 14)),
+                                      textStyle: const TextStyle(fontSize: 14)),
                                   radioButtonValue: (value) {
                                     cubit.updateSize(value.toString());
                                   },
@@ -221,8 +221,8 @@ class ProductDetails extends StatelessWidget {
                                   width: 50,
                                   selectedColor: HexColor('27374D'),
                                 ),
-                                SizedBox(height: 8),
-                                Text(
+                                const SizedBox(height: 8),
+                                const Text(
                                   'Colors Available:',
                                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                                 ),
@@ -236,7 +236,7 @@ class ProductDetails extends StatelessWidget {
                                           cubit.updateColor(index);
                                         },
                                         child: Container(
-                                          margin: EdgeInsets.all(8),
+                                          margin: const EdgeInsets.all(8),
                                           width: 50,
                                           height: 50,
                                           decoration: BoxDecoration(
@@ -257,7 +257,7 @@ class ProductDetails extends StatelessWidget {
                                     }),
                                   ),
                                 ),
-                                SizedBox(height: 15),
+                                const SizedBox(height: 15),
                                 Center(
                                   child: defaultMaterialButton(
                                     Function: () {
@@ -275,8 +275,8 @@ class ProductDetails extends StatelessWidget {
                                     text: 'Add To Cart',
                                   ),
                                 ),
-                                SizedBox(height: 15),
-                                if(state is PrentaSaveToCartLoadingState) LinearProgressIndicator(),
+                                const SizedBox(height: 15),
+                                if(state is PrentaSaveToCartLoadingState) const LinearProgressIndicator(),
                               ],
                             ),
                           ],

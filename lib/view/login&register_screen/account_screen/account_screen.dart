@@ -7,7 +7,7 @@ import '../login_body/login_body.dart';
 class AccountScreen extends StatelessWidget {
   final bool fromResetPassword; // Flag to determine if navigated from password reset
 
-  AccountScreen({this.fromResetPassword = false});  // Add default value for the flag
+  const AccountScreen({this.fromResetPassword = false});  // Add default value for the flag
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class AccountScreen extends StatelessWidget {
         body: Stack(
           fit: StackFit.expand, // Expand the Stack to fill the entire screen
           children: [
-            Positioned(
+            const Positioned(
               top: 0,
               left: 0,
               right: 0,
@@ -48,7 +48,7 @@ class AccountScreen extends StatelessWidget {
                       fontSize: 25,
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Text(
                     'Sign in-up to enjoy our offers',
                     style: TextStyle(
@@ -56,7 +56,7 @@ class AccountScreen extends StatelessWidget {
                       color: thirdColor,
                     ),
                   ),
-                  SizedBox(height: 15),
+                  const SizedBox(height: 15),
                 ],
               ),
             ),
@@ -68,31 +68,31 @@ class AccountScreen extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                   color: mCubit.isDark?Colors.grey[700]:Colors.white,
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(30),
                     topRight: Radius.circular(30),
                   ),
                 ),
                 child: Column(
                   children: [
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Container(
-                        padding: EdgeInsets.only(top: 5,bottom: 5),
+                        padding: const EdgeInsets.only(top: 5,bottom: 5),
                         child: TabBar(
                           dividerColor: Colors.transparent,
                           labelColor: firstColor,
                           indicator: BoxDecoration(
                               color: Colors.white, borderRadius: BorderRadius.circular(30)
                           ),
-                          tabs: [
+                          tabs: const [
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 50.0),
+                              padding: EdgeInsets.symmetric(horizontal: 50.0),
                               child: Tab(text: 'Login'),
                             ),
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                              padding: EdgeInsets.symmetric(horizontal: 40.0),
                               child: Tab(text: 'Register'),
                             ),
                           ],
@@ -100,13 +100,13 @@ class AccountScreen extends StatelessWidget {
                         height: 60,
                         decoration: BoxDecoration(
                           color: Colors.grey.withOpacity(0.3),
-                          borderRadius: BorderRadius.all(
+                          borderRadius: const BorderRadius.all(
                             Radius.circular(30),
                           ),
                         ),
                       ),
                     ),
-                    SizedBox(height: 35,),
+                    const SizedBox(height: 35,),
                     Expanded(
                       child: TabBarView(
                         children: [

@@ -5,7 +5,6 @@ import 'package:ionicons/ionicons.dart';
 import 'package:printa/shared/components/components.dart';
 import 'package:printa/shared/components/constants.dart';
 import 'package:printa/shared/styles/colors.dart';
-import 'package:printa/view/homeScreen/homescreen.dart';
 import 'package:printa/view/layout/prenta_layout.dart';
 import 'package:printa/view_model/change_mode/mode_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
@@ -32,12 +31,12 @@ class CheckOut extends StatelessWidget {
 
           // Navigate or show success message
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Checkout successful!')),
+            const SnackBar(content: Text('Checkout successful!')),
           );
 
         } else if (state is CartCheckoutErrorState) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Checkout failed. Please try again.')),
+            const SnackBar(content: Text('Checkout failed. Please try again.')),
           );
         }
       },
@@ -52,24 +51,24 @@ class CheckOut extends StatelessWidget {
             centerTitle: true,
             backgroundColor: Colors.transparent,
             leading: IconButton(
-              icon: Icon(Ionicons.chevron_back_outline),
+              icon: const Icon(Ionicons.chevron_back_outline),
               onPressed: () {
                 navigateAndFinish(context, PrentaLayout());
               },
             ),
-            title: Text(
+            title: const Text(
               'Checkout',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
           body: cartItems.isEmpty
-              ? Center(child: Text('Your cart is empty.'))
+              ? const Center(child: Text('Your cart is empty.'))
               : Column(
             children: [
               Expanded(
                 child: ListView.separated(
                   itemCount: cartItems.length,
-                  separatorBuilder: (context, index) => SizedBox(height: 1,),
+                  separatorBuilder: (context, index) => const SizedBox(height: 1,),
                   itemBuilder: (context, index) {
                     final item = cartItems[index];
                     return Padding(
@@ -91,15 +90,15 @@ class CheckOut extends StatelessWidget {
                           title: Row(
                             children: [
                               Text(item['title']),
-                              Spacer(),
+                              const Spacer(),
                               Text(item['color']),
-                              SizedBox(width: 15),
+                              const SizedBox(width: 15),
                               CircleAvatar(
                                 radius: 16,
                                 backgroundColor: ModeCubit.get(context).isDark?secondColor:firstColor,
                                 child: Text(
                                   '${item['size']}',
-                                  style: TextStyle(fontSize: 15, color: Colors.white),
+                                  style: const TextStyle(fontSize: 15, color: Colors.white),
                                 ),
                               ),
                             ],
@@ -122,12 +121,12 @@ class CheckOut extends StatelessWidget {
                                         shape: BoxShape.circle,
                                         border: Border.all(color: Colors.grey),
                                       ),
-                                      child: Icon(Icons.add, size: 20),
+                                      child: const Icon(Icons.add, size: 20),
                                     ),
                                   ),
-                                  SizedBox(width: 6),
+                                  const SizedBox(width: 6),
                                   Text('${item['quantity']}'),
-                                  SizedBox(width: 6),
+                                  const SizedBox(width: 6),
                                   GestureDetector(
                                     onTap: () {
                                       cubit.decreaseQuantity(item['id']);
@@ -139,15 +138,15 @@ class CheckOut extends StatelessWidget {
                                         shape: BoxShape.circle,
                                         border: Border.all(color: Colors.grey),
                                       ),
-                                      child: Icon(Icons.remove, size: 20),
+                                      child: const Icon(Icons.remove, size: 20),
                                     ),
                                   ),
-                                  Spacer(),
+                                  const Spacer(),
                                   GestureDetector(
                                     onTap: () {
                                       cubit.removeFromCart(item['id']);
                                       },
-                                    child: Icon(
+                                    child: const Icon(
                                       Icons.delete,
                                       size: 25,
                                     ),
@@ -170,18 +169,18 @@ class CheckOut extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Sub total',
                           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                         Text(
                           '${cubit.calculateSubtotal()} LE',
-                          style: TextStyle(fontSize: 16),
+                          style: const TextStyle(fontSize: 16),
                         ),
                       ],
                     ),
-                    SizedBox(height: 12),
-                    Row(
+                    const SizedBox(height: 12),
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
@@ -194,17 +193,17 @@ class CheckOut extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 12),
+                    const SizedBox(height: 12),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Total',
                           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                         Text(
                           '${cubit.calculateTotalWithShipping()} LE', // Adding shipping cost to total
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),

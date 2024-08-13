@@ -9,7 +9,7 @@ class SplashScreen extends StatefulWidget {
   final bool? onBoarding;
   final String? uId;
   final bool? isDark;
-  SplashScreen({this.onBoarding, this.uId,this.isDark});
+  const SplashScreen({super.key, this.onBoarding, this.uId,this.isDark});
 
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -19,7 +19,6 @@ class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _logoAnimation;
-  late Animation<double> _textAnimation;
   late VideoPlayerController _videoController;
 
   @override
@@ -28,11 +27,10 @@ class _SplashScreenState extends State<SplashScreen>
 
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 3),
+      duration: const Duration(seconds: 3),
     );
 
     _logoAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(_controller);
-    _textAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(_controller);
 
     _videoController = VideoPlayerController.asset('images/background.mp4')
       ..initialize().then((_) {
@@ -45,12 +43,12 @@ class _SplashScreenState extends State<SplashScreen>
       Widget startWidget;
       if (widget.onBoarding != null) {
         if (widget.uId != null) {
-          startWidget = PrentaLayout();
+          startWidget = const PrentaLayout();
         } else {
-          startWidget = AccountScreen();
+          startWidget = const AccountScreen();
         }
       } else {
-        startWidget = OnBoarding();
+        startWidget = const OnBoarding();
       }
 
       Navigator.pushReplacement(
@@ -85,11 +83,11 @@ class _SplashScreenState extends State<SplashScreen>
                   builder: (context, child) {
                     return FadeTransition(
                       opacity: _logoAnimation,
-                      child: YourLogoWidget(),
+                      child: const YourLogoWidget(),
                     );
                   },
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Text(
                   'Prenta',
                   style: TextStyle(
@@ -109,6 +107,8 @@ class _SplashScreenState extends State<SplashScreen>
 }
 
 class YourLogoWidget extends StatelessWidget {
+  const YourLogoWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Image.asset(

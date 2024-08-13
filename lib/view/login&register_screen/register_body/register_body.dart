@@ -18,6 +18,8 @@ class RegisterBody extends StatelessWidget {
   var phoneController = TextEditingController();
   var confirmPasswordController = TextEditingController();
 
+  RegisterBody({super.key});
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -47,7 +49,7 @@ class RegisterBody extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                SizedBox(height: 8),
+                                const SizedBox(height: 8),
                                 defaultTextFormField(
                                   controller: firstNameController,
                                   KeyboardType: TextInputType.text,
@@ -64,12 +66,12 @@ class RegisterBody extends StatelessWidget {
                               ],
                             ),
                           ),
-                          SizedBox(width: 20),
+                          const SizedBox(width: 20),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                SizedBox(height: 8),
+                                const SizedBox(height: 8),
                                 defaultTextFormField(
                                   controller: lastNameController,
                                   KeyboardType: TextInputType.text,
@@ -88,7 +90,7 @@ class RegisterBody extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: 15),
+                      const SizedBox(height: 15),
                       defaultTextFormField(
                         controller: phoneController,
                         KeyboardType: TextInputType.phone,
@@ -102,7 +104,7 @@ class RegisterBody extends StatelessWidget {
                         lable: 'Phone Number',
                         prefix: Ionicons.phone_portrait_outline,
                       ),
-                      SizedBox(height: 15),
+                      const SizedBox(height: 15),
                       defaultTextFormField(
                         controller: emailController,
                         KeyboardType: TextInputType.text,
@@ -116,7 +118,7 @@ class RegisterBody extends StatelessWidget {
                         lable: 'Email',
                         prefix: Ionicons.mail_outline,
                       ),
-                      SizedBox(height: 15),
+                      const SizedBox(height: 15),
                       defaultTextFormField(
                         controller: passwordController,
                         KeyboardType: TextInputType.visiblePassword,
@@ -135,7 +137,7 @@ class RegisterBody extends StatelessWidget {
                           RegisterCubit.get(context).ChangePasswordVisibility();
                         },
                       ),
-                      SizedBox(height: 15),
+                      const SizedBox(height: 15),
                       defaultTextFormField(
                         controller: confirmPasswordController,
                         KeyboardType: TextInputType.visiblePassword,
@@ -156,7 +158,7 @@ class RegisterBody extends StatelessWidget {
                           RegisterCubit.get(context).ChangePasswordVisibility();
                         },
                       ),
-                      SizedBox(height: 30),
+                      const SizedBox(height: 30),
                       ConditionalBuilder(
                         condition: (state is! RegisterLoadingState),
                         builder: (context) => defaultMaterialButton(
@@ -173,9 +175,9 @@ class RegisterBody extends StatelessWidget {
                             }
                           },
                         ),
-                        fallback: (context) => Center(child: CircularProgressIndicator()),
+                        fallback: (context) => const Center(child: CircularProgressIndicator()),
                       ),
-                      SizedBox(height: 40),
+                      const SizedBox(height: 40),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -184,9 +186,9 @@ class RegisterBody extends StatelessWidget {
                             width: 70,
                             color: Colors.blueGrey.withOpacity(0.4),
                           ),
-                          SizedBox(width: 10),
-                          Text('or Register with'),
-                          SizedBox(width: 10),
+                          const SizedBox(width: 10),
+                          const Text('or Register with'),
+                          const SizedBox(width: 10),
                           Container(
                             height: 1,
                             width: 70,
@@ -194,7 +196,7 @@ class RegisterBody extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: 15),
+                      const SizedBox(height: 15),
                       Container(
                         width: double.infinity,
                         decoration: BoxDecoration(
@@ -203,12 +205,12 @@ class RegisterBody extends StatelessWidget {
                             width: 0.3,
                           ),
                           color: Colors.white,
-                          borderRadius: BorderRadius.all(Radius.circular(30)),
+                          borderRadius: const BorderRadius.all(Radius.circular(30)),
                         ),
                         child: MaterialButton(
                           color: Colors.white,
                           height: 60,
-                          shape: RoundedRectangleBorder(
+                          shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.all(Radius.circular(30)),
                           ),
                           onPressed: () {},
@@ -217,12 +219,12 @@ class RegisterBody extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Image(
+                                const Image(
                                   height: 30,
                                   width: 30,
                                   image: AssetImage('images/google.png'),
                                 ),
-                                SizedBox(width: 3),
+                                const SizedBox(width: 3),
                                 Text('Google',style: TextStyle(fontSize: 18,color:mCubit.isDark?Colors.black:Colors.black ),
                                 ),
                               ],
@@ -230,7 +232,7 @@ class RegisterBody extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                     ],
                   ),
                 ),

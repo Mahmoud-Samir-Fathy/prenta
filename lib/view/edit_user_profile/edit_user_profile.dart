@@ -4,7 +4,6 @@ import 'package:ionicons/ionicons.dart';
 import 'package:printa/shared/components/components.dart';
 import 'package:printa/view/change_password/change_password.dart';
 import 'package:printa/view/edit_address/edit_address.dart';
-import 'package:printa/view/user_profile/profile.dart';
 import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 
@@ -14,6 +13,8 @@ class EditUserProfile extends StatelessWidget {
   var lastNameController = TextEditingController();
   var emailController = TextEditingController();
   var phoneController = TextEditingController();
+
+  EditUserProfile({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,15 +33,15 @@ class EditUserProfile extends StatelessWidget {
               surfaceTintColor: Colors.transparent,
               elevation: 0,
               leading: IconButton(
-                icon: Icon(Ionicons.chevron_back_outline),
+                icon: const Icon(Ionicons.chevron_back_outline),
                 onPressed: () {
                   Navigator.pop(context);
                 },
               ),
-              title: Text('Edit Profile'),
+              title: const Text('Edit Profile'),
               centerTitle: true,
             ),
-            body: Center(child: CircularProgressIndicator()),
+            body: const Center(child: CircularProgressIndicator()),
           );
         }
 
@@ -58,12 +59,12 @@ class EditUserProfile extends StatelessWidget {
             surfaceTintColor: Colors.transparent,
             elevation: 0,
             leading: IconButton(
-              icon: Icon(Ionicons.chevron_back_outline),
+              icon: const Icon(Ionicons.chevron_back_outline),
               onPressed: () {
                 Navigator.pop(context);
               },
             ),
-            title: Text('Edit Profile'),
+            title: const Text('Edit Profile'),
             centerTitle: true,
           ),
           body: SingleChildScrollView(
@@ -73,7 +74,7 @@ class EditUserProfile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   if (state is UpdateUserInfoLoadingState)
-                    LinearProgressIndicator(),
+                    const LinearProgressIndicator(),
                   Stack(
                     alignment: AlignmentDirectional.bottomEnd,
                     children: [
@@ -95,10 +96,10 @@ class EditUserProfile extends StatelessWidget {
                           onPressed: () {
                             PrentaCubit.get(context).getProfileImage();
                           },
-                          icon: Icon(Ionicons.camera))
+                          icon: const Icon(Ionicons.camera))
                     ],
                   ),
-                  SizedBox(height: 40),
+                  const SizedBox(height: 40),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -106,10 +107,10 @@ class EditUserProfile extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('First Name',
+                            const Text('First Name',
                                 style: TextStyle(
                                     fontSize: 16, fontWeight: FontWeight.w500)),
-                            SizedBox(height: 8),
+                            const SizedBox(height: 8),
                             defaultTextFormField(
                               controller: firstNameController,
                               KeyboardType: TextInputType.text,
@@ -126,17 +127,17 @@ class EditUserProfile extends StatelessWidget {
                           ],
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 20,
                       ),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Last Name',
+                            const Text('Last Name',
                                 style: TextStyle(
                                     fontSize: 16, fontWeight: FontWeight.w500)),
-                            SizedBox(height: 8),
+                            const SizedBox(height: 8),
                             defaultTextFormField(
                               controller: lastNameController,
                               KeyboardType: TextInputType.text,
@@ -155,16 +156,16 @@ class EditUserProfile extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Your Email',
+                      const Text('Your Email',
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.w500)),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       defaultTextFormField(
                         enabled: false,
                         controller: emailController,
@@ -181,16 +182,16 @@ class EditUserProfile extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Phone Number',
+                      const Text('Phone Number',
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.w500)),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       defaultTextFormField(
                         controller: phoneController,
                         KeyboardType: TextInputType.phone,
@@ -206,43 +207,43 @@ class EditUserProfile extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Row(
                     children: [
-                      Icon(Icons.password),
-                      SizedBox(
+                      const Icon(Icons.password),
+                      const SizedBox(
                         width: 15,
                       ),
-                      Text('Change Password'),
-                      Spacer(),
+                      const Text('Change Password'),
+                      const Spacer(),
                       IconButton(
                           onPressed: () {
                             navigateTo(context, ChangePassword());
                           },
-                          icon: Icon(Icons.arrow_forward_ios_sharp))
+                          icon: const Icon(Icons.arrow_forward_ios_sharp))
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Row(
                     children: [
-                      Icon(Icons.home),
-                      SizedBox(
+                      const Icon(Icons.home),
+                      const SizedBox(
                         width: 15,
                       ),
-                      Text('Change Address'),
-                      Spacer(),
+                      const Text('Change Address'),
+                      const Spacer(),
                       IconButton(
                           onPressed: () {
                             navigateTo(context, EditAddress());
                           },
-                          icon: Icon(Icons.arrow_forward_ios_sharp))
+                          icon: const Icon(Icons.arrow_forward_ios_sharp))
                     ],
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   defaultMaterialButton(text: 'Submit', Function: () {
                     PrentaCubit.get(context).UploadUserImage(
                       password: userInfo.password.toString(),

@@ -15,12 +15,12 @@ class Wishlist extends StatelessWidget {
         if (state is PrentaDeleteFavouriteItemSuccessState) {
           // Optionally show a success message or refresh the list
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Item removed from wishlist')),
+            const SnackBar(content: Text('Item removed from wishlist')),
           );
         } else if (state is PrentaDeleteFavouriteItemErrorState) {
           // Optionally show an error message
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Failed to remove item from wishlist')),
+            const SnackBar(content: Text('Failed to remove item from wishlist')),
           );
         }
       },
@@ -31,20 +31,20 @@ class Wishlist extends StatelessWidget {
 
         return Scaffold(
           appBar: AppBar(
-            title: Text('Wishlist'),
+            title: const Text('Wishlist'),
             centerTitle: true,
             elevation: 0.0,
             actions: [
               IconButton(
-                icon: Icon(Ionicons.search),
+                icon: const Icon(Ionicons.search),
                 onPressed: () {},
               ),
             ],
           ),
           body: wishlistItems.isEmpty
-              ? Center(child: Text('No items in wishlist'))
+              ? const Center(child: Text('No items in wishlist'))
               : ListView.separated(
-            separatorBuilder: (context, index) => SizedBox(height: 1),
+            separatorBuilder: (context, index) => const SizedBox(height: 1),
             itemCount: wishlistItems.length,
             itemBuilder: (context, index) {
               final item = wishlistItems[index];
@@ -59,18 +59,18 @@ class Wishlist extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Image.network(item!.productImage!, width: 100, height: 100),
-                          SizedBox(width: 16),
+                          const SizedBox(width: 16),
                           Expanded(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(item.productTittle!, style: TextStyle(fontSize: 22)),
-                                Text('${item.productDescription!}', maxLines: 2, overflow: TextOverflow.ellipsis),
-                                SizedBox(height: 10),
+                                Text(item.productTittle!, style: const TextStyle(fontSize: 22)),
+                                Text(item.productDescription!, maxLines: 2, overflow: TextOverflow.ellipsis),
+                                const SizedBox(height: 10),
                                 Row(
                                   children: [
-                                    Spacer(),
+                                    const Spacer(),
                                     Text('Price: ${item.productPrice.toString()}'),
                                   ],
                                 ),
@@ -86,7 +86,7 @@ class Wishlist extends StatelessWidget {
                       // Call the delete function with the correct product
                       cubit.deleteFavouriteItem(model: item);
                     },
-                    icon: Icon(Icons.cancel),
+                    icon: const Icon(Icons.cancel),
                   ),
                 ],
               );

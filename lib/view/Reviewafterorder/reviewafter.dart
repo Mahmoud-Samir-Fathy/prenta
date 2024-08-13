@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:printa/view/review_before/review_before.dart';
 import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 
@@ -11,7 +10,7 @@ import '../../shared/components/components.dart';
 class ReviewAfter extends StatelessWidget {
   final Map<String, dynamic> item;
 
-  ReviewAfter(this.item);
+  ReviewAfter(this.item, {super.key});
 
   final reviewController = TextEditingController();
 
@@ -24,12 +23,12 @@ class ReviewAfter extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             leading: IconButton(
-              icon: Icon(Icons.arrow_back_ios),
+              icon: const Icon(Icons.arrow_back_ios),
               onPressed: () {
                 Navigator.pop(context);
               },
             ),
-            title: Text(
+            title: const Text(
               'Review',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
@@ -49,17 +48,17 @@ class ReviewAfter extends StatelessWidget {
                           children: [
                             Text(
                               item['title'] ?? 'Unknown Item',
-                              style: TextStyle(fontSize: 20),
+                              style: const TextStyle(fontSize: 20),
                             ),
                             Text(
                               item['description'] ?? 'Unknown Item',
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
-                              style: TextStyle(fontSize: 20),
+                              style: const TextStyle(fontSize: 20),
                             ),
                             Text(
                               '${item['price'] ?? '0.00'} L.E.',
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontWeight: FontWeight.w300, fontSize: 16),
                             ),
                           ],
@@ -75,26 +74,26 @@ class ReviewAfter extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 25),
+                  const SizedBox(height: 25),
                   Container(
                     height: 1,
                     width: double.infinity,
                     color: Colors.grey[400],
                   ),
-                  SizedBox(height: 15),
-                  Text(
+                  const SizedBox(height: 15),
+                  const Text(
                     'WRITE YOUR REVIEW',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   RatingBar.builder(
                     initialRating: cubit.rate,
                     minRating: 1,
                     direction: Axis.horizontal,
                     allowHalfRating: true,
                     itemCount: 5,
-                    itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                    itemBuilder: (context, _) => Icon(
+                    itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                    itemBuilder: (context, _) => const Icon(
                       Icons.star,
                       color: Colors.amber,
                     ),
@@ -103,7 +102,7 @@ class ReviewAfter extends StatelessWidget {
                       cubit.updateRating(rating);
                     },
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Container(
                     decoration: BoxDecoration(
                       color: HexColor('F6FAFD'),
@@ -111,22 +110,22 @@ class ReviewAfter extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                     child: Padding(
-                      padding: EdgeInsets.only(bottom: 90),
+                      padding: const EdgeInsets.only(bottom: 90),
                       child: TextFormField(
                         controller: reviewController,
                         maxLines: null,
                         keyboardType: TextInputType.multiline,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: 'Write your review here',
                           hintStyle: TextStyle(color: Colors.black54),
                           border: InputBorder.none,
                           contentPadding: EdgeInsets.all(8.0),
                         ),
-                        style: TextStyle(color: Colors.black),
+                        style: const TextStyle(color: Colors.black),
                       ),
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Center(

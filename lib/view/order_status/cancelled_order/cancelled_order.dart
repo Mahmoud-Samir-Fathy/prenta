@@ -9,6 +9,8 @@ import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 
 class CancelledOrder extends StatelessWidget{
+  const CancelledOrder({super.key});
+
   @override
   Widget build(BuildContext context) {
 
@@ -22,10 +24,10 @@ class CancelledOrder extends StatelessWidget{
             condition: cancelledItems.isNotEmpty,
             builder: (context)=>ListView.separated(
               itemBuilder: (context, index) => buildActiveItem(cancelledItems[index],context),
-              separatorBuilder: (context, index) => SizedBox(height: 10),
+              separatorBuilder: (context, index) => const SizedBox(height: 10),
               itemCount: cancelledItems.length,
             ),
-            fallback: (context)=>Center(child: Text('No items here')),
+            fallback: (context)=>const Center(child: Text('No items here')),
           );
         }
     );
@@ -52,7 +54,7 @@ class CancelledOrder extends StatelessWidget{
                   fit: BoxFit.cover,
                 ),
               ),
-              SizedBox(width: 10),
+              const SizedBox(width: 10),
               Expanded(
                 child: Container(
                   height: 100,
@@ -62,27 +64,27 @@ class CancelledOrder extends StatelessWidget{
                     children: [
                       Text(item['title'] ?? 'Unknown Item'),
                       Text(item['description'] ?? 'No description',maxLines: 1,overflow: TextOverflow.ellipsis,),
-                      Spacer(),
+                      const Spacer(),
                       Row(
                         children: [
                           Column(
                             children: [
-                              Text('Qty(${item['quantity'] ?? 1})', style: TextStyle(fontSize: 16)),
+                              Text('Qty(${item['quantity'] ?? 1})', style: const TextStyle(fontSize: 16)),
                               Text('${price * quantity + 50} L.E',
-                                  style: TextStyle(fontWeight: FontWeight.w700)),                            ],
+                                  style: const TextStyle(fontWeight: FontWeight.w700)),                            ],
                           ),
-                          SizedBox(width: 30),
+                          const SizedBox(width: 30),
                           Column(
                             children: [
                               CircleAvatar(
                                 backgroundColor: ModeCubit.get(context).isDark?secondColor:firstColor,
-                                child: Text(item['size'] ?? 'N/A', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
+                                child: Text(item['size'] ?? 'N/A', style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
                                 radius: 16,
                               ),
                               Text(item['color'] )
                             ],
                           ),
-                          Spacer(),
+                          const Spacer(),
                           TextButton(child:Text('Re-order', style: TextStyle(color: ModeCubit.get(context).isDark?forthColor:Colors.black,fontWeight: FontWeight.bold, fontSize: 18)),onPressed: (){
                             navigateToProductDetails(context, item);
 

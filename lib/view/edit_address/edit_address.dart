@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:printa/shared/styles/colors.dart';
-import 'package:printa/view/edit_user_profile/edit_user_profile.dart';
 import 'package:printa/view/user_profile/profile.dart';
 import 'package:printa/view_model/change_mode/mode_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
@@ -16,6 +15,8 @@ class EditAddress extends StatelessWidget{
   var buildingController=TextEditingController();
   var floorController=TextEditingController();
   var formKey=GlobalKey<FormState>();
+
+  EditAddress({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -41,10 +42,10 @@ class EditAddress extends StatelessWidget{
           backgroundColor: mCubit.isDark?secondColor:thirdColor,
           appBar: AppBar(
             backgroundColor: mCubit.isDark?secondColor:thirdColor,
-            leading: IconButton(icon: Icon(Ionicons.chevron_back_outline),onPressed: (){
+            leading: IconButton(icon: const Icon(Ionicons.chevron_back_outline),onPressed: (){
               Navigator.pop(context);
             },),
-            title: Text('Edit Address'),
+            title: const Text('Edit Address'),
             centerTitle:true ,
           ),
           body: Container(
@@ -57,8 +58,8 @@ class EditAddress extends StatelessWidget{
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('City', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500,)),
-                      SizedBox(height: 8),
+                      const Text('City', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500,)),
+                      const SizedBox(height: 8),
                       defaultTextFormField(
                         controller: cityController,
                         KeyboardType: TextInputType.text,
@@ -72,9 +73,9 @@ class EditAddress extends StatelessWidget{
                         lable: 'City',
                         prefix: Icons.location_city,
                       ),
-                      SizedBox(height: 15,),
-                      Text('Area', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 15,),
+                      const Text('Area', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
+                      const SizedBox(height: 8),
                       defaultTextFormField(
                         controller: areaController,
                         KeyboardType: TextInputType.text,
@@ -88,9 +89,9 @@ class EditAddress extends StatelessWidget{
                         lable: 'Area',
                         prefix: Icons.area_chart_outlined,
                       ),
-                      SizedBox(height: 15,),
-                      Text('Street name', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 15,),
+                      const Text('Street name', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
+                      const SizedBox(height: 8),
                       defaultTextFormField(
                         controller: stController,
                         KeyboardType: TextInputType.text,
@@ -104,9 +105,9 @@ class EditAddress extends StatelessWidget{
                         lable: 'st.name',
                         prefix: Icons.stacked_line_chart,
                       ),
-                      SizedBox(height: 15,),
-                      Text('Building', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 15,),
+                      const Text('Building', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
+                      const SizedBox(height: 8),
                       defaultTextFormField(
                         controller: buildingController,
                         KeyboardType: TextInputType.text,
@@ -120,9 +121,9 @@ class EditAddress extends StatelessWidget{
                         lable: 'Building',
                         prefix: Icons.home,
                       ),
-                      SizedBox(height: 15,),
-                      Text('Floor', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 15,),
+                      const Text('Floor', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
+                      const SizedBox(height: 8),
                       defaultTextFormField(
                         controller: floorController,
                         KeyboardType: TextInputType.text,
@@ -136,7 +137,7 @@ class EditAddress extends StatelessWidget{
                         lable: 'Floor',
                         prefix: Icons.roofing,
                       ),
-                      SizedBox(height: 30,),
+                      const SizedBox(height: 30,),
                       Center(child: defaultMaterialButton(text: 'Submit', Function: (){
                         if (formKey.currentState!.validate()) {
                           cubit.updateUserAddress(
@@ -155,7 +156,7 @@ class EditAddress extends StatelessWidget{
             ),
             decoration: BoxDecoration(
                 color: mCubit.isDark?Colors.grey[700]:Colors.white,
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                     topRight: Radius.circular(40),
                     topLeft: Radius.circular(40)
                 )
