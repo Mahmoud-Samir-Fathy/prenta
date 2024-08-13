@@ -16,6 +16,8 @@ class CheckOut extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    PrentaCubit.get(context).getUserData();
+
     Future.microtask(() => BlocProvider.of<PrentaCubit>(context).loadCartItems());
 
     var date=DateTime.now();
