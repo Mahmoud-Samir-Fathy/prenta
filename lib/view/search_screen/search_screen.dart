@@ -9,8 +9,6 @@ import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 
 class SearchScreen extends StatelessWidget {
-  const SearchScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     PrentaCubit.get(context).getProductData();
@@ -25,11 +23,11 @@ class SearchScreen extends StatelessWidget {
           body: SafeArea(
             child: Column(
               children: [
-                const SizedBox(height: 30,),
+                SizedBox(height: 30,),
                 Row(
                   children: [
                     IconButton(
-                      icon: const Icon(Ionicons.chevron_back_outline),
+                      icon: Icon(Ionicons.chevron_back_outline),
                       onPressed: () {
                         Navigator.pop(context);
                       },
@@ -48,7 +46,7 @@ class SearchScreen extends StatelessWidget {
                         onChanged: (value) {
                           cubit.searchProduct(value);
                         },
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           hintText: 'Search',
                         ),
                       ),
@@ -57,7 +55,7 @@ class SearchScreen extends StatelessWidget {
                       onPressed: () {
                         cubit.clearSearch();
                       },
-                      icon: const Icon(Icons.close),
+                      icon: Icon(Icons.close),
                     ),
                   ],
                 ),
@@ -67,7 +65,7 @@ class SearchScreen extends StatelessWidget {
                     child: ListView.separated(
                       itemBuilder: (context, index) =>
                           buildSearchItem(cubit.searchResults[index],context),
-                      separatorBuilder: (context, index) => const SizedBox(height: 1),
+                      separatorBuilder: (context, index) => SizedBox(height: 1),
                       itemCount: cubit.searchResults.length,
                     ),
                   ),
@@ -102,7 +100,7 @@ Widget buildSearchItem(ProductModel model, context) => GestureDetector(
               fit: BoxFit.cover, // Ensures the image fits well within the container
             ),
           ),
-          const SizedBox(width: 16),
+          SizedBox(width: 16),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -112,17 +110,17 @@ Widget buildSearchItem(ProductModel model, context) => GestureDetector(
                 children: [
                   Text(
                     model.title!,
-                    style: const TextStyle(fontSize: 22),
+                    style: TextStyle(fontSize: 22),
                   ),
                   Text(
                     model.description!,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(height: 10),
+                  SizedBox(height: 10),
                   Row(
                     children: [
-                      const Spacer(),
+                      Spacer(),
                       Text('Price: ${model.price.toString()}'),
                     ],
                   ),
