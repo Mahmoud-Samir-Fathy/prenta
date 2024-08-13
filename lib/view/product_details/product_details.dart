@@ -19,6 +19,7 @@ class ProductDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    PrentaCubit.get(context).getFavouriteItems();
 
     return BlocConsumer<PrentaCubit, PrentaStates>(
         listener: (context, state) {
@@ -84,7 +85,7 @@ class ProductDetails extends StatelessWidget {
                                 ),
                                 Spacer(),
                                 Icon(
-                                  model!.isFavourite! ? Ionicons.heart : Ionicons.heart_outline,
+                                  model.isFavourite! ? Ionicons.heart : Ionicons.heart_outline,
                                   color: model.isFavourite! ? Colors.red : Colors.grey,
                                   size: 23,
                                 ),

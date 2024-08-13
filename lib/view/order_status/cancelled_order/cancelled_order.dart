@@ -89,7 +89,7 @@ class CancelledOrder extends StatelessWidget{
                           const Spacer(),
                           if (item['description'] != null)
                             TextButton(child:Text('Re-order', style: TextStyle(color: ModeCubit.get(context).isDark?forthColor:Colors.black,fontWeight: FontWeight.bold, fontSize: 18)),onPressed: (){
-                            navigateToProductDetails(context, item,FavouriteModel());
+                              PrentaCubit.get(context).showReorderOrderDialog(context,Colors.blueAccent,item['id'],item['title']);
 
                           },),
                         ],
@@ -106,20 +106,3 @@ class CancelledOrder extends StatelessWidget{
   );
 }
 }
-  void navigateToProductDetails(BuildContext context, Map<String, dynamic> item,FavouriteModel model) {
-    Navigator.push(context,
-      MaterialPageRoute(
-        builder: (context) => ProductDetails(
-          model:model ,
-          product: ProductModel(
-            title: item['title'],
-            description: item['description'],
-            image: item['image'],
-            price: item['price'].toString(),
-          ),
-        ),
-      ),
-    );
-  }
-
-

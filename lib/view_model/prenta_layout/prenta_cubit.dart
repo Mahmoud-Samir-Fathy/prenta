@@ -72,10 +72,10 @@ class PrentaCubit extends Cubit<PrentaStates> {
 
   }
   List<Widget> screens=[
-    HomeScreen(),
-    Wishlist(),
-    UserOrders(),
-    Profile()
+    const HomeScreen(),
+    const Wishlist(),
+    const UserOrders(),
+    const Profile()
   ];
 
 
@@ -298,7 +298,7 @@ class PrentaCubit extends Cubit<PrentaStates> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => AccountScreen(fromResetPassword: true),
+          builder: (context) => const AccountScreen(fromResetPassword: true),
         ),
       );
     } on FirebaseAuthException catch (e) {
@@ -312,7 +312,7 @@ class PrentaCubit extends Cubit<PrentaStates> {
     }
   }
 
-  final Uuid uuid = Uuid(); // Create an instance of Uuid
+  final Uuid uuid = const Uuid(); // Create an instance of Uuid
 
   List<ProductModel> productInfo = [];
 
@@ -610,13 +610,13 @@ class PrentaCubit extends Cubit<PrentaStates> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Align(
+          title: const Align(
             alignment: AlignmentDirectional.center,
             child: Text('Successfully add to cart'),
           ),
           content: Container(
             height: 100,
-            child: Center(
+            child: const Center(
               child: Text(
                 'Do you want to go to checkout screen or continue browsing?',
                 textAlign: TextAlign.center,
@@ -635,14 +635,14 @@ class PrentaCubit extends Cubit<PrentaStates> {
               ),
               child: MaterialButton(
                 height: 50,
-                shape: RoundedRectangleBorder(
+                shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(30)),
                 ),
                 onPressed: () {
-                  navigateTo(context, CheckOut());
+                  navigateTo(context, const CheckOut());
 
                 },
-                child: Text('Checkout'),
+                child: const Text('Checkout'),
               ),
             ),
             Container(
@@ -655,13 +655,13 @@ class PrentaCubit extends Cubit<PrentaStates> {
               child: MaterialButton(
                 color: color,
                 height: 50,
-                shape: RoundedRectangleBorder(
+                shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(30)),
                 ),
                 onPressed: () {
-                  navigateTo(context, PrentaLayout());
+                  navigateTo(context, const PrentaLayout());
                 },
-                child: Text(
+                child: const Text(
                   'Home',
                   style: TextStyle(color: Colors.white),
                 ),
@@ -678,7 +678,7 @@ class PrentaCubit extends Cubit<PrentaStates> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Align(
+          title: const Align(
             alignment: AlignmentDirectional.center,
             child: Text('Warning'),
           ),
@@ -688,7 +688,7 @@ class PrentaCubit extends Cubit<PrentaStates> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
+                  const Text(
                     'Please Check your information before forther go on!',
                     textAlign: TextAlign.center,
                     style: TextStyle(fontWeight: FontWeight.w300),
@@ -696,12 +696,12 @@ class PrentaCubit extends Cubit<PrentaStates> {
                   Text(
                     'Your Address is '+'${userInfo!.city}'+','+'${userInfo!.area}'+','+'${userInfo!.streetName}'+','+'${userInfo!.building}'+','+'${userInfo!.floor}' ,maxLines: 2,overflow:TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontWeight: FontWeight.w300),
+                    style: const TextStyle(fontWeight: FontWeight.w300),
                   ),
                   Text(
                     'Your PhoneNumber is '+'${userInfo!.phoneNumber}',
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontWeight: FontWeight.w300),
+                    style: const TextStyle(fontWeight: FontWeight.w300),
                   ),
                 ],
               ),
@@ -719,14 +719,14 @@ class PrentaCubit extends Cubit<PrentaStates> {
               ),
               child: MaterialButton(
                 height: 50,
-                shape: RoundedRectangleBorder(
+                shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(30)),
                 ),
                 onPressed: () {
                   navigateTo(context, EditUserProfile());
 
                 },
-                child: Text('Edit Profile'),
+                child: const Text('Edit Profile'),
               ),
             ),
             Container(
@@ -739,7 +739,7 @@ class PrentaCubit extends Cubit<PrentaStates> {
               child: MaterialButton(
                 color: color,
                 height: 50,
-                shape: RoundedRectangleBorder(
+                shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(30)),
                 ),
                 onPressed: () {
@@ -747,7 +747,7 @@ class PrentaCubit extends Cubit<PrentaStates> {
                   Navigator.pop(context);
                   getOnProcessingItems();
                 },
-                child: Text(
+                child: const Text(
                   'ChickOut',
                   style: TextStyle(color: Colors.white),
                 ),
@@ -964,18 +964,77 @@ class PrentaCubit extends Cubit<PrentaStates> {
   }
 
 
+  void updateStatusToOnProcessing(String itemId) async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user == null) {
+        emit(PrentaGetUserErrorState('No user logged in'));
+        return;
+      }
+
+      String userId = user.uid;
+
+      // Retrieve the specific order document containing the item to update
+      QuerySnapshot<Map<String, dynamic>> ordersSnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .collection('orders')
+          .get();
+
+      for (QueryDocumentSnapshot<Map<String, dynamic>> orderDoc in ordersSnapshot.docs) {
+        var data = orderDoc.data();
+        if (data.containsKey('items')) {
+          var itemsField = data['items'];
+          List<dynamic> cartItems;
+          if (itemsField is String) {
+            cartItems = jsonDecode(itemsField);
+          } else {
+            cartItems = itemsField;
+          }
+
+          // Find the specific item by itemId and update its status
+          bool itemUpdated = false;
+          for (var item in cartItems) {
+            if (item is Map<String, dynamic> && item['id'] == itemId && item['status'] == 'Cancelled') {
+              item['status'] = 'OnProcessing';
+              itemUpdated = true;
+              break; // Exit loop once item is found and updated
+            }
+          }
+
+          if (itemUpdated) {
+            // Update Firestore with the modified items list for this order
+            await orderDoc.reference.update({
+              'items': jsonEncode(cartItems),
+            });
+            getOnProcessingItems();
+            getCancelledItems();
+            // Emit success state if update was successful
+            emit(PrentaUpdateStatusSuccessState());
+            return;
+          }
+        }
+      }
+      emit(PrentaUpdateStatusErrorState('Item not found or status already completed'));
+    } catch (e) {
+      emit(PrentaUpdateStatusErrorState('Error updating item status: $e'));
+    }
+  }
+
+
+
   void showCancelledOrderDialog(BuildContext context, Color color, item,title) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Align(
+          title: const Align(
             alignment: AlignmentDirectional.center,
             child: Text('Warning'),
           ),
           content: Container(
             height: 100,
-            child: Center(
+            child: const Center(
               child: Text(
                 'Are your sure you want to cancel order ?',
                 textAlign: TextAlign.center,
@@ -994,13 +1053,13 @@ class PrentaCubit extends Cubit<PrentaStates> {
               ),
               child: MaterialButton(
                 height: 50,
-                shape: RoundedRectangleBorder(
+                shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(30)),
                 ),
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: Text('No'),
+                child: const Text('No'),
               ),
             ),
             Container(
@@ -1013,7 +1072,7 @@ class PrentaCubit extends Cubit<PrentaStates> {
               child: MaterialButton(
                 color: color,
                 height: 50,
-                shape: RoundedRectangleBorder(
+                shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(30)),
                 ),
                 onPressed: () {
@@ -1022,7 +1081,7 @@ class PrentaCubit extends Cubit<PrentaStates> {
                  sendPushMessage(deviceToken!, 'order '+ title +' has been successfully cancelled', 'Order Cancelled', DateTime.now().toString(), 'cancelled');
 
                 },
-                child: Text(
+                child: const Text(
                   'Yes',
                   style: TextStyle(color: Colors.white),
                 ),
@@ -1033,7 +1092,81 @@ class PrentaCubit extends Cubit<PrentaStates> {
       },
     );
   }
-   double rate=0;
+
+  void showReorderOrderDialog(BuildContext context, Color color,item,title) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Align(
+            alignment: AlignmentDirectional.center,
+            child: Text('Warning'),
+          ),
+          content: Container(
+            height: 100,
+            child: const Center(
+              child: Text(
+                'Are you sure you want to re-order this product with the same specification?',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontWeight: FontWeight.w300),
+              ),
+            ),
+          ),
+          actions: [
+            Container(
+              height: 50,
+              width: 120,
+              decoration: BoxDecoration(
+                color: ModeCubit.get(context).isDark?Colors.grey[700]:Colors.white,
+                borderRadius: BorderRadius.circular(30),
+                border: Border.all(color: firstColor),
+              ),
+              child: MaterialButton(
+                height: 50,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(30)),
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('No'),
+              ),
+            ),
+            Container(
+              height: 50,
+              width: 120,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30),
+                border: Border.all(color: color),
+              ),
+              child: MaterialButton(
+                color: color,
+                height: 50,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(30)),
+                ),
+                onPressed: () {
+                  updateStatusToOnProcessing(item);
+                  Navigator.pop(context);
+                  sendPushMessage(deviceToken!, 'order '+ title +' has been successfully Add', 'Order Successfully add', DateTime.now().toString(), 'cancelled');
+
+
+                },
+                child: const Text(
+                  'Yes',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+
+
+  double rate=0;
   void updateRating(double rating) {
     this.rate = rating;
     emit(PrentaRatingUpdated(rating: rating));
