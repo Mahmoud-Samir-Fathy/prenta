@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:printa/models/favourite_model/favourite_model.dart';
 import 'package:printa/models/product_model/product%20model.dart';
 import 'package:printa/shared/components/components.dart';
 import 'package:printa/shared/styles/colors.dart';
@@ -13,10 +14,12 @@ import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 
 class ProductDetails extends StatelessWidget {
   final ProductModel product;
-  const ProductDetails({Key? key, required this.product}) : super(key: key);
+  final FavouriteModel model;
+  const ProductDetails({Key? key, required this.product,required this.model}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
     return BlocConsumer<PrentaCubit, PrentaStates>(
         listener: (context, state) {
           if (state is PrentaSaveToCartSuccessState) {
@@ -32,6 +35,7 @@ class ProductDetails extends StatelessWidget {
       builder: (context, state) {
         var cubit = PrentaCubit.get(context);
         var mCubit=ModeCubit.get(context);
+
 
         return Scaffold(
           appBar: AppBar(
@@ -79,15 +83,10 @@ class ProductDetails extends StatelessWidget {
                                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                                 ),
                                 Spacer(),
-                                IconButton(
-                                  onPressed: () {
-                                    // Add your onPressed logic here
-                                  },
-                                  icon: Icon(
-                                    Icons.favorite,
-                                    color: Colors.red,
-                                    size: 23,
-                                  ),
+                                Icon(
+                                  model!.isFavourite! ? Ionicons.heart : Ionicons.heart_outline,
+                                  color: model.isFavourite! ? Colors.red : Colors.grey,
+                                  size: 23,
                                 ),
                               ],
                             ),

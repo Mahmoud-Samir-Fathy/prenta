@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:printa/models/favourite_model/favourite_model.dart';
 import 'package:printa/models/product_model/product%20model.dart';
 import 'package:printa/shared/components/components.dart';
 import 'package:printa/view/product_details/product_details.dart';
@@ -64,7 +65,7 @@ class SearchScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: ListView.separated(
                       itemBuilder: (context, index) =>
-                          buildSearchItem(cubit.searchResults[index],context),
+                          buildSearchItem(cubit.searchResults[index],context,FavouriteModel()),
                       separatorBuilder: (context, index) => SizedBox(height: 1),
                       itemCount: cubit.searchResults.length,
                     ),
@@ -79,9 +80,9 @@ class SearchScreen extends StatelessWidget {
   }
 }
 
-Widget buildSearchItem(ProductModel model, context) => GestureDetector(
+Widget buildSearchItem(ProductModel product, context,FavouriteModel model) => GestureDetector(
   onTap: () {
-    navigateTo(context, ProductDetails(product: model));
+    navigateTo(context, ProductDetails(product: product,model:model ,));
   },
   child: Padding(
     padding: const EdgeInsetsDirectional.symmetric(horizontal: 5),
@@ -94,7 +95,7 @@ Widget buildSearchItem(ProductModel model, context) => GestureDetector(
             borderRadius: BorderRadius.circular(8.0), // Adjust the radius as needed
             clipBehavior: Clip.antiAlias, // Smooth clipping
             child: Image.network(
-              model.image!,
+              product.image!,
               width: 100,
               height: 100,
               fit: BoxFit.cover, // Ensures the image fits well within the container
@@ -109,11 +110,11 @@ Widget buildSearchItem(ProductModel model, context) => GestureDetector(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    model.title!,
+                    product.title!,
                     style: TextStyle(fontSize: 22),
                   ),
                   Text(
-                    model.description!,
+                    product.description!,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -121,7 +122,7 @@ Widget buildSearchItem(ProductModel model, context) => GestureDetector(
                   Row(
                     children: [
                       Spacer(),
-                      Text('Price: ${model.price.toString()}'),
+                      Text('Price: ${product.price.toString()}'),
                     ],
                   ),
                 ],

@@ -1,6 +1,7 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:printa/models/favourite_model/favourite_model.dart';
 import 'package:printa/models/product_model/product%20model.dart';
 import 'package:printa/shared/styles/colors.dart';
 import 'package:printa/view/product_details/product_details.dart';
@@ -13,6 +14,7 @@ class CancelledOrder extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+    PrentaCubit.get(context).getFavouriteItems();
 
     return BlocConsumer<PrentaCubit, PrentaStates>(
       listener: (context,state){},
@@ -71,7 +73,7 @@ class CancelledOrder extends StatelessWidget{
                             children: [
                               Text('Qty(${item['quantity'] ?? 1})', style: const TextStyle(fontSize: 16)),
                               Text('${price * quantity + 50} L.E',
-                                  style: const TextStyle(fontWeight: FontWeight.w700)),                            ],
+                                  style: const TextStyle(fontWeight: FontWeight.w700)),],
                           ),
                           const SizedBox(width: 30),
                           Column(
@@ -85,8 +87,9 @@ class CancelledOrder extends StatelessWidget{
                             ],
                           ),
                           const Spacer(),
-                          TextButton(child:Text('Re-order', style: TextStyle(color: ModeCubit.get(context).isDark?forthColor:Colors.black,fontWeight: FontWeight.bold, fontSize: 18)),onPressed: (){
-                            navigateToProductDetails(context, item);
+                          if (item['description'] != null)
+                            TextButton(child:Text('Re-order', style: TextStyle(color: ModeCubit.get(context).isDark?forthColor:Colors.black,fontWeight: FontWeight.bold, fontSize: 18)),onPressed: (){
+                            navigateToProductDetails(context, item,FavouriteModel());
 
                           },),
                         ],
@@ -103,10 +106,11 @@ class CancelledOrder extends StatelessWidget{
   );
 }
 }
-  void navigateToProductDetails(BuildContext context, Map<String, dynamic> item) {
+  void navigateToProductDetails(BuildContext context, Map<String, dynamic> item,FavouriteModel model) {
     Navigator.push(context,
       MaterialPageRoute(
         builder: (context) => ProductDetails(
+          model:model ,
           product: ProductModel(
             title: item['title'],
             description: item['description'],

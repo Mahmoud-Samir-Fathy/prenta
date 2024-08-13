@@ -20,6 +20,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return BlocConsumer<PrentaCubit, PrentaStates>(
       listener: (context, state) {},
       builder: (context, state) {
@@ -181,7 +182,7 @@ class HomeScreen extends StatelessWidget {
 Widget itemCard(ProductModel product, BuildContext context, FavouriteModel model) {
   return GestureDetector(
     onTap: () {
-      navigateTo(context, ProductDetails(product: product));
+      navigateTo(context, ProductDetails(product: product,model:model));
     },
     child: Container(
       decoration: BoxDecoration(
