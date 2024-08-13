@@ -183,7 +183,7 @@ class Profile extends StatelessWidget {
                                 ],
                               ),
                               onPressed: () {
-                                _showSignOutDialog(context,  ModeCubit.get(context).isDark ? Colors.white : firstColor);
+                                _showSignOutDialog(context, ModeCubit.get(context).isDark ? secondColor : firstColor);
                               },
                             ),
                           ),
@@ -226,6 +226,7 @@ void _showSignOutDialog(BuildContext context, Color color) {
             height: 50,
             width: 120,
             decoration: BoxDecoration(
+              color: ModeCubit.get(context).isDark?Colors.grey[700]:Colors.white,
               borderRadius: BorderRadius.circular(30),
               border: Border.all(color: firstColor),
             ),

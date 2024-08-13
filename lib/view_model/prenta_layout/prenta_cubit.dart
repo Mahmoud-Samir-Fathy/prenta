@@ -988,6 +988,7 @@ class PrentaCubit extends Cubit<PrentaStates> {
               height: 50,
               width: 120,
               decoration: BoxDecoration(
+                color: ModeCubit.get(context).isDark?Colors.grey[700]:Colors.white,
                 borderRadius: BorderRadius.circular(30),
                 border: Border.all(color: firstColor),
               ),
