@@ -3,7 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:printa/models/user_model/user_model.dart';
 import 'package:printa/shared/components/constants.dart';
 import 'package:printa/shared/network/local/cache_helper.dart';
 import 'package:printa/view/layout/prenta_layout.dart';
@@ -38,6 +40,72 @@ void UserLogin({
         emit(LoginErrorState(error.toString()));
       });
 }
+
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+
+  Future<void> signInWithGoogle() async {
+    emit(LoginLoadingState());
+    try {
+      await _googleSignIn.signOut();
+
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+      if (googleUser != null) {
+        final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+        final AuthCredential credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken,
+          idToken: googleAuth.idToken,
+        );
+
+        final UserCredential userCredential =
+        await _auth.signInWithCredential(credential);
+        final User? user = userCredential.user;
+
+        if (user != null) {
+          await saveUserDataToFirestore(user);
+          emit(LoginSuccessState(user.uid));
+        }
+      } else {
+        emit(LoginErrorState('Google sign-in aborted'));
+      }
+    } catch (error) {
+      emit(LoginErrorState(error.toString()));
+    }
+  }
+
+  Future<void> saveUserDataToFirestore(User user) async {
+    try {
+      // Creating a UserModel instance with Google sign-in data
+      UserModel userModel = UserModel(
+        firstName: user.displayName?.split(' ').first,
+        lastName: user.displayName?.split(' ').last,
+        email: user.email,
+        profileImage: user.photoURL,
+        streetName: '',
+        floor: '',
+        city: '',
+        building: '',
+        area: '',
+        password: '',
+        phoneNumber: '',
+        isEmailAndPassword: false,
+        // Additional fields can be added here as needed
+      );
+
+      // Saving user data to Firestore
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .set(userModel.toMap());
+
+      getDeviceToken();
+    } catch (error) {
+      emit(LoginErrorState('Failed to save user data: $error'));
+    }
+  }
+
+
 
   Future<void> resetPassword({
     required String email,

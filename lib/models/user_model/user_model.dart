@@ -10,6 +10,7 @@ String? area;
 String? streetName;
 String? building;
 String? floor;
+bool? isEmailAndPassword;
 
 UserModel({
   this.firstName,
@@ -23,6 +24,8 @@ UserModel({
   this.streetName,
   this.building,
   this.floor,
+  this.isEmailAndPassword = true, // Default to false
+
 });
 
 UserModel.fromJason(Map<String,dynamic>json){
@@ -37,6 +40,8 @@ area=json['area'];
 streetName=json['streetName'];
 building=json['building'];
 floor=json['floor'];
+isEmailAndPassword = json['isEmailAndPassword'] ?? true; // Default to false if null
+
 
 }
 
@@ -53,6 +58,7 @@ return{
   'streetName':streetName,
   'building':building,
   'floor':floor,
+  'isEmailAndPassword':isEmailAndPassword,
 };
 }
 

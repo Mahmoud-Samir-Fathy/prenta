@@ -27,7 +27,8 @@ class NotificationScreen extends StatelessWidget {
                 title: const Text('Notification'),
                 centerTitle: true,
               ),
-              body:SingleChildScrollView(
+              body:cubit.notificationList.isEmpty
+                  ? const Center(child: Text('Your notification screen is empty.')):SingleChildScrollView(
                 child: ListView.separated(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),

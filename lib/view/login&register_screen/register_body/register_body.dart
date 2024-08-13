@@ -178,61 +178,6 @@ class RegisterBody extends StatelessWidget {
                         fallback: (context) => const Center(child: CircularProgressIndicator()),
                       ),
                       const SizedBox(height: 40),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            height: 1,
-                            width: 70,
-                            color: Colors.blueGrey.withOpacity(0.4),
-                          ),
-                          const SizedBox(width: 10),
-                          const Text('or Register with'),
-                          const SizedBox(width: 10),
-                          Container(
-                            height: 1,
-                            width: 70,
-                            color: Colors.blueGrey.withOpacity(0.4),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 15),
-                      Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.grey.withOpacity(0.5),
-                            width: 0.3,
-                          ),
-                          color: Colors.white,
-                          borderRadius: const BorderRadius.all(Radius.circular(30)),
-                        ),
-                        child: MaterialButton(
-                          color: Colors.white,
-                          height: 60,
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(30)),
-                          ),
-                          onPressed: () {},
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 37),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Image(
-                                  height: 30,
-                                  width: 30,
-                                  image: AssetImage('images/google.png'),
-                                ),
-                                const SizedBox(width: 3),
-                                Text('Google',style: TextStyle(fontSize: 18,color:mCubit.isDark?Colors.black:Colors.black ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
                     ],
                   ),
                 ),

@@ -168,7 +168,9 @@ class LoginBody extends StatelessWidget {
                         shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(30)),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          LoginCubit.get(context).signInWithGoogle();
+                        },
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 37),
                           child: Row(

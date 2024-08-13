@@ -210,7 +210,7 @@ class EditUserProfile extends StatelessWidget {
                   const SizedBox(
                     height: 15,
                   ),
-                  Row(
+                  if(userInfo.isEmailAndPassword==true) Row(
                     children: [
                       const Icon(Icons.password),
                       const SizedBox(
