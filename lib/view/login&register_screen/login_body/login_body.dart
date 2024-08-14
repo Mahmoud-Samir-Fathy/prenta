@@ -44,6 +44,7 @@ class LoginBody extends StatelessWidget {
                 value: state.uId,
               ).then((value) {
                 uId=state.uId;
+                LoginCubit.get(context).getDeviceToken();
                 print('my ID is ################ ${state.uId}');
                 print('And This my id in main ########################## $uId');
                 navigateAndFinish(context, const PrentaLayout());

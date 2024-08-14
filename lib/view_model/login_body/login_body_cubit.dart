@@ -35,7 +35,6 @@ void userLogin({
           email: email,
           password: password).then((value) {
             emit(LoginSuccessState(value.user!.uid));
-            getDeviceToken();
       }).catchError((error){
         emit(LoginErrorState(error.toString()));
       });
@@ -58,12 +57,17 @@ void userLogin({
           idToken: googleAuth.idToken,
         );
 
-        final UserCredential userCredential =
-        await _auth.signInWithCredential(credential);
+        final UserCredential userCredential = await _auth.signInWithCredential(credential);
         final User? user = userCredential.user;
 
         if (user != null) {
-          await saveUserDataToFirestore(user);
+          // Before saving user data, check if they already exist in Firestore
+          bool userExists = await checkUserInFirestore(user.uid);
+
+          if (!userExists) {
+            await saveUserDataToFirestore(user);
+          }
+
           emit(LoginSuccessState(user.uid));
         }
       } else {
@@ -73,10 +77,20 @@ void userLogin({
       emit(LoginErrorState(error.toString()));
     }
   }
+  Future<bool> checkUserInFirestore(String uid) async {
+    try {
+      DocumentSnapshot docSnapshot = await FirebaseFirestore.instance.collection('users').doc(uid).get();
+      return docSnapshot.exists;
+    } catch (error) {
+      emit(LoginErrorState('Failed to check user in Firestore: $error'));
+      return false;
+    }
+  }
 
   Future<void> saveUserDataToFirestore(User user) async {
     try {
-      // Creating a UserModel instance with Google sign-in data
+      DocumentReference userDoc = FirebaseFirestore.instance.collection('users').doc(user.uid);
+
       UserModel userModel = UserModel(
         firstName: user.displayName?.split(' ').first,
         lastName: user.displayName?.split(' ').last,
@@ -90,21 +104,15 @@ void userLogin({
         password: '',
         phoneNumber: '',
         isEmailAndPassword: false,
-        // Additional fields can be added here as needed
       );
 
       // Saving user data to Firestore
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(user.uid)
-          .set(userModel.toMap());
-
-      getDeviceToken();
+      await userDoc.set(userModel.toMap());
+      emit(LoginSuccessState(user.uid));
     } catch (error) {
       emit(LoginErrorState('Failed to save user data: $error'));
     }
   }
-
 
 
   Future<void> resetPassword({
