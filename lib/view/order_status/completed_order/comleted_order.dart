@@ -77,8 +77,8 @@ class CompletedOrder extends StatelessWidget{
                               children: [
                                 CircleAvatar(
                                   backgroundColor: ModeCubit.get(context).isDark?secondColor:firstColor,
-                                  child: Text(item['size'] ?? 'N/A', style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
                                   radius: 16,
+                                  child: Text(item['size'] ?? 'N/A', style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
                                 ),
                                 Text(item['color'] )
                               ],

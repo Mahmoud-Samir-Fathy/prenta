@@ -182,7 +182,7 @@ class Customize extends StatelessWidget {
                 Center(
                   child: defaultMaterialButton(
                     text: 'Confirm',
-                    Function: () {
+                    function: () {
                       cubit.saveCustomToCart(
                         title: 'Customized',
                         color: cubit.selectedColorName,

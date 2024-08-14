@@ -16,11 +16,11 @@ import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 
 class LoginBody extends StatelessWidget {
   final bool fromResetPassword;
-  var formKey = GlobalKey<FormState>();
-  var emailController = TextEditingController();
-  var passwordController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
-  LoginBody({this.fromResetPassword = false});  // Add default value for the flag
+  LoginBody({super.key, this.fromResetPassword = false});  // Add default value for the flag
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,7 @@ class LoginBody extends StatelessWidget {
 
               });
             } else {
-              navigateTo(context, SendEmailVerification());
+              navigateTo(context, const SendEmailVerification());
             }
           }
         },
@@ -66,7 +66,7 @@ class LoginBody extends StatelessWidget {
                   children: [
                     defaultTextFormField(
                       controller: emailController,
-                      KeyboardType: TextInputType.emailAddress,
+                      keyboardType: TextInputType.emailAddress,
                       validate: (value) {
                         if (value!.isEmpty) {
                           return 'Please enter your email';
@@ -74,13 +74,13 @@ class LoginBody extends StatelessWidget {
                           return null;
                         }
                       },
-                      lable: 'Email',
+                      label: 'Email',
                       prefix: Ionicons.mail_outline,
                     ),
                     const SizedBox(height: 15),
                     defaultTextFormField(
                       controller: passwordController,
-                      KeyboardType: TextInputType.visiblePassword,
+                      keyboardType: TextInputType.visiblePassword,
                       validate: (value) {
                         if (value!.isEmpty) {
                           return 'Please type the correct password';
@@ -88,12 +88,12 @@ class LoginBody extends StatelessWidget {
                           return null;
                         }
                       },
-                      lable: 'Password',
+                      label: 'Password',
                       isPassword: LoginCubit.get(context).isPasswordShown,
                       prefix: Ionicons.key_outline,
                       suffix: LoginCubit.get(context).suffixIcon,
                       suffixpressed: () {
-                        LoginCubit.get(context).ChangePasswordVisibility();
+                        LoginCubit.get(context).changePasswordVisibility();
                       },
                     ),
                     const SizedBox(height: 10),
@@ -111,7 +111,7 @@ class LoginBody extends StatelessWidget {
                       condition: (state is! LoginLoadingState),
                       builder: (context) => defaultMaterialButton(
                         text: 'Login',
-                        Function: () {
+                        function: () {
                           if (formKey.currentState!.validate()) {
                             if (fromResetPassword) {
                               LoginCubit.get(context).loginAndUpdatePassword(
@@ -120,7 +120,7 @@ class LoginBody extends StatelessWidget {
                                 passwordController.text,
                               );
                             } else {
-                              LoginCubit.get(context).UserLogin(
+                              LoginCubit.get(context).userLogin(
                                 email: emailController.text,
                                 password: passwordController.text,
                               );

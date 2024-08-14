@@ -6,7 +6,7 @@ import 'package:printa/view_model/login_body/login_body_cubit.dart';
 import 'package:printa/view_model/login_body/login_body_states.dart';
 
 class ForgetPassword extends StatelessWidget {
-  var emailController = TextEditingController();
+  final emailController = TextEditingController();
 
   ForgetPassword({super.key});
 
@@ -38,7 +38,7 @@ class ForgetPassword extends StatelessWidget {
                     const SizedBox(height: 25),
                     defaultTextFormField(
                       controller: emailController,
-                      KeyboardType: TextInputType.emailAddress,
+                      keyboardType: TextInputType.emailAddress,
                       validate: (value) {
                         if (value!.isEmpty) {
                           return 'Please enter your email';
@@ -46,7 +46,7 @@ class ForgetPassword extends StatelessWidget {
                           return null;
                         }
                       },
-                      lable: 'Email Address',
+                      label: 'Email Address',
                       prefix: Ionicons.mail_outline,
                     ),
                     const SizedBox(height: 25),
@@ -55,7 +55,7 @@ class ForgetPassword extends StatelessWidget {
                     Center(
                       child: defaultMaterialButton(
                         text: 'Send',
-                        Function: () {
+                        function: () {
                           LoginCubit.get(context).resetPassword(
                             context: context,
                             email: emailController.text.trim(),

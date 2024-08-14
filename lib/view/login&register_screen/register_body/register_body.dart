@@ -4,19 +4,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:printa/shared/components/components.dart';
 import 'package:printa/view/send_email_verification/send_email_verification.dart';
-import 'package:printa/view_model/change_mode/mode_cubit.dart';
 import 'package:printa/view_model/register_body/register_body_cubit.dart';
 import 'package:printa/view_model/register_body/register_body_states.dart';
 
 
 class RegisterBody extends StatelessWidget {
-  var formKey = GlobalKey<FormState>();
-  var firstNameController = TextEditingController();
-  var lastNameController = TextEditingController();
-  var emailController = TextEditingController();
-  var passwordController = TextEditingController();
-  var phoneController = TextEditingController();
-  var confirmPasswordController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+  final firstNameController = TextEditingController();
+  final lastNameController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final phoneController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
 
   RegisterBody({super.key});
 
@@ -27,13 +26,12 @@ class RegisterBody extends StatelessWidget {
       child: BlocConsumer<RegisterCubit, RegisterStates>(
         listener: (context, state) {
           if(state is CreateUserSuccessState){
-            navigateTo(context, SendEmailVerification());
+            navigateTo(context, const SendEmailVerification());
           }else if (state is CreateUserErrorState){
             showToast(context, title: 'Error', description: state.error, state: ToastColorState.error, icon: Ionicons.warning);
           }
         },
         builder: (context, state) {
-          var mCubit=ModeCubit.get(context);
           return Container(
             child: SingleChildScrollView(
               child: Padding(
@@ -52,7 +50,7 @@ class RegisterBody extends StatelessWidget {
                                 const SizedBox(height: 8),
                                 defaultTextFormField(
                                   controller: firstNameController,
-                                  KeyboardType: TextInputType.text,
+                                  keyboardType: TextInputType.text,
                                   validate: (value) {
                                     if (value!.isEmpty) {
                                       return 'Please enter your first name';
@@ -60,7 +58,7 @@ class RegisterBody extends StatelessWidget {
                                       return null;
                                     }
                                   },
-                                  lable: 'First Name',
+                                  label: 'First Name',
                                   prefix: Icons.person_outline,
                                 ),
                               ],
@@ -74,7 +72,7 @@ class RegisterBody extends StatelessWidget {
                                 const SizedBox(height: 8),
                                 defaultTextFormField(
                                   controller: lastNameController,
-                                  KeyboardType: TextInputType.text,
+                                  keyboardType: TextInputType.text,
                                   validate: (value) {
                                     if (value!.isEmpty) {
                                       return 'Please enter your Last name';
@@ -82,7 +80,7 @@ class RegisterBody extends StatelessWidget {
                                       return null;
                                     }
                                   },
-                                  lable: 'Last Name',
+                                  label: 'Last Name',
                                   prefix: Icons.person_outline,
                                 ),
                               ],
@@ -93,7 +91,7 @@ class RegisterBody extends StatelessWidget {
                       const SizedBox(height: 15),
                       defaultTextFormField(
                         controller: phoneController,
-                        KeyboardType: TextInputType.phone,
+                        keyboardType: TextInputType.phone,
                         validate: (value) {
                           if (value!.isEmpty) {
                             return 'Please enter your phone';
@@ -101,13 +99,13 @@ class RegisterBody extends StatelessWidget {
                             return null;
                           }
                         },
-                        lable: 'Phone Number',
+                        label: 'Phone Number',
                         prefix: Ionicons.phone_portrait_outline,
                       ),
                       const SizedBox(height: 15),
                       defaultTextFormField(
                         controller: emailController,
-                        KeyboardType: TextInputType.text,
+                        keyboardType: TextInputType.text,
                         validate: (value) {
                           if (value!.isEmpty) {
                             return 'Please enter your email';
@@ -115,13 +113,13 @@ class RegisterBody extends StatelessWidget {
                             return null;
                           }
                         },
-                        lable: 'Email',
+                        label: 'Email',
                         prefix: Ionicons.mail_outline,
                       ),
                       const SizedBox(height: 15),
                       defaultTextFormField(
                         controller: passwordController,
-                        KeyboardType: TextInputType.visiblePassword,
+                        keyboardType: TextInputType.visiblePassword,
                         validate: (value) {
                           if (value!.isEmpty) {
                             return 'Please type the correct password';
@@ -129,18 +127,18 @@ class RegisterBody extends StatelessWidget {
                             return null;
                           }
                         },
-                        lable: 'Password',
+                        label: 'Password',
                         prefix: Ionicons.key_outline,
                         isPassword: RegisterCubit.get(context).isPasswordShown,
                         suffix: RegisterCubit.get(context).suffixIcon,
                         suffixpressed: () {
-                          RegisterCubit.get(context).ChangePasswordVisibility();
+                          RegisterCubit.get(context).changePasswordVisibility();
                         },
                       ),
                       const SizedBox(height: 15),
                       defaultTextFormField(
                         controller: confirmPasswordController,
-                        KeyboardType: TextInputType.visiblePassword,
+                        keyboardType: TextInputType.visiblePassword,
                         validate: (value) {
                           if (value!.isEmpty) {
                             return 'Please type the correct password';
@@ -150,12 +148,12 @@ class RegisterBody extends StatelessWidget {
                             return null;
                           }
                         },
-                        lable: 'Confirm Password',
+                        label: 'Confirm Password',
                         isPassword: RegisterCubit.get(context).isPasswordShown,
                         prefix: Ionicons.key_outline,
                         suffix: RegisterCubit.get(context).suffixIcon,
                         suffixpressed: () {
-                          RegisterCubit.get(context).ChangePasswordVisibility();
+                          RegisterCubit.get(context).changePasswordVisibility();
                         },
                       ),
                       const SizedBox(height: 30),
@@ -163,7 +161,7 @@ class RegisterBody extends StatelessWidget {
                         condition: (state is! RegisterLoadingState),
                         builder: (context) => defaultMaterialButton(
                           text: 'Register',
-                          Function: () {
+                          function: () {
                             if (formKey.currentState!.validate()) {
                               RegisterCubit.get(context).userRegister(
                                 firstName: firstNameController.text,

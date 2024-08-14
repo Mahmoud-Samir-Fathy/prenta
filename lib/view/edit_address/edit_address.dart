@@ -9,12 +9,12 @@ import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 import '../../shared/components/components.dart';
 
 class EditAddress extends StatelessWidget{
-  var cityController=TextEditingController();
-  var areaController=TextEditingController();
-  var stController=TextEditingController();
-  var buildingController=TextEditingController();
-  var floorController=TextEditingController();
-  var formKey=GlobalKey<FormState>();
+  final cityController=TextEditingController();
+  final areaController=TextEditingController();
+  final stController=TextEditingController();
+  final buildingController=TextEditingController();
+  final floorController=TextEditingController();
+  final formKey=GlobalKey<FormState>();
 
   EditAddress({super.key});
 
@@ -24,7 +24,7 @@ class EditAddress extends StatelessWidget{
 
       listener: (context,state){
         if(state is UpdateUserAddressSuccessState) {
-          navigateTo(context, Profile());
+          navigateTo(context, const Profile());
           showToast(context, title: 'Success', description: 'Address has been updated', state: ToastColorState.success, icon: Ionicons.thumbs_up_outline);
         }
       },
@@ -50,6 +50,13 @@ class EditAddress extends StatelessWidget{
           ),
           body: Container(
             height: double.infinity,
+            decoration: BoxDecoration(
+                color: mCubit.isDark?Colors.grey[700]:Colors.white,
+                borderRadius: const BorderRadius.only(
+                    topRight: Radius.circular(40),
+                    topLeft: Radius.circular(40)
+                )
+            ),
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: SingleChildScrollView(
@@ -62,7 +69,7 @@ class EditAddress extends StatelessWidget{
                       const SizedBox(height: 8),
                       defaultTextFormField(
                         controller: cityController,
-                        KeyboardType: TextInputType.text,
+                        keyboardType: TextInputType.text,
                         validate: (value) {
                           if (value!.isEmpty) {
                             return 'Please enter your city';
@@ -70,7 +77,7 @@ class EditAddress extends StatelessWidget{
                             return null;
                           }
                         },
-                        lable: 'City',
+                        label: 'City',
                         prefix: Icons.location_city,
                       ),
                       const SizedBox(height: 15,),
@@ -78,7 +85,7 @@ class EditAddress extends StatelessWidget{
                       const SizedBox(height: 8),
                       defaultTextFormField(
                         controller: areaController,
-                        KeyboardType: TextInputType.text,
+                        keyboardType: TextInputType.text,
                         validate: (value) {
                           if (value!.isEmpty) {
                             return 'Please enter the area you live in';
@@ -86,7 +93,7 @@ class EditAddress extends StatelessWidget{
                             return null;
                           }
                         },
-                        lable: 'Area',
+                        label: 'Area',
                         prefix: Icons.area_chart_outlined,
                       ),
                       const SizedBox(height: 15,),
@@ -94,7 +101,7 @@ class EditAddress extends StatelessWidget{
                       const SizedBox(height: 8),
                       defaultTextFormField(
                         controller: stController,
-                        KeyboardType: TextInputType.text,
+                        keyboardType: TextInputType.text,
                         validate: (value) {
                           if (value!.isEmpty) {
                             return 'Please enter your st.name';
@@ -102,7 +109,7 @@ class EditAddress extends StatelessWidget{
                             return null;
                           }
                         },
-                        lable: 'st.name',
+                        label: 'st.name',
                         prefix: Icons.stacked_line_chart,
                       ),
                       const SizedBox(height: 15,),
@@ -110,7 +117,7 @@ class EditAddress extends StatelessWidget{
                       const SizedBox(height: 8),
                       defaultTextFormField(
                         controller: buildingController,
-                        KeyboardType: TextInputType.text,
+                        keyboardType: TextInputType.text,
                         validate: (value) {
                           if (value!.isEmpty) {
                             return 'Please enter your building';
@@ -118,7 +125,7 @@ class EditAddress extends StatelessWidget{
                             return null;
                           }
                         },
-                        lable: 'Building',
+                        label: 'Building',
                         prefix: Icons.home,
                       ),
                       const SizedBox(height: 15,),
@@ -126,7 +133,7 @@ class EditAddress extends StatelessWidget{
                       const SizedBox(height: 8),
                       defaultTextFormField(
                         controller: floorController,
-                        KeyboardType: TextInputType.text,
+                        keyboardType: TextInputType.text,
                         validate: (value) {
                           if (value!.isEmpty) {
                             return 'Please enter your floor number';
@@ -134,11 +141,11 @@ class EditAddress extends StatelessWidget{
                             return null;
                           }
                         },
-                        lable: 'Floor',
+                        label: 'Floor',
                         prefix: Icons.roofing,
                       ),
                       const SizedBox(height: 30,),
-                      Center(child: defaultMaterialButton(text: 'Submit', Function: (){
+                      Center(child: defaultMaterialButton(text: 'Submit', function: (){
                         if (formKey.currentState!.validate()) {
                           cubit.updateUserAddress(
                               streetName: stController.text,
@@ -153,13 +160,6 @@ class EditAddress extends StatelessWidget{
                   ),
                 ),
               ),
-            ),
-            decoration: BoxDecoration(
-                color: mCubit.isDark?Colors.grey[700]:Colors.white,
-                borderRadius: const BorderRadius.only(
-                    topRight: Radius.circular(40),
-                    topLeft: Radius.circular(40)
-                )
             ),
           ),
         );

@@ -20,13 +20,13 @@ class LoginCubit extends Cubit<LoginStates>{
 
   IconData suffixIcon=Ionicons.eye_off_outline;
   bool isPasswordShown=true;
-  void ChangePasswordVisibility(){
+  void changePasswordVisibility(){
     isPasswordShown =!isPasswordShown;
     suffixIcon=isPasswordShown?Ionicons.eye_off_outline:Ionicons.eye_off_outline;
     emit(ChangePassVisibility());
   }
 
-void UserLogin({
+void userLogin({
     required String email,
     required String password,
 }){
@@ -125,7 +125,7 @@ void UserLogin({
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => AccountScreen(fromResetPassword: true),
+          builder: (context) => const AccountScreen(fromResetPassword: true),
         ),
       );
     } on FirebaseAuthException catch (e) {
@@ -163,7 +163,7 @@ void UserLogin({
           print('Password updated successfully in Firestore for user: ${user.uid}');
           emit(UpdateUserPasswordSuccessState());
           PrentaCubit.get(context).sendPushMessage(deviceToken!, 'Password has been updated successfully', 'Password Updated', DateTime.now().toString(), 'password');
-          navigateAndFinish(context, PrentaLayout());
+          navigateAndFinish(context, const PrentaLayout());
           // Navigate to profile or home screen here if needed
         }).catchError((error) {
           print('Failed to update password in Firestore: $error');

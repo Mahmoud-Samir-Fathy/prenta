@@ -11,10 +11,10 @@ import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 import '../../shared/components/components.dart';
 
 class ChangePassword extends StatelessWidget{
-  var oldPasswordController=TextEditingController();
-  var newPasswordController=TextEditingController();
-  var confirmNewPasswordController=TextEditingController();
-  var formKey=GlobalKey<FormState>();
+  final oldPasswordController=TextEditingController();
+  final newPasswordController=TextEditingController();
+  final confirmNewPasswordController=TextEditingController();
+  final formKey=GlobalKey<FormState>();
 
   ChangePassword({super.key});
 
@@ -47,6 +47,13 @@ class ChangePassword extends StatelessWidget{
           ),
           body: Container(
             height: double.infinity,
+            decoration: BoxDecoration(
+                color: mCubit.isDark?Colors.grey[700]:Colors.white,
+                borderRadius: const BorderRadius.only(
+                    topRight: Radius.circular(40),
+                    topLeft: Radius.circular(40)
+                )
+            ),
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: SingleChildScrollView(
@@ -59,7 +66,7 @@ class ChangePassword extends StatelessWidget{
                       const SizedBox(height: 8),
                       defaultTextFormField(
                           controller: oldPasswordController,
-                          KeyboardType: TextInputType.visiblePassword,
+                          keyboardType: TextInputType.visiblePassword,
                           validate: (value) {
                             if (value!.isEmpty) {
                               return 'Please enter your current password';
@@ -70,7 +77,7 @@ class ChangePassword extends StatelessWidget{
                             }
                           },
                           isPassword: cubit.isPasswordShown,
-                          lable: 'Current Password',
+                          label: 'Current Password',
                           prefix:  Ionicons.lock_closed_outline,
                           suffix: cubit.suffixIcon,
                           suffixpressed: (){
@@ -80,14 +87,14 @@ class ChangePassword extends StatelessWidget{
                       const SizedBox(height: 8,),
                       Align(alignment: AlignmentDirectional.bottomEnd,
                           child: TextButton(onPressed: (){
-                            navigateTo(context, Reset_password_in_edit());
+                            navigateTo(context, ResetPasswordInEdit());
                           }, child: Text('Forget Password?',style: TextStyle(color: mCubit.isDark?Colors.white:Colors.blueAccent),))),
                       const SizedBox(height: 15,),
                       const Text('New Password', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
                       const SizedBox(height: 8),
                       defaultTextFormField(
                           controller: newPasswordController,
-                          KeyboardType: TextInputType.visiblePassword,
+                          keyboardType: TextInputType.visiblePassword,
                           validate: (value) {
                             if (value!.isEmpty) {
                               return 'Please enter your new password';
@@ -95,7 +102,7 @@ class ChangePassword extends StatelessWidget{
                               return null;
                             }
                           },
-                          lable: 'New Password',
+                          label: 'New Password',
                           prefix: Ionicons.key_outline,
                           suffix: cubit.suffixIcon,
                           isPassword: cubit.isPasswordShown,
@@ -109,7 +116,7 @@ class ChangePassword extends StatelessWidget{
                       const SizedBox(height: 8),
                       defaultTextFormField(
                           controller: confirmNewPasswordController,
-                          KeyboardType: TextInputType.visiblePassword,
+                          keyboardType: TextInputType.visiblePassword,
                           validate: (value) {
                             if (value!.isEmpty) {
                               return 'Please type the correct password';
@@ -119,7 +126,7 @@ class ChangePassword extends StatelessWidget{
                               return null;
                             }
                           },
-                          lable: 'Confirm password',
+                          label: 'Confirm password',
                           prefix: Ionicons.key_outline,
                           isPassword: cubit.isPasswordShown,
                           suffix: cubit.suffixIcon,
@@ -130,7 +137,7 @@ class ChangePassword extends StatelessWidget{
 
                       const SizedBox(height: 40,),
                       Center(
-                          child: defaultMaterialButton(text: 'Submit', Function: ()
+                          child: defaultMaterialButton(text: 'Submit', function: ()
                       {
                         if (formKey.currentState!.validate()) {
                           cubit.updateUserPassword(email: cubit.userInfo!.email.toString(), currentPassword: oldPasswordController.text, newPassword: newPasswordController.text);
@@ -141,13 +148,6 @@ class ChangePassword extends StatelessWidget{
                   ),
                 ),
               ),
-            ),
-            decoration: BoxDecoration(
-                color: mCubit.isDark?Colors.grey[700]:Colors.white,
-                borderRadius: const BorderRadius.only(
-                    topRight: Radius.circular(40),
-                    topLeft: Radius.circular(40)
-                )
             ),
           ),
         );

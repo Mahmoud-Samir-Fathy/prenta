@@ -7,7 +7,7 @@ import '../login_body/login_body.dart';
 class AccountScreen extends StatelessWidget {
   final bool fromResetPassword; // Flag to determine if navigated from password reset
 
-  const AccountScreen({this.fromResetPassword = false});  // Add default value for the flag
+  const AccountScreen({super.key, this.fromResetPassword = false});  // Add default value for the flag
 
   @override
   Widget build(BuildContext context) {
@@ -80,6 +80,13 @@ class AccountScreen extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Container(
                         padding: const EdgeInsets.only(top: 5,bottom: 5),
+                        height: 60,
+                        decoration: BoxDecoration(
+                          color: Colors.grey.withOpacity(0.3),
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(30),
+                          ),
+                        ),
                         child: TabBar(
                           dividerColor: Colors.transparent,
                           labelColor: firstColor,
@@ -96,13 +103,6 @@ class AccountScreen extends StatelessWidget {
                               child: Tab(text: 'Register'),
                             ),
                           ],
-                        ),
-                        height: 60,
-                        decoration: BoxDecoration(
-                          color: Colors.grey.withOpacity(0.3),
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(30),
-                          ),
                         ),
                       ),
                     ),

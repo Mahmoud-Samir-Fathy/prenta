@@ -48,7 +48,7 @@ class _SplashScreenState extends State<SplashScreen>
           startWidget = const AccountScreen();
         }
       } else {
-        startWidget = const OnBoarding();
+        startWidget =  OnBoarding();
       }
 
       Navigator.pushReplacement(

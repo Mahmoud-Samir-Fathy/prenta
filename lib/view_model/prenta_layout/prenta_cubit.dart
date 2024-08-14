@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -104,11 +105,16 @@ class PrentaCubit extends Cubit<PrentaStates> {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       userImage = File(pickedFile.path);
+
       emit(GetProfileImagePickedSuccessState());
     } else {
       print('No image selected.');
       emit(GetProfileImagePickedErrorState());
     }
+  }
+  // Method to clear the temporary profile image
+  void clearTempImage() {
+    userImage = null;
   }
 
   void UploadUserImage({
@@ -118,6 +124,7 @@ class PrentaCubit extends Cubit<PrentaStates> {
     required String password,
     required String phoneNumber,
     String? profileImage,
+    required BuildContext context
   }) {
     emit(UpdateUserInfoLoadingState());
 
@@ -128,6 +135,7 @@ class PrentaCubit extends Cubit<PrentaStates> {
         email: email,
         password: password,
         phoneNumber: phoneNumber,
+          context:context,
       );
     } else {
       FirebaseStorage.instance
@@ -138,6 +146,7 @@ class PrentaCubit extends Cubit<PrentaStates> {
         value.ref.getDownloadURL().then((value) {
           emit(UploadProfileImageSuccessState());
           updateUserInfo(
+            context: context,
             firstName: firstName,
             lastName: lastName,
             email: email,
@@ -161,6 +170,7 @@ class PrentaCubit extends Cubit<PrentaStates> {
     required String email,
     required String password,
     required String phoneNumber,
+    required BuildContext context,
     String? image,
   }) {
     UserModel model = UserModel(
@@ -174,7 +184,8 @@ class PrentaCubit extends Cubit<PrentaStates> {
       building: userInfo!.building,
       city: userInfo!.city,
       floor: userInfo!.floor,
-      streetName: userInfo!.streetName
+      streetName: userInfo!.streetName,
+        isEmailAndPassword: userInfo!.isEmailAndPassword
     );
     FirebaseFirestore.instance
         .collection('users')
@@ -182,24 +193,11 @@ class PrentaCubit extends Cubit<PrentaStates> {
         .update(model.toMap())
         .then((value) {
       getUserData();
+      navigateAndFinish(context, const PrentaLayout());
       sendPushMessage(deviceToken!, 'Information Successfully Changed', 'Personal Information', DateTime.now().toString(), 'person');
     }).catchError((error) {
       emit(UpdateUserInfoErrorState());
     });
-  }
-
-
-  bool isDark=false;
-  void changeMode({bool? fromShared}) {
-    if(fromShared !=null){
-      isDark=fromShared;
-      emit(ThemeBrightnessChange());
-    }else {
-      isDark=!isDark;
-      CacheHelper.putBool(key: 'isDark', value: isDark).then((value) {
-        emit(ThemeBrightnessChange());
-      });
-    }
   }
 
   void updateUserAddress({
@@ -228,6 +226,7 @@ class PrentaCubit extends Cubit<PrentaStates> {
       building: building,
       city: city,
       floor: floor,
+        isEmailAndPassword:userInfo!.isEmailAndPassword,
     );
     FirebaseFirestore.instance
         .collection('users')

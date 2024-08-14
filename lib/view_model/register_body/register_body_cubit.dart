@@ -14,7 +14,7 @@ class RegisterCubit extends Cubit<RegisterStates> {
   IconData suffixIcon = Ionicons.eye_off_outline;
   bool isPasswordShown = true;
 
-  void ChangePasswordVisibility() {
+  void changePasswordVisibility() {
     isPasswordShown = !isPasswordShown;
     suffixIcon =
     isPasswordShown ? Ionicons.eye_off_outline : Ionicons.eye_outline;

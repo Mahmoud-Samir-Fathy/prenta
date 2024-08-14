@@ -1,10 +1,7 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:printa/models/favourite_model/favourite_model.dart';
-import 'package:printa/models/product_model/product%20model.dart';
 import 'package:printa/shared/styles/colors.dart';
-import 'package:printa/view/product_details/product_details.dart';
 import 'package:printa/view_model/change_mode/mode_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
@@ -80,8 +77,8 @@ class CancelledOrder extends StatelessWidget{
                             children: [
                               CircleAvatar(
                                 backgroundColor: ModeCubit.get(context).isDark?secondColor:firstColor,
-                                child: Text(item['size'] ?? 'N/A', style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
                                 radius: 16,
+                                child: Text(item['size'] ?? 'N/A', style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
                               ),
                               Text(item['color'] )
                             ],

@@ -9,10 +9,10 @@ import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 
 class EditUserProfile extends StatelessWidget {
 
-  var firstNameController = TextEditingController();
-  var lastNameController = TextEditingController();
-  var emailController = TextEditingController();
-  var phoneController = TextEditingController();
+  final firstNameController = TextEditingController();
+  final lastNameController = TextEditingController();
+  final emailController = TextEditingController();
+  final phoneController = TextEditingController();
 
   EditUserProfile({super.key});
 
@@ -20,12 +20,13 @@ class EditUserProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     // Call getUserData to fetch the user data when the screen is built
     PrentaCubit.get(context).getUserData();
+    PrentaCubit.get(context).clearTempImage();
+
 
     return BlocConsumer<PrentaCubit, PrentaStates>(
       listener: (context, state) {},
       builder: (context, state) {
         var cubit = PrentaCubit.get(context);
-
         // Handle loading state
         if (state is PrentaLoadingState || cubit.userInfo == null) {
           return Scaffold(
@@ -113,7 +114,7 @@ class EditUserProfile extends StatelessWidget {
                             const SizedBox(height: 8),
                             defaultTextFormField(
                               controller: firstNameController,
-                              KeyboardType: TextInputType.text,
+                              keyboardType: TextInputType.text,
                               validate: (value) {
                                 if (value!.isEmpty) {
                                   return 'Please enter your first name';
@@ -121,7 +122,7 @@ class EditUserProfile extends StatelessWidget {
                                   return null;
                                 }
                               },
-                              lable: 'First Name',
+                              label: 'First Name',
                               prefix: Icons.person,
                             ),
                           ],
@@ -140,7 +141,7 @@ class EditUserProfile extends StatelessWidget {
                             const SizedBox(height: 8),
                             defaultTextFormField(
                               controller: lastNameController,
-                              KeyboardType: TextInputType.text,
+                              keyboardType: TextInputType.text,
                               validate: (value) {
                                 if (value!.isEmpty) {
                                   return 'Please enter your Last name';
@@ -148,7 +149,7 @@ class EditUserProfile extends StatelessWidget {
                                   return null;
                                 }
                               },
-                              lable: 'Last Name',
+                              label: 'Last Name',
                               prefix: Icons.person,
                             ),
                           ],
@@ -169,7 +170,7 @@ class EditUserProfile extends StatelessWidget {
                       defaultTextFormField(
                         enabled: false,
                         controller: emailController,
-                        KeyboardType: TextInputType.emailAddress,
+                        keyboardType: TextInputType.emailAddress,
                         validate: (value) {
                           if (value!.isEmpty) {
                             return 'Please enter your email address';
@@ -177,7 +178,7 @@ class EditUserProfile extends StatelessWidget {
                             return null;
                           }
                         },
-                        lable: 'xxx@gmail.com',
+                        label: 'xxx@gmail.com',
                         prefix: Icons.email_outlined,
                       ),
                     ],
@@ -194,7 +195,7 @@ class EditUserProfile extends StatelessWidget {
                       const SizedBox(height: 8),
                       defaultTextFormField(
                         controller: phoneController,
-                        KeyboardType: TextInputType.phone,
+                        keyboardType: TextInputType.phone,
                         validate: (value) {
                           if (value!.isEmpty) {
                             return 'Please enter your phone number';
@@ -202,7 +203,7 @@ class EditUserProfile extends StatelessWidget {
                             return null;
                           }
                         },
-                        lable: '+02*******',
+                        label: '+02*******',
                         prefix: Icons.phone,
                       ),
                     ],
@@ -244,8 +245,9 @@ class EditUserProfile extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 30),
-                  defaultMaterialButton(text: 'Submit', Function: () {
+                  defaultMaterialButton(text: 'Submit', function: () {
                     PrentaCubit.get(context).UploadUserImage(
+                      context: context,
                       password: userInfo.password.toString(),
                       firstName: firstNameController.text,
                       lastName: lastNameController.text,

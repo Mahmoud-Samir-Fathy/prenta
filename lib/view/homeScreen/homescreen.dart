@@ -62,7 +62,7 @@ class HomeScreen extends StatelessWidget {
                     const SizedBox(height: 30),
                     GestureDetector(
                       onTap: (){
-                        navigateTo(context, SearchScreen());
+                        navigateTo(context, const SearchScreen());
                       },
                       child: Container(
                         height: 50,

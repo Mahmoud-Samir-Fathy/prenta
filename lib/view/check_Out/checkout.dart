@@ -12,7 +12,7 @@ import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 
 class CheckOut extends StatelessWidget {
 
-  const CheckOut({Key? key}) : super(key: key);
+  const CheckOut({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +55,7 @@ class CheckOut extends StatelessWidget {
             leading: IconButton(
               icon: const Icon(Ionicons.chevron_back_outline),
               onPressed: () {
-                navigateAndFinish(context, PrentaLayout());
+                navigateAndFinish(context, const PrentaLayout());
               },
             ),
             title: const Text(
@@ -217,7 +217,7 @@ class CheckOut extends StatelessWidget {
                 child: Center(
                   child: defaultMaterialButton(
                     text: 'Check out',
-                    Function: () {
+                    function: () {
                       cubit.showCheckOutDialog(context,  ModeCubit.get(context).isDark ? secondColor : firstColor);
                     },
                   ),

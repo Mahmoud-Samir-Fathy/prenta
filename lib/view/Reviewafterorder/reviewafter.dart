@@ -131,7 +131,7 @@ class ReviewAfter extends StatelessWidget {
                     child: Center(
                       child: defaultMaterialButton(
                         text: 'Post Review',
-                        Function: () {
+                        function: () {
                           cubit.sendProductReview(
                             context: context,
                             stars: cubit.rate,

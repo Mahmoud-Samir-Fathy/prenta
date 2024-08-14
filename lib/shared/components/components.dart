@@ -4,13 +4,13 @@ import 'package:printa/shared/styles/colors.dart';
 
 Widget defaultTextFormField({
   required TextEditingController? controller,
-  required TextInputType? KeyboardType,
+  required TextInputType? keyboardType,
   Function(String)? onChanged,
   Function(String)? onSubmit,
   bool enabled=true,
   VoidCallback?onTap,
   required String? Function(String?)? validate,
-  required String? lable,
+  required String? label,
   required IconData? prefix,
   bool isPassword = false,
   IconData? suffix,
@@ -23,7 +23,7 @@ Widget defaultTextFormField({
       width: 0.4, // You can adjust the width of the border as needed
     ),
     color: Colors.white,
-    borderRadius: BorderRadius.all(
+    borderRadius: const BorderRadius.all(
       Radius.circular(30),
     ),
   ),
@@ -32,40 +32,40 @@ Widget defaultTextFormField({
     child: TextFormField(
       controller: controller,
       enabled:enabled ,
-      keyboardType: KeyboardType,
+      keyboardType: keyboardType,
       obscureText: isPassword,
       onChanged:onChanged,
       onFieldSubmitted:onSubmit,
       onTap: onTap,
       validator: validate,
       decoration: InputDecoration(
-        hintStyle: TextStyle(color: Colors.grey),
+        hintStyle: const TextStyle(color: Colors.grey),
         border: InputBorder.none,
         prefixIcon: Icon(prefix,color: Colors.black,),
-        hintText: lable,
+        hintText: label,
         focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30.0),borderSide: BorderSide.none),
         suffixIcon: suffix !=null?IconButton(icon: Icon(suffix),onPressed: suffixpressed,):null,
-        contentPadding: EdgeInsets.symmetric(vertical: 11.0),
+        contentPadding: const EdgeInsets.symmetric(vertical: 11.0),
 
       ),
-      style: TextStyle(fontSize: 14,color: Colors.black),
+      style: const TextStyle(fontSize: 14,color: Colors.black),
     ),
   ),
 );
 
 Widget defaultMaterialButton({
   required String text,
-  required Function,
+  required function,
 })=>MaterialButton(
-onPressed: Function,
+onPressed: function,
+color: firstColor,
+shape: const RoundedRectangleBorder(
+borderRadius: BorderRadius.all( Radius.circular(10),),
+),
 child:
 Padding(
 padding: const EdgeInsets.all(12.0),
-child: Text(text,style: TextStyle(color: Colors.white,fontSize: 20),),
-),
-color: firstColor,
-shape: RoundedRectangleBorder(
-borderRadius: BorderRadius.all( Radius.circular(10),),
+child: Text(text,style: const TextStyle(color: Colors.white,fontSize: 20),),
 ),
 );
 
@@ -84,7 +84,7 @@ void showToast(context,{
 })=> MotionToast(
   icon: icon,
   title: Text(title),
-  description: Text(description,style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+  description: Text(description,style: const TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
   animationType: AnimationType.fromBottom,
   animationCurve: Curves.decelerate,
   primaryColor: chooseToastColor(state),

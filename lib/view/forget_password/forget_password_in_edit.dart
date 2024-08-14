@@ -5,10 +5,10 @@ import 'package:printa/shared/components/components.dart';
 import 'package:printa/view_model/prenta_layout/prenta_cubit.dart';
 import 'package:printa/view_model/prenta_layout/prenta_states.dart';
 
-class Reset_password_in_edit extends StatelessWidget{
-  var emailController=TextEditingController();
+class ResetPasswordInEdit extends StatelessWidget{
+  final emailController=TextEditingController();
 
-  Reset_password_in_edit({super.key});
+  ResetPasswordInEdit({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class Reset_password_in_edit extends StatelessWidget{
 
                     defaultTextFormField(
                       controller: emailController,
-                      KeyboardType: TextInputType.emailAddress,
+                      keyboardType: TextInputType.emailAddress,
                       validate: (value){
                         if(value!.isEmpty){
                           return 'Please enter your email';
@@ -44,14 +44,14 @@ class Reset_password_in_edit extends StatelessWidget{
                         }
                       },
                       enabled: false,
-                      lable: 'Email Address',
+                      label: 'Email Address',
                       prefix:  Ionicons.mail_outline,
                     ),
 
                     const SizedBox(height: 25,),
                     const Center(child: Image(image: AssetImage('images/change_password.png'))),
                     const SizedBox(height: 40,),
-                    Center(child: defaultMaterialButton(text: 'Send', Function: (){
+                    Center(child: defaultMaterialButton(text: 'Send', function: (){
                       PrentaCubit.get(context).resetPassword(context:context,email: emailController.text.trim());
 
                     })),

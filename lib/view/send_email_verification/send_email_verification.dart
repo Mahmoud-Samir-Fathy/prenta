@@ -22,7 +22,7 @@ class SendEmailVerification extends StatelessWidget{
             const Text('To enjoy our services, we need to just verify your email address',style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),),
             const Text('so please press send button to ensure thats you',style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold)),
             const Spacer(),
-            defaultMaterialButton(text: 'Send', Function: (){
+            defaultMaterialButton(text: 'Send', function: (){
               FirebaseAuth.instance.currentUser!.sendEmailVerification();
               showToast(context, title: 'Sent', description: 'An email was send to your email address please check it', state: ToastColorState.success, icon:Ionicons.thumbs_up_outline);
             }),
